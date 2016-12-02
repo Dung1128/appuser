@@ -15,7 +15,7 @@ import Modal from 'react-native-modalbox';
 import { Col, Row, Grid } from "react-native-easy-grid";
 
 
-const domain = 'http://haivanexpress.com';
+const domain = 'http://hai-van.local';
 const urlApi = domain+'/api/api_adm_so_do_giuong.php';
 const currentDate = new Date();
 
@@ -181,9 +181,10 @@ class HomeIOS extends Component {
       let dataNot = this._renderNot(this.state.results);
       return(
          <View style={styles.container}>
-				<View style={{flexDirection: 'row', padding: 30}}>
-					<Text style={{flex: 2, width: 200, borderWidth:1, borderColor:'#ccc', padding:10, height:39}} onPress={() => this._setDatePickerShow()}>{this.state.fullDate}</Text>
-					<Button style={{flex: 3, borderRadius: 0}} onPress={() => {this._getNot()}}>Tìm Kiếm</Button>
+				<View style={{alignItems: 'center', marginTop: 5}}><Text>Bạn vui lòng chọn ngày xuất phát</Text></View>
+				<View style={{flexDirection: 'row', padding: 30, paddingTop: 10}}>
+					<Text style={{flex: 4, borderWidth:1, borderColor:'#ccc', padding:10, height:39}} onPress={() => this._setDatePickerShow()}>{this.state.fullDate}</Text>
+					<Button style={{flex: 1, borderRadius: 0}} onPress={() => {this._getNot()}}><Icon name='ios-search-outline' /></Button>
 				</View>
 				<ScrollView>
 					{ this.state.loading && <Spinner /> }

@@ -20,7 +20,7 @@ import ModalPicker from 'react-native-modal-picker';
 
 const heightDevice = Dimensions.get('window').height;
 const widthDevice = Dimensions.get('window').width;
-const domain = 'http://haivanexpress.com';
+const domain = 'http://hai-van.local';
 class ViewSoDoGiuong extends Component {
 
 	constructor(props) {
@@ -51,13 +51,15 @@ class ViewSoDoGiuong extends Component {
 			arrOrder: [],
 			checkout: false,
 			dataBook: [],
-			arrBookGiuong: []
+			arrBookGiuong: [],
+			themVe: false,
+			arrThemve: []
 		};
 	}
 
 	infoAdm() {
 		var that = this;
-		AsyncStorage.getItem('infoAdm').then((data) => {
+		AsyncStorage.getItem('infoUser').then((data) => {
 			let results = JSON.parse(data);
 			that.setState({
 				infoAdm: results
@@ -132,6 +134,14 @@ class ViewSoDoGiuong extends Component {
 								</TouchableOpacity>
 							</Col>
 						);
+					}else if(dataGiuong.bvv_status == -2) {
+						htmlChild.push(
+							<Col key={i+j} style={styles.borderCol}>
+								<TouchableOpacity onPress={this._unsetActiveGiuong.bind(this, idGiuong)} style={[styles.selectGiuongUser, styles.opacityBg]}>
+									<Text style={[styles.textCenter, styles.textActiveGiuong]}>{item[j].sdgct_label_full}</Text>
+								</TouchableOpacity>
+							</Col>
+						);
 					}else {
 						if(dataGiuong.bvv_status == -2) {
 							htmlChild.push(
@@ -200,17 +210,46 @@ class ViewSoDoGiuong extends Component {
 	}
 
 	_setActiveGiuong(id) {
-		let dataGiuong = this.state.arrVeNumber[id];
+		if(this.state.themVe.check) {
+			let themVe = this.state.themVe;
+			let setStatus = this.state.arrVeNumber;
+			let dataBook = this.state.dataBook;
+			let arrBookGiuong = this.state.arrBookGiuong;
+			setStatus[id].bvv_status = -2;
+			setStatus[id].bvv_bex_id_a = themVe.keyDiemDi;
+			setStatus[id].bvv_bex_id_b = themVe.keyDiemDen;
+			setStatus[id].bvv_price = themVe.totalPriceInt;
+			dataBook.push({'numberGiuong': parseInt(id), 'bvv_bex_id_a': themVe.keyDiemDi, 'bvv_bex_id_b': themVe.keyDiemDen, 'bvv_price': parseInt(themVe.totalPriceInt)});
+			arrBookGiuong.push({'numberGiuong': parseInt(id)});
+			this.setState({
+				loadingModal: true,
+				isOpen: false,
+				arrVeNumber: setStatus,
+				loadingModal: false,
+				isOpen: false,
+				nameDiemDi: '',
+				keyDiemDi: '',
+				nameDiemDen: '',
+				keyDiemDen: '',
+				priceTotal: 0,
+				totalPriceInt: 0,
+				checkout: true,
+				dataBook: dataBook,
+				arrBookGiuong: arrBookGiuong
+			});
+		}else {
+			let dataGiuong = this.state.arrVeNumber[id];
 
-		this.getPriceBen(dataGiuong.bvv_bex_id_a, dataGiuong.bvv_bex_id_b, dataGiuong.bvv_id);
-		this.setState({
-			nameGiuong: id,
-			type: '',
-			bvv_bvn_id_muon_chuyen: dataGiuong.bvv_bvn_id,
-			bvv_number_muon_chuyen: dataGiuong.bvv_number,
-			totalPriceInt: this.state.totalPriceInt
-		});
-		this.openModal();
+			this.getPriceBen(dataGiuong.bvv_bex_id_a, dataGiuong.bvv_bex_id_b, dataGiuong.bvv_id);
+			this.setState({
+				nameGiuong: id,
+				type: '',
+				bvv_bvn_id_muon_chuyen: dataGiuong.bvv_bvn_id,
+				bvv_number_muon_chuyen: dataGiuong.bvv_number,
+				totalPriceInt: this.state.totalPriceInt
+			});
+			this.openModal();
+		}
 	}
 
 	_unsetActiveGiuong(id){
@@ -242,6 +281,11 @@ class ViewSoDoGiuong extends Component {
 	}
 
 	openModalOrder(id) {
+		var themVe = this.state.themVe;
+		themVe.check = false;
+		this.setState({
+			themVe: themVe
+		});
 		this.refs.modalPopupOrder.open();
 	}
 
@@ -533,7 +577,7 @@ class ViewSoDoGiuong extends Component {
 			let currentArrActive = this.state.arrVeNumber;
 			let dataBook = this.state.dataBook;
 			let arrBookGiuong = this.state.arrBookGiuong;
-			currentArrActive[id].bvv_status = -1;
+			currentArrActive[id].bvv_status = -2;
 			currentArrActive[id].bvv_bex_id_a = this.state.keyDiemDi;
 			currentArrActive[id].bvv_bex_id_b = this.state.keyDiemDen;
 			currentArrActive[id].bvv_price = this.state.totalPriceInt;
@@ -571,17 +615,13 @@ class ViewSoDoGiuong extends Component {
 			html.push(
 				<CardItem key={i}>
 					<View style={{flexDirection: 'row'}}>
-						<View style={{flex: 1}}>
+						<View style={{flex: 4, alignItems: 'flex-start'}}>
 							<Text>{this.state.resultsBen[dBook[i].bvv_bex_id_a]} -> {this.state.resultsBen[dBook[i].bvv_bex_id_b]}</Text>
+							<Text>Số Ghế: {dBook[i].numberGiuong}</Text>
+							<Text>Số Lượng: 1</Text>
 						</View>
-						<View style={{flex: 1}}>
-							<Text>{dBook[i].numberGiuong}</Text>
-						</View>
-						<View style={{flex: 1}}>
-							<Text>1</Text>
-						</View>
-						<View style={{flex: 1}}>
-							<Text>{newPrice} VNĐ</Text>
+						<View style={{flex: 3, alignItems: 'flex-end'}}>
+							<Text style={{fontWeight: 'bold'}}>{newPrice} VNĐ</Text>
 						</View>
 					</View>
 				</CardItem>
@@ -600,11 +640,11 @@ class ViewSoDoGiuong extends Component {
 					<View style={{flex: 1}}>
 						<Text></Text>
 					</View>
-					<View style={{flex: 1}}>
+					<View style={{flex: 2}}>
 						<Text>Tổng Tiền</Text>
 					</View>
-					<View style={{flex: 1}}>
-						<Text>{newTotalPrice} VNĐ</Text>
+					<View style={{flex: 4, alignItems: 'flex-end'}}>
+						<Text style={{fontWeight: 'bold', color: 'red'}}>{newTotalPrice} VNĐ</Text>
 					</View>
 				</View>
 			</CardItem>
@@ -629,25 +669,20 @@ class ViewSoDoGiuong extends Component {
 
 						<CardItem>
 							<View style={{flexDirection: 'row'}}>
-								<View style={{flex: 1}}>
-									<Text>Nđi & Nđến</Text>
+								<View style={{flex: 4}}>
+									<Text>Nơi đi -> Nơi đến</Text>
 								</View>
-								<View style={{flex: 1}}>
-									<Text>DS ghế</Text>
-								</View>
-								<View style={{flex: 1}}>
-									<Text>Tghế</Text>
-								</View>
-								<View style={{flex: 1}}>
-									<Text>Đgiá</Text>
+								<View style={{flex: 3, alignItems: 'flex-end'}}>
+									<Text>Giá</Text>
 								</View>
 							</View>
 						</CardItem>
 						{html}
 						{totalHtml}
 						<CardItem>
-							<View>
-								<Button block success onPress={() => this._handleSaveOrder()}>Đặt Vé</Button>
+							<View style={{flexDirection: 'row'}}>
+								<Button info style={{flex: 1, marginRight: 5}} onPress={() => this.closeModalOrder()}>Tiếp tục chọn chỗ</Button>
+								<Button success style={{flex: 1, marginLeft: 5}} onPress={() => this._handleSaveOrder()}>Thanh Toán</Button>
 							</View>
 						</CardItem>
 					</Card>
@@ -663,7 +698,20 @@ class ViewSoDoGiuong extends Component {
 				<ScrollView style={styles.container}>
 					<Card style={styles.paddingContent}>
 						<CardItem header style={{alignItems: 'center', justifyContent: 'center'}}>
-							<Text style={{fontSize: 20}}>Tầng 1</Text>
+							<View style={{flexDirection: 'row'}}>
+								<View style={{flex: 1}}>
+									<Badge width={5} height={20} backgroundColor={'#d6d7da'}></Badge>
+									<View><Text>Đã có người</Text></View>
+								</View>
+								<View style={{flex: 1}}>
+									<Badge width={5} height={20} backgroundColor={'#7eecb5'}></Badge>
+									<View><Text>Đã chọn</Text></View>
+								</View>
+								<View style={{flex: 1}}>
+									<Badge width={5} height={20} backgroundColor={'#ff8c00'}></Badge>
+									<View><Text>Đang chọn</Text></View>
+								</View>
+							</View>
 						</CardItem>
 
 						<CardItem>
@@ -695,11 +743,11 @@ class ViewSoDoGiuong extends Component {
 					{this.state.loadingModal? <Spinner /> : (this._renderModalBen(this.state.resultsBen))}
 				</Modal>
 
-				<Modal style={[styles.modal, styles.modalPopupAction]} position={"center"} ref={"modalPopupAction"} isDisabled={this.state.isDisabled}>
+				<Modal style={[styles.modalAction, styles.modalPopupAction]} position={"center"} ref={"modalPopupAction"} isDisabled={this.state.isDisabled}>
 					{this.state.loadingModalAction? <Spinner /> : (this._renderButtonAction())}
 				</Modal>
 
-				<Modal style={[styles.modal, styles.modalPopupOrder]} position={"top"} ref={"modalPopupOrder"} isDisabled={this.state.isDisabled}>
+				<Modal style={[styles.modalOrder, styles.modalPopupOrder]} position={"top"} ref={"modalPopupOrder"} isDisabled={this.state.isDisabled}>
 					{this.state.loadingModalOrder? <Spinner /> : (this._renderOrder())}
 				</Modal>
 
@@ -725,8 +773,63 @@ class ViewSoDoGiuong extends Component {
  					  </View>}
  				  </TouchableOpacity>
  			  </View>
+
+			  {this.state.themVe.check &&
+			   <View style={{position: 'absolute', top: 60, right: 0, left: 0, backgroundColor: 'rgba(0, 0, 0, 0.8)', padding: 10}}>
+					<Text style={{color: '#fff', alignItems: 'center', justifyContent: 'center', fontWeight: 'bold', fontSize: 16}}>Chọn chỗ trống để Thêm Vé</Text>
+			   </View>}
 			</View>
 		);
+	}
+
+	_handleThemVe() {
+		let arrBookGiuong = this.state.arrBookGiuong;
+		let checkGiuongCurrent = false;
+		this.closeModalAction();
+		for(var i = 0; i < arrBookGiuong.length; i++) {
+			if(arrBookGiuong[i].numberGiuong == parseInt(this.state.currentIdGiuong)) {
+				checkGiuongCurrent = true;
+				let dataBook = this.state.dataBook;
+				this.setState({
+					themVe: {
+						check: true,
+						keyDiemDi: dataBook[i].bvv_bex_id_a,
+						keyDiemDen: dataBook[i].bvv_bex_id_b,
+						totalPriceInt: dataBook[i].bvv_price
+					}
+				});
+				break;
+			}
+		}
+		if(!checkGiuongCurrent) {
+			let dataGiuong = this.state.arrVeNumber[this.state.currentIdGiuong];
+			this.setState({
+				loadingModal: true,
+				type: 'update'
+			});
+			var that = this;
+
+			fetch(domain+'/api/api_user_ben.php?type=update&notId='+this.props.data.notId+'&notTuyenId='+this.props.data.notTuyenId+'&bvv_bvn_id='+dataGiuong.bvv_bvn_id+'&bvv_id='+dataGiuong.bvv_id+'&bvv_number='+dataGiuong.bvv_number+'&day='+this.props.data.day)
+			.then((response) => response.json())
+			.then((responseJson) => {
+				that.setState({
+					themVe: {
+						check: true,
+						keyDiemDi: responseJson.keyDiemDi,
+						keyDiemDen: responseJson.keyDiemDen,
+						totalPriceInt: responseJson.totalPrice
+					},
+					loadingModal: false
+				});
+				return responseJson;
+			})
+			.catch((error) => {
+				that.setState({
+					loadingModal: false
+				});
+				console.error(error);
+			});
+		}
 	}
 
 	_handleSaveOrder() {
@@ -751,8 +854,10 @@ class ViewSoDoGiuong extends Component {
 				checkout: false,
 				loadingModalOrder: false,
 				dataBook: [],
-				arrBookGiuong: []
+				arrBookGiuong: [],
+				themVe: []
 			});
+			Actions.Checkout({title: 'Thanh Toán', data: {adm_id: this.props.data.adm_id}});
 			that.closeModalOrder();
 		})
 		.catch((error) => {
@@ -775,11 +880,11 @@ class ViewSoDoGiuong extends Component {
 	_renderButtonAction() {
 		let dataGiuong = this.state.arrVeNumber[this.state.currentIdGiuong];
 		let html = [];
+			html.push(<Button key="themve" block success style={styles.marginTopButton} onPress={this._handleThemVe.bind(this)}>Thêm vé</Button>);
 			if(this.state.currentIdGiuong != 0) {
 				html.push(<Button key="huyve" block danger style={styles.marginTopButton} onPress={this._handleHuyVe.bind(this)}>Hủy Vé</Button>);
-
 			}
-			html.push(<Button key="chinhsua" block style={styles.marginTopButton} onPress={this._handleChinhSua.bind(this)}>Chỉnh sửa</Button>);
+			html.push(<Button key="chinhsua" block info style={styles.marginTopButton} onPress={this._handleChinhSua.bind(this)}>Chỉnh sửa</Button>);
 		return html;
 	}
 
@@ -801,7 +906,8 @@ class ViewSoDoGiuong extends Component {
 						arrVeNumber: setStatus,
 						loadingModalAction: false,
 						arrBookGiuong: arrBookGiuong,
-						dataBook: dataBook
+						dataBook: dataBook,
+						themVe: []
 					});
 
 					if(dataBook.length == 0 && arrBookGiuong.length == 0) {
@@ -903,7 +1009,7 @@ const styles = StyleSheet.create({
 		marginBottom: 50
 	},
 	wrapOrder: {
-		marginBottom: 50
+		marginBottom: 0
 	},
 	paddingContent: {
 		marginLeft: 10,
@@ -938,6 +1044,9 @@ const styles = StyleSheet.create({
 	},
 	activeGiuongUser: {
 		backgroundColor: '#7eecb5',
+	},
+	selectGiuongUser: {
+		backgroundColor: '#ff8c00'
 	},
 	activeLenXe: {
 		backgroundColor: '#5fb760',
@@ -998,9 +1107,17 @@ const styles = StyleSheet.create({
 		height: 300,
 		width: 300
 	},
+	modalAction: {
+		alignItems: 'center',
+		paddingRight: 20,
+		paddingLeft: 20
+	},
 	modalPopupAction: {
 		width: 300,
-		height: 140
+		height: 200
+	},
+	modalOrder: {
+		paddingTop: 65
 	},
 	modalPopupOrder: {
 		width:widthDevice,

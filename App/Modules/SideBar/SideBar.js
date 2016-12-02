@@ -32,7 +32,7 @@ class SideBar extends Component {
    }
 
    _onPressLogout() {
-      AsyncStorage.removeItem('infoAdm');
+      AsyncStorage.removeItem('infoUser');
 		this.setState({
 			checkLogin: false
 		});

@@ -9,7 +9,7 @@ import { Container, Content, InputGroup, View, Icon, Input,Text, Button, Thumbna
 import { Col, Row, Grid } from "react-native-easy-grid";
 import {Actions} from 'react-native-router-flux';
 
-const domain = 'http://haivanexpress.com';
+const domain = 'http://hai-van.local';
 class Welcome extends Component {
 
 	constructor(props) {
@@ -29,7 +29,7 @@ class Welcome extends Component {
 			loading: true
 		});
 		var that = this;
-      AsyncStorage.getItem('infoAdm').then((data) => {
+      AsyncStorage.getItem('infoUser').then((data) => {
          let results = JSON.parse(data);
          if(results != null) {
             Actions.home({title: 'Chọn Chuyến', data: results});
@@ -58,15 +58,12 @@ class Welcome extends Component {
 	         loading: true
 	      });
 	      var that = this;
-			let urlRequest	= domain+'/api/api_user_dang_nhap.php?username='+this.state.username+'&password='+this.state.password+"&sdsdsdsd=1";
-			
+			let urlRequest	= domain+'/api/api_user_dang_nhap.php?username='+this.state.username+'&password='+this.state.password;
 	      fetch(urlRequest)
 	      .then((response) => {
-				//console.log(response);
 				return response.json()
 			})
 	      .then((responseJson) => {
-				//console.log(responseJson);
 	         that.setState({
 	            loading: false,
 					username: '',
@@ -74,7 +71,7 @@ class Welcome extends Component {
 	         });
 	         if(responseJson.status == 200) {
 	            let result = JSON.stringify(responseJson);
-	            AsyncStorage.setItem("infoAdm", result);
+	            AsyncStorage.setItem("infoUser", result);
 	            Actions.home({title: 'Chọn Chuyến', data: result});
 	         }else {
 					that.setState({
@@ -89,7 +86,6 @@ class Welcome extends Component {
 					error: 'true',
 					messageError: ['Lỗi hệ thống. Vui lòng liên hệ với bộ phận Kỹ Thuật.']
 	         });
-	         //console.log(error);
 	      });
 		}else {
 			this.setState({
@@ -120,19 +116,29 @@ class Welcome extends Component {
 			<View key="content_login" style={styles.paddingContent}>
 				<InputGroup key="group_username">
 					<Icon name='ios-person' style={styles[this.state.cssError]} />
-					<Input placeholder="Email" onChange={(event) => this.setState({username: event.nativeEvent.text})} />
+					<Input placeholder="Số điện thoại" onChange={(event) => this.setState({username: event.nativeEvent.text})} />
 				</InputGroup>
 				<InputGroup key="group_password">
 					<Icon name='ios-unlock' style={styles[this.state.cssError]} />
 					<Input placeholder="Mật khẩu" secureTextEntry={true} onChange={(event) => this.setState({password: event.nativeEvent.text})} />
 				</InputGroup>
+
 				{arrValid}
-				<Button
-					block
-					success
-					style={styles.marginButton}
-					onPress={this.handleLogin.bind(this)}
-				>Đăng nhập</Button>
+
+				<View style={{flexDirection: 'row'}}>
+					<Button
+						block
+						success
+						style={[styles.buttonLogin, {flex: 1}]}
+						onPress={this.handleLogin.bind(this)}
+					>Đăng nhập</Button>
+					<Button
+						block
+						info
+						style={[styles.buttonRegister, {flex: 1}]}
+						onPress={() => Actions.Register({title: 'Đăng Ký', hideNavBar: false})}
+					>Đăng ký</Button>
+				</View>
 			</View>
 		);
 
@@ -160,9 +166,14 @@ class Welcome extends Component {
 }
 
 const styles = StyleSheet.create({
-   marginButton: {
-      marginTop: 10
+   buttonLogin: {
+      marginTop: 10,
+		marginRight: 10
    },
+	buttonRegister: {
+		marginTop: 10,
+		marginLeft: 10
+	},
 	cssError: {
 		color: 'red'
 	},
