@@ -115,7 +115,7 @@ class Welcome extends Component {
 		htmlContent.push(
 			<View key="content_login" style={styles.paddingContent}>
 				<InputGroup key="group_username">
-					<Icon name='ios-person' style={styles[this.state.cssError]} />
+					<Icon name='ios-call' style={styles[this.state.cssError]} />
 					<Input placeholder="Số điện thoại" onChange={(event) => this.setState({username: event.nativeEvent.text})} />
 				</InputGroup>
 				<InputGroup key="group_password">

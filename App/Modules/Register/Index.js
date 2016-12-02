@@ -144,12 +144,12 @@ class Register extends Component {
 							</InputGroup>
 
 							<InputGroup key="group_email">
-								<Icon name='ios-person' style={styles[this.state.cssError.cssErrorEmail]} />
+								<Icon name='ios-mail' style={styles[this.state.cssError.cssErrorEmail]} />
 								<Input placeholder="Địa Chỉ Email" onChange={(event) => this.setState({email: event.nativeEvent.text})} />
 							</InputGroup>
 
 							<InputGroup key="group_phone">
-								<Icon name='ios-person' style={styles[this.state.cssError.cssErrorPhone]} />
+								<Icon name='ios-call' style={styles[this.state.cssError.cssErrorPhone]} />
 								<Input placeholder="Số điện thoại" onChange={(event) => this.setState({phone: event.nativeEvent.text})} />
 							</InputGroup>
 
