@@ -12,11 +12,13 @@ import { Text, Button, Card, CardItem, Spinner, Icon } from 'native-base';
 import CalendarPicker from 'react-native-calendar-picker';
 import {Actions} from 'react-native-router-flux';
 import Modal from 'react-native-modalbox';
+import ModalPicker from 'react-native-modal-picker';
 import { Col, Row, Grid } from "react-native-easy-grid";
 
-
+const heightDevice = Dimensions.get('window').height;
+const widthDevice = Dimensions.get('window').width;
 const domain = 'http://hai-van.local';
-const urlApi = domain+'/api/api_adm_so_do_giuong.php';
+const urlApi = domain+'/api/api_user_so_do_giuong.php';
 const currentDate = new Date();
 
 class HomeIOS extends Component {
@@ -33,12 +35,21 @@ class HomeIOS extends Component {
          MONTHS: ['Tháng 1', 'Tháng 2', 'Tháng 3', 'Tháng 4', 'Tháng 5', 'Tháng 6', 'Tháng 7',
          'Tháng 8', 'Tháng 9', 'Tháng 10', 'Tháng 11', 'Tháng 12'],
          results: [],
-         showDatePicker: false,
+			dataBx: [],
+			listItem1: [],
+			listItem2: [],
          optionSelect: '',
          arrSoDoGiuong: [],
          loading: true,
-			isDisabled: false
-      }
+			isDisabled: false,
+			showContentNot: false,
+			oneSearch: false,
+			keyDiemDi: '',
+			keyDiemDen: '',
+			nameDiemDi: '',
+			nameDiemDen: '',
+			selectCheckbox: 'borderCheckbox'
+      };
    }
 
    onDateChange(date) {
@@ -53,9 +64,6 @@ class HomeIOS extends Component {
    }
 
    _setDatePickerShow() {
-      this.setState({
-         showDatePicker: true
-      });
 		this.openModal();
    }
 
@@ -74,85 +82,88 @@ class HomeIOS extends Component {
    }
 
    _renderNot(results) {
-      let data = [],
-          countData = results.length;
-      for(var i = 0; i < countData; i++) {
-         data.push({key:results[i].not_id, gio_xuat_ben: this.state.fullDate+' '+results[i].did_gio_xuat_ben_that, label: results[i].did_gio_xuat_ben_that+' ← ' +results[i].did_gio_xuat_ben+' '+results[i].tuy_ma, not_tuy_id: results[i].not_tuy_id, ben_a: results[i].tuy_ben_a, ben_b: results[i].tuy_ben_b});
-      }
+		let data = [],
+			that = this;
+		Object.keys(results).map(function(key) {
+			data.push({soChoTrong: results[key].tongSoChoConLai, tenSoDo: results[key].ten_so_do,price: results[key].price, tuyen: results[key].tuyen, not_id:results[key].not_id, id_dieu_do: results[key].id_dieu_do, did_gio_xuat_ben_that: results[key].did_gio_xuat_ben_that, not_tuy_id: results[key].not_tuy_id, ben_a: results[key].diem_di, ben_b: results[key].diem_den});
+		});
 
       return data;
    }
 
-   searchGiuong() {
-      var that = this;
-      that.setState({
-         loadingSDG: true
+	componentDidMount() {
+		let that = this;
+      fetch(domain+'/api/api_user_ben.php?type=home')
+      .then((response) => response.json())
+      .then((responseJson) => {
+			let listItem1 = [],
+				listItem2 = [];
+			Object.keys(responseJson.dataBx).map(function(key) {
+				listItem1.push({key: key.toString(), label: responseJson.dataBx[key], value: key});
+				listItem2.push({key: key.toString(),  label: responseJson.dataBx[key], value: key});
+			});
+			that.setState({
+				listItem1: listItem1,
+				listItem2: listItem2,
+				dataBx: responseJson.dataBx
+			});
+      })
+      .catch((error) => {
+         console.error(error);
       });
-      return fetch(urlApi+'?not_id='+this.state.optionSelect.key+'&day='+this.state.fullDate)
+	}
+
+   _getNot() {
+		checkData = false;
+		if(this.state.keyDiemDi == '') {
+			checkData = false;
+			alert('Vui lòng chọn Điểm Đi!');
+		}else {
+			if(this.state.keyDiemDen == '') {
+				checkData = false;
+				alert('Vui lòng chọn Điểm Đến!');
+			}else {
+				if(this.state.keyDiemDi == this.state.keyDiemDen) {
+					checkData = false;
+					alert('Điểm đi và Điểm đến không được trùng nhau!');
+				}else {
+					checkData = true;
+				}
+			}
+		}
+
+		if(checkData) {
+
+			let newCurrentDate = currentDate.getDate()+(currentDate.getMonth()+1)+currentDate.getFullYear();
+			let selectCurrentDate = this.state.day+this.state.month+this.state.year;
+			if(newCurrentDate <= selectCurrentDate) {
+		      var that = this;
+				that.setState({
+					loading: true,
+					showContentNot: true
+				});
+				console.log(urlApi+'?day='+that.state.fullDate+'&diem_a='+this.state.keyDiemDi+'&diem_b='+this.state.keyDiemDen);
+				fetch(urlApi+'?day='+that.state.fullDate+'&diem_a='+this.state.keyDiemDi+'&diem_b='+this.state.keyDiemDen)
             .then((response) => response.json())
             .then((responseJson) => {
                that.setState({
-                  arrSoDoGiuong:responseJson.so_do_giuong,
-                  loadingSDG: false
+                  results:responseJson.so_do_giuong,
+                  loading: false,
+						showContentNot: false,
+						oneSearch: true
                });
                return responseJson.so_do_giuong;
             })
             .catch((error) => {
+               that.setState({
+                  loading: false,
+						showContentNot: false
+               });
                console.error(error);
             });
-   }
-
-	componentDidMount() {
-		let newCurrentDate = currentDate.getDate()+(currentDate.getMonth()+1)+currentDate.getFullYear();
-		let selectCurrentDate = this.state.day+this.state.month+this.state.year;
-		if(newCurrentDate <= selectCurrentDate) {
-			var that = this;
-			that.setState({
-				loading: true
-			});
-	      return fetch(urlApi+'?day='+that.state.fullDate)
-	            .then((response) => response.json())
-	            .then((responseJson) => {
-	               that.setState({
-	                  results:responseJson.so_do_giuong,
-	                  loading: false
-	               });
-	               return responseJson.so_do_giuong;
-	            })
-	            .catch((error) => {
-	               that.setState({
-	                  loading: false
-	               });
-	               console.error(error);
-	            });
-		}
-	}
-
-   _getNot() {
-		let newCurrentDate = currentDate.getDate()+(currentDate.getMonth()+1)+currentDate.getFullYear();
-		let selectCurrentDate = this.state.day+this.state.month+this.state.year;
-		if(newCurrentDate <= selectCurrentDate) {
-	      var that = this;
-			that.setState({
-				loading: true
-			});
-	      return fetch(urlApi+'?day='+that.state.fullDate)
-	            .then((response) => response.json())
-	            .then((responseJson) => {
-	               that.setState({
-	                  results:responseJson.so_do_giuong,
-	                  loading: false
-	               });
-	               return responseJson.so_do_giuong;
-	            })
-	            .catch((error) => {
-	               that.setState({
-	                  loading: false
-	               });
-	               console.error(error);
-	            });
-		}else {
-			alert('Ngày tháng không hợp lệ!');
+			}else {
+				alert('Ngày tháng không hợp lệ!');
+			}
 		}
    }
 
@@ -177,58 +188,126 @@ class HomeIOS extends Component {
 	}
 
    render() {
+		let listItem1 = this.state.listItem1;
+		let listItem2 = this.state.listItem2;
+		if(this.state.keyDiemDi != undefined) {
+			for(var i = 0; i < listItem1.length; i++) {
+				listItem1[i].section = false;
+				if(listItem1[i].value == this.state.keyDiemDi) {
+					listItem1[i].section = true;
+					break;
+				}
+			}
+		}
+		if(this.state.keyDiemDen != undefined) {
+			for(var i = 0; i < listItem2.length; i++) {
+				listItem2[i].section = false;
+				if(listItem2[i].value == this.state.keyDiemDen) {
+					listItem2[i].section = true;
+					break;
+				}
+			}
+		}
 
       let dataNot = this._renderNot(this.state.results);
+		let classContainer = 'columnContainer';
+		if(this.state.oneSearch) {
+			classContainer = 'container';
+		}
       return(
-         <View style={styles.container}>
-				<View style={{alignItems: 'center', marginTop: 5}}><Text>Bạn vui lòng chọn ngày xuất phát</Text></View>
-				<View style={{flexDirection: 'row', padding: 30, paddingTop: 10}}>
-					<Text style={{flex: 4, borderWidth:1, borderColor:'#ccc', padding:10, height:39}} onPress={() => this._setDatePickerShow()}>{this.state.fullDate}</Text>
-					<Button style={{flex: 1, borderRadius: 0}} onPress={() => {this._getNot()}}><Icon name='ios-search-outline' /></Button>
-				</View>
-				<ScrollView>
-					{ this.state.loading && <Spinner /> }
-					{ !this.state.loading && <Card dataArray={dataNot}
-	                 renderRow={(dataNot) =>
-	                   <CardItem onPress={() => Actions.ViewSoDoGiuong({title: 'Chọn chỗ', data: {adm_id: this.props.data.adm_id, gio_xuat_ben: dataNot.gio_xuat_ben, notId:dataNot.key, day:this.state.fullDate, notTuyenId: dataNot.not_tuy_id, benA: dataNot.ben_a, benB: dataNot.ben_b}})}>
-	                       <Text>{dataNot.label}</Text>
-	                   </CardItem>
-	               }>
-	           </Card>}
-			  </ScrollView>
+			<View style={styles[classContainer]}>
+				{!this.state.oneSearch &&
+					<View style={{flexDirection: 'column', padding: 30, marginTop: 10}}>
+						<View>
+							<Text style={{marginBottom: 5}}>Điểm đi:</Text>
+							<View style={{flexDirection: 'row'}}>
+								<ModalPicker
+									key="diemdi"
+									data={listItem1}
+									initValue="Chọn điểm đi"
+									onChange={(option)=>{ this.setState({nameDiemDi: option.label, keyDiemDi: option.value}) }}>
+									<TextInput
+									style={{borderWidth:1, borderColor:'#ccc', padding:10, height:39, width: (widthDevice-60), marginBottom: 10}}
+									editable={false}
+									placeholder="Vui lòng chọn điểm đi"
+									value={this.state.nameDiemDi} />
+								</ModalPicker>
+							</View>
+						</View>
+						<View>
+							<Text style={{marginBottom: 5}}>Điểm đến:</Text>
+							<View style={{flexDirection: 'row'}}>
+								<ModalPicker
+									key="diemden"
+									data={listItem2}
+									initValue="Chọn điểm đến"
+									onChange={(option2)=>{ this.setState({nameDiemDen: option2.label, keyDiemDen: option2.value}) }}>
+									<TextInput
+									style={{borderWidth:1, borderColor:'#ccc', padding:10, height:39, width: (widthDevice-60), marginBottom: 10}}
+									editable={false}
+									placeholder="Vui lòng chọn điểm đến"
+									value={this.state.nameDiemDen} />
+								</ModalPicker>
+							</View>
+						</View>
+						<View>
+							<Text style={{marginBottom: 5}}>Ngày đi:</Text>
+							<View style={{flexDirection: 'row'}}>
+								<Text style={{flex: 4, borderWidth:1, borderColor:'#ccc', padding:10, height:39}} onPress={() => this._setDatePickerShow()}>{this.state.fullDate}</Text>
+							</View>
+						</View>
+						<View style={{marginTop: 20}}>
+							<Button block success onPress={() => this._getNot()}><Icon name='ios-search-outline' /> Tìm kiếm</Button>
+						</View>
+					</View>
+				}
 
-			  <View style={{flexDirection: 'row', position: 'absolute', bottom: 0, left: 0}}>
-				  <TouchableOpacity style={[styles.styleTabbars, {flex: 4}]}>
-					  <Text style={{color: 'red'}}>Chọn Chuyến</Text>
-				  </TouchableOpacity>
-				  <TouchableOpacity onPress={() => Actions.LichSu({title: 'Lịch sử đặt vé', data: {adm_id: this.props.data.adm_id, day:this.state.fullDate}}) } style={[styles.styleTabbars, {flex: 4}]}>
-					  <Text>Lịch Sử</Text>
-				  </TouchableOpacity>
-				  <TouchableOpacity onPress={() => Actions.DanhGia({title: 'Đánh giá', data: {adm_id: this.props.data.adm_id, day:this.state.fullDate}})} style={[styles.styleTabbars, {flex: 4}]}>
-					  <Text>Đánh Giá</Text>
-				  </TouchableOpacity>
-				  <TouchableOpacity style={[styles.styleTabbars, {flex: 1}]} onPress={() => this._handleDropdown()}>
-					  <Icon name="ios-more" />
-					  {this.state.showDropdown && <View style={{position: 'absolute', width: 250, bottom: 55, right: 10, borderWidth: 1, borderColor: 'rgba(0,0,0,0.15)', backgroundColor: '#fff', shadowOffset: {width: 0, height: 2}, shadowRadius: 2, shadowOpacity: 0.1, shadowColor: 'black'}}>
-						  <View style={{flexDirection: 'row', margin: 10}}>
-							  <Text onPress={() => [Actions.LichSu({title: 'Lịch sử đặt vé', data: {adm_id: this.props.data.adm_id, day:this.state.fullDate}}), this.setState({showDropdown: false}) ]} style={{padding: 10, flex: 6}}>Lịch Sử</Text>
-							  <TouchableOpacity style={{flex: 1,backgroundColor: '#ff4500', width: 20, marginRight: 20, height: 40, alignItems: 'center', justifyContent: 'center', borderRadius: 100}}><Icon name="ios-close-circle-outline" style={{color: '#fff'}} /></TouchableOpacity>
-						  </View>
-						  <View style={{flexDirection: 'row', margin: 10}}>
-							  <Text onPress={() => [Actions.DanhGia({title: 'Đánh giá', data: {adm_id: this.props.data.adm_id, day:this.state.fullDate}}), this.setState({showDropdown: false}) ]} style={{padding: 10, flex: 6}}>Đánh Giá</Text>
-							  <TouchableOpacity style={{flex: 1,backgroundColor: '#00bfff', width: 20, marginRight: 20, height: 40, alignItems: 'center', justifyContent: 'center', borderRadius: 100}}><Icon name="ios-cloud-done-outline" style={{color: '#fff'}} /></TouchableOpacity>
-						  </View>
-					  </View>}
-				  </TouchableOpacity>
-			  </View>
+				{this.state.oneSearch &&
+					<ScrollView>
+						<View style={{flexDirection: 'row', marginTop: -5}}>
+							<View style={{flex: 1, alignItems: 'center', justifyContent: 'center', marginTop: 10, backgroundColor: '#b3b3b3', padding: 10}}>
+								<Text style={{color: '#fff'}}>Thời gian</Text>
+							</View>
+							<View style={{flex: 1, alignItems: 'center', justifyContent: 'center', marginTop: 10, backgroundColor: '#b3b3b3', padding: 10}}>
+								<Text style={{color: '#fff'}}>Giá</Text>
+							</View>
+						</View>
+							{ this.state.showContentNot && <Spinner /> }
+							{ !this.state.loading && <Card  style={{marginTop: -5}} dataArray={dataNot}
+			                 renderRow={(dataNot) =>
+			                   <CardItem>
+											<TouchableOpacity style={{flexDirection: 'row'}} onPress={() => Actions.ViewSoDoGiuong({title: 'Chọn chỗ', data: {dataBen: this.state.dataBx, id_dieu_do: dataNot.id_dieu_do, totalPriceInt: dataNot.price, adm_id: this.props.data.adm_id, gio_xuat_ben: dataNot.did_gio_xuat_ben_that, notId:dataNot.not_id, day:this.state.fullDate, notTuyenId: dataNot.not_tuy_id, benA: dataNot.ben_a, benB: dataNot.ben_b}})}>
+												<View style={{flex: 2}}>
+													<Text style={{fontWeight: 'bold'}}>{dataNot.did_gio_xuat_ben_that}</Text>
+													<Text>{this.state.dataBx[dataNot.ben_a]} -> {this.state.dataBx[dataNot.ben_b]}</Text>
+													<Text>{dataNot.tenSoDo}</Text>
+													<Text>Số chỗ trống: {dataNot.soChoTrong}</Text>
+												</View>
+												<View style={{flex: 1, flexDirection: 'column', justifyContent: 'center',alignItems: 'center'}}>
+													<View style={{padding: 5, alignItems: 'center', justifyContent: 'center'}}>
+														<Text style={{fontWeight: 'bold', color: '#ff931f'}}>{dataNot.price} VNĐ</Text>
+													</View>
+		  											<View style={{backgroundColor: '#f9af00', alignItems: 'center', justifyContent: 'center', padding: 10}}>
+														<Text>Chọn Chỗ</Text>
+													</View>
+												</View>
+											</TouchableOpacity>
+			                   </CardItem>
+			               }>
+			           </Card>}
+				  </ScrollView>
+			  }
 
-			  	<Modal style={[styles.modal, styles.modalPopup, {paddingTop: 50}]} position={"top"} ref={"modal3"} isDisabled={this.state.isDisabled}>
+				<Modal style={[{height: 370, paddingTop: 50}]} position={"center"} ref={"modal3"} isDisabled={this.state.isDisabled}>
 					<TouchableOpacity onPress={() => this.closeModal()} style={{width: 50, height: 40, position: 'absolute', right: 0, top: 0, padding: 10}}>
 						<Icon name="ios-close-circle" />
 					</TouchableOpacity>
-			  		{this._renderDatePicker()}
+					<ScrollView>
+			  			{this._renderDatePicker()}
+					</ScrollView>
 	        	</Modal>
-         </View>
+      	</View>
+
       );
    }
 }
@@ -237,9 +316,15 @@ class HomeIOS extends Component {
 const styles = StyleSheet.create({
    container: {
 		flex: 1,
-      marginTop: 64,
-      position: 'relative'
+      marginTop: 59,
+      position: 'relative',
    },
+	columnContainer: {
+		flex: 1,
+		flexDirection: 'column',
+		justifyContent: 'center',
+		alignItems: 'center',
+	},
    contentAbsolute: {
       position: 'absolute',
       top: 0
@@ -255,13 +340,6 @@ const styles = StyleSheet.create({
 		paddingLeft: 20
 	},
 	modalPopup: {
-	},
-	styleTabbars: {
-		flex: 1,
-		height: 50,
-		alignItems: 'center',
-		justifyContent: 'center',
-		backgroundColor: '#f7f7f7'
 	},
 });
 

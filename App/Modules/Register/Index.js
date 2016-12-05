@@ -163,13 +163,15 @@ class Register extends Component {
 								<Input placeholder="Nhập Lại Mật khẩu" secureTextEntry={true} onChange={(event) => this.setState({rePassword: event.nativeEvent.text})} />
 							</InputGroup>
 
+							<Text style={{fontWeight: 'bold', marginTop: 10, marginBottom: 5}}>Chú ý: Số Điện Thoại là tài khoản đăng nhập</Text>
+
 							<Button
 								block
 								success
 								style={styles.buttonRegister}
 								onPress={() => this.handleRegister()}
 							>Đăng ký</Button>
-							<Text style={{fontWeight: 'bold', marginTop: 10}}>Chú ý: Số Điện Thoại là tài khoản đăng nhập</Text>
+
 
 							{this.state.messageError}
 						</View>

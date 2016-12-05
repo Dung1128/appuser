@@ -8,156 +8,168 @@ import {
   ScrollView,
   TouchableOpacity
 } from 'react-native';
-import { Container, Content, InputGroup, Icon, Input, Button, Spinner, Card, CardItem, Badge } from 'native-base';
+import { Container, Content, InputGroup, Icon, Input, Button, Spinner, Card, CardItem, Badge, CheckBox, List, ListItem } from 'native-base';
 import {Actions, ActionConst} from 'react-native-router-flux';
 const heightDevice = Dimensions.get('window').height;
-
-const domain = 'http://haivanexpress.com';
+const widthDevice = Dimensions.get('window').width;
+const domain = 'http://hai-van.local';
 class LichSu extends Component {
 
 	constructor(props) {
       super(props);
 		this.state = {
 			loading: true,
-			results: ''
+			results: '',
+			loadingOrder: false,
+			trungChuyen: false,
+			address: '',
+			trungChuyen: false,
+			selectCheckbox: 'borderCheckbox'
 		};
-		console.log(this.props.data);
    }
 
-	_renderHtmlLichSu(data) {
-		let html = [],
-			htmlItem = [];
-
-		for(var i = 0; i < data.length; i++) {
-			var item = data[i];
-			var price1 = parseInt(item.datve.price);
-			var price2 = parseInt(item.datve.dav_price);
-			var newPrice1 = price1.toFixed(0).replace(/./g, function(c, i, a) {
+	_renderOrder() {
+		let dBook = this.props.data.dataBook;
+		let html = [];
+		let totalHtml = [];
+		let total = 0;
+		for(var i = 0; i < dBook.length; i++) {
+			total += dBook[i].bvv_price;
+			let newPrice = dBook[i].bvv_price.toFixed(0).replace(/./g, function(c, i, a) {
 				return i && c !== "." && ((a.length - i) % 3 === 0) ? ',' + c : c;
 			});
-			var newPrice2 = price2.toFixed(0).replace(/./g, function(c, i, a) {
-				return i && c !== "." && ((a.length - i) % 3 === 0) ? ',' + c : c;
-			});
-			htmlItem.push(
-				<CardItem key={item.datve.dav_did_id+i}>
-					<TouchableOpacity>
-							<View style={{flex: 5}}>
-							<Text>Mã Đơn Hàng: <Text style={styles.fontBold}>{item.oder.ord_ma}</Text></Text>
-							<Text>Họ tên: <Text style={styles.fontBold}>{item.oder.ord_ten_khach_hang}</Text></Text>
-							<Text>Số điện thoại: {item.oder.ord_phone}</Text>
-							<Text>Tuyến đi: {this.state.dataBen[item.datve.tuy_ben_a]} -> {this.state.dataBen[item.datve.tuy_ben_b]}</Text>
-							<Text>Nơi đi & Nơi đến: {this.state.dataBen[item.datve.dav_diem_a]} -> {this.state.dataBen[item.datve.dav_diem_b]}</Text>
-							<Text>Số ghế: <Text style={styles.fontBold}>{item.datve.number_ghe}</Text></Text>
-							<Text>Tổng tiền: <Text style={styles.fontBold}>{newPrice1 + ' VNĐ'}</Text></Text>
+			html.push(
+				<CardItem key={i}>
+					<View style={{flexDirection: 'row'}}>
+						<View style={{flex: 4, alignItems: 'flex-start'}}>
+							<Text>{this.props.data.dataBen[dBook[i].bvv_bex_id_a]} -> {this.props.data.dataBen[dBook[i].bvv_bex_id_b]}</Text>
+							<Text>Số Ghế: {dBook[i].numberGiuong}</Text>
+							<Text>Số Lượng: 1</Text>
 						</View>
-					</TouchableOpacity>
+						<View style={{flex: 3, alignItems: 'flex-end'}}>
+							<Text style={{fontWeight: 'bold'}}>{newPrice} VNĐ</Text>
+						</View>
+					</View>
 				</CardItem>
 			);
 		}
-		html.push(
-			<Card key="card">
-				{htmlItem}
-			</Card>
+
+		let newTotalPrice = total.toFixed(0).replace(/./g, function(c, i, a) {
+			return i && c !== "." && ((a.length - i) % 3 === 0) ? ',' + c : c;
+		});
+		totalHtml.push(
+			<CardItem key="totalprice">
+				<View style={{flexDirection: 'row'}}>
+					<View style={{flex: 1}}>
+						<Text></Text>
+					</View>
+					<View style={{flex: 1}}>
+						<Text></Text>
+					</View>
+					<View style={{flex: 2}}>
+						<Text>Tổng Tiền</Text>
+					</View>
+					<View style={{flex: 4, alignItems: 'flex-end'}}>
+						<Text style={{fontWeight: 'bold', color: 'red'}}>{newTotalPrice} VNĐ</Text>
+					</View>
+				</View>
+			</CardItem>
 		);
-		return html;
+		return(
+			<Container>
+				<Content style={styles.wrapOrder}>
+					<Card style={{width: widthDevice}}>
+						<CardItem>
+							<View>
+								<Text style={{fontSize: 20}}>Đơn hàng</Text>
+							</View>
+						</CardItem>
+
+						<CardItem>
+							<View>
+								<Text>Họ tên: <Text style={styles.fontBold}>{this.props.data.dataUser.use_gmail}</Text></Text>
+								<Text>Số điện thoại: {this.props.data.dataUser.use_phone}</Text>
+								<Text>Giờ xuất bến: <Text style={styles.fontBold}>{this.props.data.gio_xuat_ben}</Text></Text>
+							</View>
+						</CardItem>
+
+						<CardItem>
+							<View style={{flexDirection: 'row'}}>
+								<View style={{flex: 4}}>
+									<Text>Nơi đi -> Nơi đến</Text>
+								</View>
+								<View style={{flex: 3, alignItems: 'flex-end'}}>
+									<Text>Giá</Text>
+								</View>
+							</View>
+						</CardItem>
+						{html}
+						{totalHtml}
+						<CardItem>
+							<View style={{flexDirection: 'column', alignItems: 'center', justifyContent: 'center'}}>
+								<View style={{flex: 1}}>
+									<Text>Chúng tôi có dịch vụ xe trung chuyển đón tại nhà MIỄN PHÍ.</Text>
+								</View>
+								<View style={{flexDirection: 'row', marginTop: 10}}>
+									<TouchableOpacity onPress={() => this._handleCheckBox()} style={{flex: 1}}>
+										<View style={[styles[this.state.selectCheckbox], {width: 20, height: 20, borderRadius: 100, borderWidth: 1}]}></View>
+								  </TouchableOpacity>
+								  <Text style={{flex: 6}}>Có sử dụng dịch vụ trung chuyển tại nhà</Text>
+								</View>
+								{this.state.trungChuyen &&
+									<InputGroup key="group_address">
+										<Icon name='ios-pin' />
+										<Input placeholder="Địa chỉ cần đón" onChange={(event) => this.setState({address: event.nativeEvent.text})} />
+									</InputGroup>
+								}
+								{this.state.loadingOrder? <Spinner /> : <Button block success onPress={() => this._handleSaveOrder()} style={{marginTop: 10}}>Thanh Toán</Button>}
+							</View>
+						</CardItem>
+					</Card>
+				</Content>
+			</Container>
+		);
+	}
+
+	_handleCheckBox() {
+		if(this.state.selectCheckbox == 'borderCheckbox') {
+			this.setState({
+				selectCheckbox: 'borderCheckboxActive',
+				trungChuyen: true
+			});
+		}else {
+			this.setState({
+				selectCheckbox: 'borderCheckbox',
+				trungChuyen: false
+			});
+		}
 	}
 
 	_handleSaveOrder() {
-		let dataGiuong = this.state.arrVeNumber[this.state.nameGiuong];
-		let dataBook = JSON.stringify(this.state.dataBook);
+		let dataBook = JSON.stringify(this.props.data.dataBook);
 		let that = this;
-		let params = 'type=insert&bvv_bvn_id='+this.props.data.bvv_bvn_id+'&user_id='+this.props.data.user_id+'&gio_xuat_ben='+this.props.data.gio_xuat_ben+'&dataBook='+this.props.data.dataBook;
+		that.setState({
+			loadingOrder: true
+		});
+		let params = 'type=insert&bvv_bvn_id='+this.props.data.id_dieu_do+'&user_id='+this.props.data.dataUser.adm_id+'&gio_xuat_ben='+JSON.stringify(this.props.data.gio_xuat_ben)+'&dataBook='+dataBook+'&address='+this.state.address;
 		fetch(domain+'/api/api_user_save_order.php?'+params)
 		.then((response) => response.json())
 		.then((responseJson) => {
 			that.setState({
-				isOpen: false,
-				nameDiemDi: '',
-				keyDiemDi: '',
-				nameDiemDen: '',
-				keyDiemDen: '',
-				priceTotal: 0,
-				totalPriceInt: 0,
-				checkout: false
+				loadingOrder: false
 			});
-			alert('Success!');
+			Actions.Checkout({title: 'Thanh Toán', data: {adm_id: this.props.data.dataUser.adm_id}});
 		})
 		.catch((error) => {
 			console.error(error);
 		});
 	}
 
-	renderOrder(data) {
-		// let dataJson = JSON.parse(data);
-		console.log(data);
-		// for(var i = 0; i < dataJson.length; i++) {
-		// 	console.log(dataJson[i]);
-		// }
-	}
-
-	componentWillUpdate(nextProps, nextState) {
-		this.setState({
-			results: nextProps.data.dataBook
-		});
-		console.log('x');
-	}
-
    render() {
-		console.log('c');
+
       return(
 			<View style={styles.container}>
-				<ScrollView>
-					<Card>
-						<CardItem header style={{alignItems: 'center', justifyContent: 'center'}}>
-							<Text style={{fontSize: 20}}>Đơn hàng</Text>
-						</CardItem>
-
-						<CardItem>
-							<Text>Họ tên: <Text style={styles.fontBold}>{this.props.data.data_user.use_gmail}</Text></Text>
-							<Text>Số điện thoại: {this.props.data.data_user.use_phone}</Text>
-							<Text>Giờ xuất bến: <Text style={styles.fontBold}>{this.props.data.gio_xuat_ben}</Text></Text>
-						</CardItem>
-
-						<CardItem>
-							<View style={{flexDirection: 'row'}}>
-								<View style={{flex: 1}}>
-									<Text>Nđi & Nđến</Text>
-								</View>
-								<View style={{flex: 1}}>
-									<Text>DS ghế</Text>
-								</View>
-								<View style={{flex: 1}}>
-									<Text>Tghế</Text>
-								</View>
-								<View style={{flex: 1}}>
-									<Text>Đgiá</Text>
-								</View>
-							</View>
-							<View style={{flexDirection: 'row'}}>
-								<View style={{flex: 1}}>
-									<Text>Nđi & Nđến</Text>
-								</View>
-								<View style={{flex: 1}}>
-									<Text>DS ghế</Text>
-								</View>
-								<View style={{flex: 1}}>
-									<Text>Tghế</Text>
-								</View>
-								<View style={{flex: 1}}>
-									<Text>Đgiá</Text>
-								</View>
-							</View>
-						</CardItem>
-					</Card>
-				</ScrollView>
-
-			  <View style={{flexDirection: 'row', position: 'absolute', bottom: 0, left: 0}}>
-
-				 <TouchableOpacity style={[styles.styleTabbars, {flex: 4}]}>
-					 <Text style={{color: 'red'}}>Thanh Toán</Text>
-				 </TouchableOpacity>
-
-			 </View>
+				{this._renderOrder()}
 			</View>
       );
    }
@@ -165,7 +177,7 @@ class LichSu extends Component {
 
 const styles = StyleSheet.create({
 	container: {
-		paddingTop: 64,
+		paddingTop: 59,
 		height: heightDevice,
 		paddingBottom: 50
 	},
@@ -175,31 +187,16 @@ const styles = StyleSheet.create({
    paddingContent: {
       padding: 30
    },
-	opacityBg: {
-		flexDirection: 'row',
-	},
-	styleTabbars: {
-		flex: 1,
-		height: 50,
-		alignItems: 'center',
-		justifyContent: 'center',
-		backgroundColor: '#f7f7f7'
-	},
-	countDanhSachCho: {
-		position: 'absolute',
-		right: 25,
-		top: 0
-	},
-	styleTabbars: {
-		flex: 1,
-		height: 50,
-		alignItems: 'center',
-		justifyContent: 'center',
-		backgroundColor: '#f7f7f7'
-	},
 	fontBold: {
 		fontWeight: 'bold'
-	}
+	},
+	borderCheckbox: {
+		borderColor: '#e9967a'
+	},
+	borderCheckboxActive: {
+		borderColor: '#e9967a',
+		backgroundColor: '#e9967a'
+	},
 });
 
 export default LichSu

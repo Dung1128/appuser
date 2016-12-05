@@ -1,7 +1,8 @@
 import React, { Component, PropTypes } from 'react';
 import {
   StyleSheet,
-  Platform
+  Platform,
+  StatusBar
 } from 'react-native';
 import {Icon, Text} from 'native-base';
 import Drawer from 'react-native-drawer';
@@ -15,6 +16,7 @@ import SideBar from './Modules/SideBar/SideBar';
 import Register from './Modules/Register/Index';
 import Errors from './Modules/Errors/Errors';
 import ViewSoDoGiuong from './Modules/BookGiuong/ViewSoDoGiuong';
+import ListNot from './Modules/ListNot/ListNot';
 import LichSu from './Modules/LichSu/Index';
 import DanhGia from './Modules/DanhGia/Index';
 import ListOrder from './Modules/ListOrder/Index';
@@ -40,10 +42,11 @@ class App extends Component {
 			<Router navBar={NavBar} createReducer={reducerCreate}>
   	       	<Scene key="root">
 
-  			 		<Scene key="welcome" component={Welcome} hideNavBar initial />
+  			 		<Scene key="welcome" component={Welcome} initial />
   	         	<Scene key="home" component={Home} title="Chọn Chuyến" type="reset" />
 					<Scene key="Register" component={Register} title="Đăng Ký" />
 					<Scene key="login" component={Login} title="Đăng Nhập" />
+					<Scene key="ListNot" component={ListNot} title="Danh sách chuyến xe" />
 					<Scene key="ViewSoDoGiuong" component={ViewSoDoGiuong} title="Chọn Chỗ" />
 					<Scene key="LichSu" component={LichSu} title="Lịch Sử" />
 					<Scene key="DanhGia" component={DanhGia} title="Đánh Giá" />
@@ -74,6 +77,7 @@ export default class appuser extends Component {
 				tapToClose
 				openDrawerOffset={0.2}
 				panCloseMask={0.2}>
+					<StatusBar hidden={true} />
 			  		<App />
 			</Drawer>
 		);

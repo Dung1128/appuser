@@ -12,7 +12,7 @@ import { Container, Content, InputGroup, Icon, Input, Button, Spinner, Card, Car
 import {Actions, ActionConst} from 'react-native-router-flux';
 const heightDevice = Dimensions.get('window').height;
 
-const domain = 'http://haivanexpress.com';
+const domain = 'http://hai-van.local';
 class LichSu extends Component {
 
 	constructor(props) {
@@ -31,7 +31,8 @@ class LichSu extends Component {
 		});
 		var that = this;
 
-      return fetch(domain+'/api/api_user_lich_su_order.php?notId=0&day='+this.props.data.day+'&user_id='+this.props.data.adm_id)
+
+      return fetch(domain+'/api/api_user_lich_su_order.php?notId=0&user_id='+this.props.data.adm_id)
 	      .then((response) => response.json())
 	      .then((responseJson) => {
 				that.setState({
@@ -106,32 +107,6 @@ class LichSu extends Component {
 				<ScrollView>
 					{this.state.loading? <Text>Loading...</Text> : this._renderHtmlLichSu(this.state.results) }
 			  </ScrollView>
-
-			  <View style={{flexDirection: 'row', position: 'absolute', bottom: 0, left: 0}}>
-			  		{this.props.data.notId > 0 &&
-				 <TouchableOpacity onPress={() => Actions.ViewSoDoGiuong({title: 'Chọn chỗ', data: {adm_id:this.props.data.adm_id,gio_xuat_ben: this.props.data.gio_xuat_ben, notId:this.props.data.notId, day:this.props.data.day, notTuyenId: this.props.data.notTuyenId, benA: this.props.data.benA, benB: this.props.data.benB}}) } style={[styles.styleTabbars, {flex: 4}]}>
-					 <Text>Chọn Chỗ</Text>
-				 </TouchableOpacity>}
-				 {!this.props.data.notId &&
-			  <TouchableOpacity onPress={() => Actions.home({title: 'Chọn Chuyến', data: {adm_id: this.props.data.adm_id, day:this.state.fullDate}}) } style={[styles.styleTabbars, {flex: 4}]}>
-				  <Text>Chọn Chuyến</Text>
-			  </TouchableOpacity>}
-				 <TouchableOpacity style={[styles.styleTabbars, {flex: 4}]}>
-					 <Text style={{color: 'red'}}>Lịch Sử</Text>
-				 </TouchableOpacity>
-				 <TouchableOpacity onPress={() => Actions.DanhGia({title: 'Đánh giá', data: {day:this.props.data.day, adm_id: this.props.data.adm_id, gio_xuat_ben: this.props.data.gio_xuat_ben, notId:this.props.data.notId, day:this.props.data.day, notTuyenId: this.props.data.notTuyenId, benA: this.props.data.benA, benB: this.props.data.benB}})} style={[styles.styleTabbars, {flex: 4}]}>
-					 <Text>Đánh Giá</Text>
-				 </TouchableOpacity>
-				 <TouchableOpacity style={[styles.styleTabbars, {flex: 1}]} onPress={() => this._handleDropdown()}>
-					 <Icon name="ios-more" />
-					 {this.state.showDropdown && <View style={{position: 'absolute', width: 250, bottom: 55, right: 10, borderWidth: 1, borderColor: 'rgba(0,0,0,0.15)', backgroundColor: '#fff', shadowOffset: {width: 0, height: 2}, shadowRadius: 2, shadowOpacity: 0.1, shadowColor: 'black'}}>
-						 <View style={{flexDirection: 'row', margin: 10}}>
-							 <Text onPress={() => [this.setState({showDropdown: false}) ]} style={{padding: 10, flex: 6}}>Lịch Sử</Text>
-							 <TouchableOpacity style={{flex: 1,backgroundColor: '#ff4500', width: 20, marginRight: 20, height: 40, alignItems: 'center', justifyContent: 'center', borderRadius: 100}}><Icon name="ios-close-circle-outline" style={{color: '#fff'}} /></TouchableOpacity>
-						 </View>
-					 </View>}
-				 </TouchableOpacity>
-			 </View>
 			</View>
       );
    }
@@ -139,9 +114,8 @@ class LichSu extends Component {
 
 const styles = StyleSheet.create({
 	container: {
-		paddingTop: 64,
+		paddingTop: 59,
 		height: heightDevice,
-		paddingBottom: 50
 	},
    marginButton: {
       marginTop: 10
@@ -163,13 +137,6 @@ const styles = StyleSheet.create({
 		position: 'absolute',
 		right: 25,
 		top: 0
-	},
-	styleTabbars: {
-		flex: 1,
-		height: 50,
-		alignItems: 'center',
-		justifyContent: 'center',
-		backgroundColor: '#f7f7f7'
 	},
 	fontBold: {
 		fontWeight: 'bold'

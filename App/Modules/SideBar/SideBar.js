@@ -27,7 +27,8 @@ class SideBar extends Component {
    constructor(props) {
       super(props);
       this.state = {
-         checkLogin: false
+         checkLogin: false,
+			dataUser: []
       };
    }
 
@@ -39,6 +40,22 @@ class SideBar extends Component {
 		Actions.welcome({type: 'reset'});
    }
 
+	componentDidMount() {
+		let tempInterval;
+		let that = this;
+		tempInterval = setInterval(function() {
+			AsyncStorage.getItem('infoUser').then((data) => {
+				if(data != null) {
+					that.setState({
+						checkLogin: true,
+						dataUser: JSON.parse(data)
+					});
+					clearInterval(tempInterval);
+				}
+			}).done();
+		}, 1000);
+	}
+
    render() {
       return(
          <Container>
@@ -46,23 +63,91 @@ class SideBar extends Component {
                <Header style={styles.drawerCover}>
                  <Image
                    square
-                   style={styles.drawerImage}
+                   style={{resizeMode: 'contain', height: 30, marginTop: -15}}
                    source={logo}
                  />
                </Header>
 
-              <List>
+              	<List>
 
-                <ListItem button iconLeft onPress={() => {this.props.closeDrawer(); this._onPressLogout();}}>
-                  <View style={styles.listItemContainer}>
-                    <View style={[styles.iconContainer, { backgroundColor: '#F5BF35' }]}>
-                      <Icon name="ios-call" style={styles.sidebarIcon} />
-                    </View>
-                    <Text style={styles.text}>Đăng Xuất</Text>
-                  </View>
-               </ListItem>
+						{!this.state.checkLogin &&
+						 <ListItem button iconLeft onPress={() => { this.props.closeDrawer(); }}>
+							<View style={styles.listItemContainer}>
+							  <View style={[styles.iconContainer]}>
+								 <Icon name="ios-contact" style={styles.sidebarIcon} />
+							  </View>
+							  <Text style={styles.text}>Đăng Nhập</Text>
+							</View>
+						</ListItem>}
 
-              </List>
+						{this.state.checkLogin &&
+							<ListItem button iconLeft onPress={() => { this.props.closeDrawer(); Actions.LichSu({title: 'Lịch sử đặt vé', data: {adm_id: this.state.dataUser.adm_id}})}}>
+								<View style={styles.listItemContainer}>
+									<View style={[styles.iconContainer]}>
+										<Icon name="ios-bookmark" style={styles.sidebarIcon} />
+									</View>
+									<Text style={styles.text}>Lịch sử</Text>
+								</View>
+							</ListItem>
+						}
+						{this.state.checkLogin &&
+							<ListItem button iconLeft onPress={() => { this.props.closeDrawer(); Actions.DanhGia({title: 'Lịch sử đặt vé', data: {adm_id: this.state.dataUser.adm_id}})}}>
+								<View style={styles.listItemContainer}>
+									<View style={[styles.iconContainer]}>
+										<Icon name="ios-ribbon" style={styles.sidebarIcon} />
+									</View>
+									<Text style={styles.text}>Đánh giá</Text>
+								</View>
+							</ListItem>
+						}
+
+					  	<ListItem button iconLeft>
+						 	<View style={styles.listItemContainer}>
+								<View style={[styles.iconContainer]}>
+								  <Icon name="ios-happy" style={styles.sidebarIcon} />
+								</View>
+								<Text style={styles.text}>Tin tức</Text>
+						 	</View>
+					 	</ListItem>
+
+					 	<ListItem button iconLeft onPress={() => {this.props.closeDrawer(); }}>
+							<View style={styles.listItemContainer}>
+						  		<View style={[styles.iconContainer]}>
+							 		<Icon name="ios-megaphone" style={styles.sidebarIcon} />
+						  		</View>
+						  		<Text style={styles.text}>Khuyến mãi</Text>
+							</View>
+						</ListItem>
+
+						<ListItem button iconLeft onPress={() => {this.props.closeDrawer(); }}>
+					  		<View style={styles.listItemContainer}>
+						 		<View style={[styles.iconContainer]}>
+									<Icon name="ios-contacts" style={styles.sidebarIcon} />
+						 		</View>
+						 		<Text style={styles.text}>Liên hệ</Text>
+					  		</View>
+				  		</ListItem>
+
+				  		<ListItem button iconLeft onPress={() => { this.props.closeDrawer(); }}>
+					 		<View style={styles.listItemContainer}>
+								<View style={[styles.iconContainer]}>
+						  			<Icon name="ios-heart" style={styles.sidebarIcon} />
+								</View>
+								<Text style={styles.text}>Góp ý</Text>
+					 		</View>
+				 		</ListItem>
+
+						{this.state.checkLogin &&
+		             	<ListItem button iconLeft onPress={() => {this.props.closeDrawer(); this._onPressLogout();}}>
+		                  <View style={styles.listItemContainer}>
+		                    <View style={[styles.iconContainer]}>
+		                      <Icon name="ios-contact" style={styles.sidebarIcon} />
+		                    </View>
+		                    <Text style={styles.text}>Đăng Xuất</Text>
+		                  </View>
+		               </ListItem>
+						}
+              	</List>
             </Content>
          </Container>
       );

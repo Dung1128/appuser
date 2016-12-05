@@ -2,6 +2,9 @@ import React, { Component, PropTypes } from 'react';
 import { AppRegistry, StyleSheet, Platform, Animated, Image, Text, View, TouchableOpacity } from 'react-native';
 import {Icon} from 'native-base';
 import {Actions} from 'react-native-router-flux';
+
+const logo = require('../../Skin/Images/logo.png');
+
 const styles = StyleSheet.create({
   title: {
     textAlign: 'center',
@@ -25,7 +28,7 @@ const styles = StyleSheet.create({
     right: 0,
   },
   header: {
-    backgroundColor: '#EFEFF2',
+    backgroundColor: 'rgba(255, 220, 66, 1)',
     paddingTop: 0,
     top: 0,
     ...Platform.select({
@@ -39,7 +42,7 @@ const styles = StyleSheet.create({
     right: 0,
     left: 0,
     borderBottomWidth: 0.5,
-    borderBottomColor: '#828287',
+    borderBottomColor: 'rgba(255, 220, 66, 1)',
     position: 'absolute',
   },
   backButton: {
@@ -48,7 +51,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     ...Platform.select({
       ios: {
-        top: 18,
+        top: 11,
       },
       android: {
         top: 10,
@@ -64,7 +67,7 @@ const styles = StyleSheet.create({
 	 position: 'absolute',
 	 ...Platform.select({
 		ios: {
-		  top: 18,
+		  top: 11,
 		},
 		android: {
 		  top: 10,
@@ -225,18 +228,17 @@ class NavBar extends React.Component {
 
 
 
-    return (
-      <TouchableOpacity
-        testID="backNavButton"
-        style={style}
-        onPress={() => this._onPressBackButton()}
-      >
-        {buttonImage && !childState.hideBackImage &&
-          <Icon name="ios-arrow-back" />
-        }
-        <Icon name="ios-arrow-back" />
-      </TouchableOpacity>
-    );
+	 	if(this.props.sceneKey != 'Checkout') {
+    		return (
+		      <TouchableOpacity
+		        testID="backNavButton"
+		        style={style}
+		        onPress={() => this._onPressBackButton()}
+		      >
+	          	<Icon name="ios-arrow-back" />
+	      	</TouchableOpacity>
+    		);
+ 		}
   }
 
   renderRightButton(navProps) {
@@ -303,7 +305,7 @@ class NavBar extends React.Component {
    //  return tryRender(this.props.component, this.props.wrapBy) || tryRender(this.props);
 	return (
 		<TouchableOpacity style={styles.rightButton} onPress={this.context.drawer.open}>
-			<Icon name="md-more" />
+			<Icon name="md-menu" />
 		</TouchableOpacity>
 	);
   }
@@ -404,34 +406,20 @@ class NavBar extends React.Component {
         style={[
           styles.titleWrapper,
           this.props.titleWrapperStyle,
+			 {alignItems: 'center', justifyContent: 'center'}
         ]}
       >
         <Animated.Text
           lineBreakMode="tail"
           numberOfLines={1}
           {...this.props.titleProps}
-          style={[
-            styles.title,
-            this.props.titleStyle,
-            this.props.navigationState.titleStyle,
-            childState.titleStyle,
-            {
-              opacity: this.props.position.interpolate({
-                inputRange: [index - 1, index, index + 1],
-                outputRange: [0, this.props.titleOpacity, 0],
-              }),
-              left: this.props.position.interpolate({
-                inputRange: [index - 1, index + 1],
-                outputRange: [200, -200],
-              }),
-              right: this.props.position.interpolate({
-                inputRange: [index - 1, index + 1],
-                outputRange: [-200, 200],
-              }),
-            },
-          ]}
+          style={{alignItems: 'stretch', justifyContent: 'center'}}
         >
-          {title}
+			  <Image
+				 square
+				 style={{resizeMode: 'contain', height: 30, marginTop: -15}}
+				 source={logo}
+			  />
         </Animated.Text>
       </Animated.View>
     );

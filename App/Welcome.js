@@ -22,6 +22,7 @@ class Welcome extends Component {
 			error: 'false',
 			messageError: []
       };
+		this.props.text = 'ccc';
    }
 
 	componentWillMount() {
