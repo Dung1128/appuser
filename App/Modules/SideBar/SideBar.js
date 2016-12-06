@@ -78,7 +78,8 @@ class SideBar extends Component {
 							  </View>
 							  <Text style={styles.text}>Đăng Nhập</Text>
 							</View>
-						</ListItem>}
+						</ListItem>
+						}
 
 						{this.state.checkLogin &&
 							<ListItem button iconLeft onPress={() => { this.props.closeDrawer(); Actions.LichSu({title: 'Lịch sử đặt vé', data: {adm_id: this.state.dataUser.adm_id}})}}>

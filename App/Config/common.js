@@ -1,4 +1,4 @@
 
 module.exports = {
-  domain: 'http://haivanexpress.com'
+  domain: 'http://haivanexpress.vn'
 }

@@ -4,14 +4,15 @@ import {
    StyleSheet,
 	Dimensions,
    Text,
-   View
+   View,
+	ScrollView
 } from 'react-native';
+import {domain} from '../../Config/common';
 import { Button, Grid, Row, Icon, InputGroup, Input, Thumbnail } from 'native-base';
 import {Actions} from 'react-native-router-flux';
 const heightDevice = Dimensions.get('window').height;
 const widthDevice = Dimensions.get('window').width;
 
-const domain = 'http://hai-van.local';
 class Register extends Component {
 
 	constructor(props) {
@@ -82,12 +83,14 @@ class Register extends Component {
 	         loading: true
 	      });
 	      var that = this;
-			let urlRequest	= domain+'/api/api_user_dang_ky.php?fullName='+this.state.fullName+'&email='+this.state.email+'&phone='+this.state.phone+'&password='+this.state.password;
+			let urlRequest	= domain+'/api/api_user_dang_ky.php?'+encodeURIComponent('fullName='+this.state.fullName+'&email='+this.state.email+'&phone='+this.state.phone+'&password='+this.state.password);
+			console.log(urlRequest);
 	      fetch(urlRequest, {
 				method: 'GET'
 			})
 			.then((response) => response.json())
         	.then((responseData) => {
+				console.log(responseData);
             if(responseData.status == 200) {
 					that.setState({
 		            loading: false,
@@ -97,6 +100,7 @@ class Register extends Component {
 			         password: '',
 						rePassword: ''
 		         });
+					alert('Đăng ký thành công.');
 				   Actions.welcome({title: 'Đăng Nhập'});
 				}else if(responseData.status == 201) {
 					mesValid.push(
@@ -108,7 +112,7 @@ class Register extends Component {
 					});
 				}else {
 					mesValid.push(
-						<Text key="error_api" style={styles.textErrors}>Lỗi hệ thống. Vui lòng liên hệ với bộ phận Kỹ Thuật.</Text>
+						<Text key="error_api" style={styles.textErrors}>Số điện thoại đã tồn tại trên hệ thống.</Text>
 					);
 					that.setState({
 		            loading: false,
@@ -130,55 +134,51 @@ class Register extends Component {
 
    render() {
       return(
-			<Grid>
-				<Row size={1}></Row>
-				<Row size={2}>
-					<View>
-						<View style={styles.wrapViewImage}>
-							<Thumbnail size={80} source={require('../../Skin/Images/logo.png')} />
-						</View>
-						<View key="content_login" style={styles.paddingContent}>
-							<InputGroup key="group_full_name">
-								<Icon name='ios-person' style={styles[this.state.cssError.cssErrorFullname]} />
-								<Input placeholder="Họ Và Tên" onChange={(event) => this.setState({fullName: event.nativeEvent.text})} />
-							</InputGroup>
-
-							<InputGroup key="group_email">
-								<Icon name='ios-mail' style={styles[this.state.cssError.cssErrorEmail]} />
-								<Input placeholder="Địa Chỉ Email" onChange={(event) => this.setState({email: event.nativeEvent.text})} />
-							</InputGroup>
-
-							<InputGroup key="group_phone">
-								<Icon name='ios-call' style={styles[this.state.cssError.cssErrorPhone]} />
-								<Input placeholder="Số điện thoại" onChange={(event) => this.setState({phone: event.nativeEvent.text})} />
-							</InputGroup>
-
-							<InputGroup key="group_password">
-								<Icon name='ios-unlock' style={styles[this.state.cssError.cssErrorPassword]} />
-								<Input placeholder="Mật khẩu" secureTextEntry={true} onChange={(event) => this.setState({password: event.nativeEvent.text})} />
-							</InputGroup>
-
-							<InputGroup key="group_repassword">
-								<Icon name='ios-unlock' style={styles[this.state.cssError.cssErrorRepassword]} />
-								<Input placeholder="Nhập Lại Mật khẩu" secureTextEntry={true} onChange={(event) => this.setState({rePassword: event.nativeEvent.text})} />
-							</InputGroup>
-
-							<Text style={{fontWeight: 'bold', marginTop: 10, marginBottom: 5}}>Chú ý: Số Điện Thoại là tài khoản đăng nhập</Text>
-
-							<Button
-								block
-								success
-								style={styles.buttonRegister}
-								onPress={() => this.handleRegister()}
-							>Đăng ký</Button>
-
-
-							{this.state.messageError}
-						</View>
+			<ScrollView>
+				<View style={{marginTop: 100}}>
+					<View style={styles.wrapViewImage}>
+						<Thumbnail size={80} source={require('../../Skin/Images/logo.png')} />
 					</View>
-				</Row>
-				<Row size={1}></Row>
-			</Grid>
+					<View key="content_login" style={styles.paddingContent}>
+						<InputGroup key="group_full_name">
+							<Icon name='ios-person' style={styles[this.state.cssError.cssErrorFullname]} />
+							<Input placeholder="Họ Và Tên" onChange={(event) => this.setState({fullName: event.nativeEvent.text})} />
+						</InputGroup>
+
+						<InputGroup key="group_email">
+							<Icon name='ios-mail' style={styles[this.state.cssError.cssErrorEmail]} />
+							<Input placeholder="Địa Chỉ Email" onChange={(event) => this.setState({email: event.nativeEvent.text})} />
+						</InputGroup>
+
+						<InputGroup key="group_phone">
+							<Icon name='ios-call' style={styles[this.state.cssError.cssErrorPhone]} />
+							<Input placeholder="Số điện thoại" onChange={(event) => this.setState({phone: event.nativeEvent.text})} />
+						</InputGroup>
+
+						<InputGroup key="group_password">
+							<Icon name='ios-unlock' style={styles[this.state.cssError.cssErrorPassword]} />
+							<Input placeholder="Mật khẩu" secureTextEntry={true} onChange={(event) => this.setState({password: event.nativeEvent.text})} />
+						</InputGroup>
+
+						<InputGroup key="group_repassword">
+							<Icon name='ios-unlock' style={styles[this.state.cssError.cssErrorRepassword]} />
+							<Input placeholder="Nhập Lại Mật khẩu" secureTextEntry={true} onChange={(event) => this.setState({rePassword: event.nativeEvent.text})} />
+						</InputGroup>
+
+						<Text style={{fontWeight: 'bold', marginTop: 10, marginBottom: 5}}>Chú ý: Số Điện Thoại là tài khoản đăng nhập</Text>
+
+						<Button
+							block
+							success
+							style={styles.buttonRegister}
+							onPress={() => this.handleRegister()}
+						>Đăng ký</Button>
+
+
+						{this.state.messageError}
+					</View>
+				</View>
+			</ScrollView>
       );
    }
 }

@@ -65,15 +65,11 @@ class ViewSoDoGiuong extends Component {
 	componentDidMount() {
 		this.infoAdm();
 		this.setState({
-			themVe: {
-				keyDiemDi: this.props.data.benA,
-				keyDiemDen: this.props.data.benB,
-				totalPriceInt: this.props.data.totalPriceInt,
-				loading: true
-			}
+			loading: true
 		});
 		var that = this;
 		// setTimeout(() => {
+
 			fetch(domain+'/api/api_adm_so_do_giuong.php?not_id='+this.props.data.notId+'&day='+this.props.data.day)
 			.then((response) => response.json())
 			.then((responseJson) => {
@@ -117,10 +113,10 @@ class ViewSoDoGiuong extends Component {
 			default:
 		}
 		if(dataTang != undefined) {
-			for(var i = 1; i <= Object.keys(dataTang).length; i++) {
+			for(var i in dataTang) {
 				var item = dataTang[i];
 				var htmlChild = [];
-				for(var j = 1; j <= Object.keys(item).length; j++) {
+				for(var j in item) {
 					var idGiuong = item[j].sdgct_number;
 					var dataGiuong = this.state.arrVeNumber[idGiuong];
 
@@ -189,15 +185,15 @@ class ViewSoDoGiuong extends Component {
 	}
 
 	_setActiveGiuong(id) {
-		let themVe = this.state.themVe;
 		let setStatus = this.state.arrVeNumber;
 		let dataBook = this.state.dataBook;
 		let arrBookGiuong = this.state.arrBookGiuong;
 		setStatus[id].bvv_status = -2;
-		setStatus[id].bvv_bex_id_a = themVe.keyDiemDi;
-		setStatus[id].bvv_bex_id_b = themVe.keyDiemDen;
-		setStatus[id].bvv_price = themVe.totalPriceInt;
-		dataBook.push({'numberGiuong': parseInt(id), 'bvv_bex_id_a': themVe.keyDiemDi, 'bvv_bex_id_b': themVe.keyDiemDen, 'bvv_price': parseInt(themVe.totalPriceInt)});
+		setStatus[id].bvv_bex_id_a = this.props.data.keyDiemDi;
+		setStatus[id].bvv_bex_id_b = this.props.data.keyDiemDen;
+		setStatus[id].bvv_price = this.props.data.totalPriceInt;
+
+		dataBook.push({'numberGiuong': parseInt(id), 'bvv_bex_id_a': this.props.data.keyDiemDi, 'bvv_bex_id_b': this.props.data.keyDiemDen, 'bvv_price': parseInt(this.props.data.totalPriceInt)});
 		arrBookGiuong.push({'numberGiuong': parseInt(id)});
 		this.setState({
 			arrVeNumber: setStatus,
@@ -205,6 +201,8 @@ class ViewSoDoGiuong extends Component {
 			dataBook: dataBook,
 			arrBookGiuong: arrBookGiuong
 		});
+		console.log('-------');
+		console.log(dataBook);
 	}
 
 	_unsetActiveGiuong(id){
@@ -225,8 +223,7 @@ class ViewSoDoGiuong extends Component {
 						arrVeNumber: setStatus,
 						loadingModalAction: false,
 						arrBookGiuong: arrBookGiuong,
-						dataBook: dataBook,
-						themVe: []
+						dataBook: dataBook
 					});
 
 					if(dataBook.length == 0 && arrBookGiuong.length == 0) {
@@ -234,7 +231,6 @@ class ViewSoDoGiuong extends Component {
 							checkout: false
 						});
 					}
-					break;
 				}
 			}
 		}
