@@ -8,6 +8,7 @@ import {
 	ScrollView,
 	TouchableOpacity
 } from 'react-native';
+import {domain} from '../../Config/common';
 import { Text, Button, Card, CardItem, Spinner, Icon } from 'native-base';
 import CalendarPicker from 'react-native-calendar-picker';
 import {Actions} from 'react-native-router-flux';
@@ -17,7 +18,6 @@ import { Col, Row, Grid } from "react-native-easy-grid";
 
 const heightDevice = Dimensions.get('window').height;
 const widthDevice = Dimensions.get('window').width;
-const domain = 'http://hai-van.local';
 const urlApi = domain+'/api/api_user_so_do_giuong.php';
 const currentDate = new Date();
 
@@ -48,7 +48,9 @@ class HomeIOS extends Component {
 			keyDiemDen: '',
 			nameDiemDi: '',
 			nameDiemDen: '',
-			selectCheckbox: 'borderCheckbox'
+			selectCheckbox: 'borderCheckbox',
+			editFormSearch: false,
+			countClickNextDay: true
       };
    }
 
@@ -142,7 +144,6 @@ class HomeIOS extends Component {
 					loading: true,
 					showContentNot: true
 				});
-				console.log(urlApi+'?day='+that.state.fullDate+'&diem_a='+this.state.keyDiemDi+'&diem_b='+this.state.keyDiemDen);
 				fetch(urlApi+'?day='+that.state.fullDate+'&diem_a='+this.state.keyDiemDi+'&diem_b='+this.state.keyDiemDen)
             .then((response) => response.json())
             .then((responseJson) => {
@@ -150,7 +151,8 @@ class HomeIOS extends Component {
                   results:responseJson.so_do_giuong,
                   loading: false,
 						showContentNot: false,
-						oneSearch: true
+						oneSearch: true,
+						editFormSearch: false
                });
                return responseJson.so_do_giuong;
             })
@@ -187,6 +189,202 @@ class HomeIOS extends Component {
 		}
 	}
 
+	renderFormSearch(listItem1, listItem2) {
+		let html = [];
+		html.push(
+			<View key="form_search" style={{flexDirection: 'column', padding: 30, marginTop: 10}}>
+				<View>
+					<Text style={{marginBottom: 5}}>Điểm đi:</Text>
+					<View style={{flexDirection: 'row'}}>
+						<ModalPicker
+							key="diemdi"
+							data={listItem1}
+							initValue="Chọn điểm đi"
+							onChange={(option)=>{ this.setState({nameDiemDi: option.label, keyDiemDi: option.value}) }}>
+							<TextInput
+							style={{borderWidth:1, borderColor:'#ccc', padding:10, height:39, width: (widthDevice-60), marginBottom: 10}}
+							editable={false}
+							placeholder="Vui lòng chọn điểm đi"
+							value={this.state.nameDiemDi} />
+						</ModalPicker>
+					</View>
+				</View>
+				<View>
+					<Text style={{marginBottom: 5}}>Điểm đến:</Text>
+					<View style={{flexDirection: 'row'}}>
+						<ModalPicker
+							key="diemden"
+							data={listItem2}
+							initValue="Chọn điểm đến"
+							onChange={(option2)=>{ this.setState({nameDiemDen: option2.label, keyDiemDen: option2.value}) }}>
+							<TextInput
+							style={{borderWidth:1, borderColor:'#ccc', padding:10, height:39, width: (widthDevice-60), marginBottom: 10}}
+							editable={false}
+							placeholder="Vui lòng chọn điểm đến"
+							value={this.state.nameDiemDen} />
+						</ModalPicker>
+					</View>
+				</View>
+				<View>
+					<Text style={{marginBottom: 5}}>Ngày đi:</Text>
+					<View style={{flexDirection: 'row'}}>
+						<Text style={{flex: 4, borderWidth:1, borderColor:'#ccc', padding:10, height:39}} onPress={() => this._setDatePickerShow()}>{this.state.fullDate}</Text>
+					</View>
+				</View>
+				<View style={{marginTop: 20}}>
+					<Button block success onPress={() => this._getNot()}><Icon name='ios-search-outline' /> Tìm kiếm</Button>
+				</View>
+			</View>
+		);
+		return html;
+	}
+
+	showFormEditSearch() {
+		if(this.state.editFormSearch) {
+			this.setState({
+				editFormSearch: false
+			});
+		}else {
+			this.setState({
+				editFormSearch: true
+			});
+		}
+	}
+
+	_handleSearchNextDay() {
+		if(this.state.countClickNextDay) {
+			let arrDay = this.state.fullDate.split('-');
+			var today = new Date(arrDay[1]+'/'+arrDay[0]+'/'+arrDay[2]);
+			var tomorrow = new Date(today);
+			tomorrow.setDate(today.getDate()+1);
+			let arrNewDay = tomorrow.toLocaleDateString().split('/');
+			let newDay = arrNewDay[1]+'-'+arrNewDay[0]+'-'+arrNewDay[2];
+
+			this.setState({
+				fullDate: newDay
+			});
+
+			var that = this;
+			that.setState({
+				loading: true,
+				showContentNot: true,
+				countClickNextDay: false
+			});
+			fetch(urlApi+'?day='+newDay+'&diem_a='+this.state.keyDiemDi+'&diem_b='+this.state.keyDiemDen)
+			.then((response) => response.json())
+			.then((responseJson) => {
+				that.setState({
+					results:responseJson.so_do_giuong,
+					loading: false,
+					showContentNot: false,
+					oneSearch: true,
+					editFormSearch: false,
+					countClickNextDay: true
+				});
+			})
+			.catch((error) => {
+				that.setState({
+					loading: false,
+					showContentNot: false,
+					countClickNextDay: true
+				});
+				console.error(error);
+			});
+		}
+	}
+
+	_handleSearchPrevDay() {
+		if(this.state.countClickNextDay) {
+			let arrDay = this.state.fullDate.split('-');
+			var today = new Date(arrDay[1]+'/'+arrDay[0]+'/'+arrDay[2]);
+			var tomorrow = new Date(today);
+			tomorrow.setDate(today.getDate()-1);
+			let arrNewDay = tomorrow.toLocaleDateString().split('/');
+			let newDay = arrNewDay[1]+'-'+arrNewDay[0]+'-'+arrNewDay[2];
+
+			this.setState({
+				fullDate: newDay
+			});
+
+			var that = this;
+			that.setState({
+				loading: true,
+				showContentNot: true,
+				countClickNextDay: false
+			});
+			fetch(urlApi+'?day='+newDay+'&diem_a='+this.state.keyDiemDi+'&diem_b='+this.state.keyDiemDen)
+			.then((response) => response.json())
+			.then((responseJson) => {
+				that.setState({
+					results:responseJson.so_do_giuong,
+					loading: false,
+					showContentNot: false,
+					oneSearch: true,
+					editFormSearch: false,
+					countClickNextDay: true
+				});
+			})
+			.catch((error) => {
+				that.setState({
+					loading: false,
+					showContentNot: false,
+					countClickNextDay: true
+				});
+				console.error(error);
+			});
+		}
+	}
+
+	editFormSearch() {
+		let html = [];
+		let htmlBackArrow = [];
+		let month = (currentDate.getMonth()+1);
+		let day = currentDate.getDate();
+		if(month < 10) {
+			month = '0'+month;
+		}
+		if(day < 10) {
+			day = '0'+day;
+		}
+		let newCurrentDate = currentDate.getFullYear()+''+day+''+month;
+		let arrDay = this.state.fullDate.split('-');
+		if(parseInt(arrDay[0]) < 9) {
+			arrDay[0] = '0'+arrDay[0];
+		}
+		if(parseInt(arrDay[1]) < 9) {
+			arrDay[1] = '0'+arrDay[1];
+		}
+		let totalDate = arrDay[2]+''+arrDay[0]+''+arrDay[1];
+
+		if(parseInt(totalDate) > parseInt(newCurrentDate)) {
+			htmlBackArrow.push(
+				<TouchableOpacity key="button_back_arrow" onPress={() => this._handleSearchPrevDay()} style={{flex: 1}}>
+					<Icon key="back_arrow" name="ios-arrow-back" style={{backgroundColor: '#f5ac00', color: '#fff', height: 35, paddingTop: 3, paddingLeft: 4}} />
+				</TouchableOpacity>
+			);
+		}
+
+		html.push(
+			<View key="button_search" style={{flexDirection: 'row', paddingRight: 5, paddingLeft: 5, marginTop: 20}}>
+				<View style={{flex: 2, marginRight: 50}}>
+					<View style={{flexDirection: 'row'}}>
+						{htmlBackArrow}
+						<Text style={{flex: 5, backgroundColor: '#ffc20d', color: '#fff', height: 35, paddingTop: 7, paddingLeft: 15}}>{this.state.fullDate}</Text>
+						<TouchableOpacity onPress={() => this._handleSearchNextDay()} style={{flex: 1}}>
+							<Icon key="next_arrow" name="ios-arrow-forward" style={{backgroundColor: '#f5ac00', color: '#fff', height: 35, paddingTop: 3, paddingLeft: 5}} />
+						</TouchableOpacity>
+					</View>
+				</View>
+				<View style={{flex: 3, backgroundColor: '#ffc20d', alignItems: 'center', justifyContent: 'center'}}>
+					<TouchableOpacity onPress={() => this.showFormEditSearch()}>
+						<Text style={{color: '#fff'}}>{this.state.editFormSearch? 'Đóng' : 'Sửa nơi đi, nơi đến, ngày đi'}</Text>
+					</TouchableOpacity>
+				</View>
+			</View>
+		);
+		return html;
+	}
+
    render() {
 		let listItem1 = this.state.listItem1;
 		let listItem2 = this.state.listItem2;
@@ -217,54 +415,17 @@ class HomeIOS extends Component {
       return(
 			<View style={styles[classContainer]}>
 				{!this.state.oneSearch &&
-					<View style={{flexDirection: 'column', padding: 30, marginTop: 10}}>
-						<View>
-							<Text style={{marginBottom: 5}}>Điểm đi:</Text>
-							<View style={{flexDirection: 'row'}}>
-								<ModalPicker
-									key="diemdi"
-									data={listItem1}
-									initValue="Chọn điểm đi"
-									onChange={(option)=>{ this.setState({nameDiemDi: option.label, keyDiemDi: option.value}) }}>
-									<TextInput
-									style={{borderWidth:1, borderColor:'#ccc', padding:10, height:39, width: (widthDevice-60), marginBottom: 10}}
-									editable={false}
-									placeholder="Vui lòng chọn điểm đi"
-									value={this.state.nameDiemDi} />
-								</ModalPicker>
-							</View>
-						</View>
-						<View>
-							<Text style={{marginBottom: 5}}>Điểm đến:</Text>
-							<View style={{flexDirection: 'row'}}>
-								<ModalPicker
-									key="diemden"
-									data={listItem2}
-									initValue="Chọn điểm đến"
-									onChange={(option2)=>{ this.setState({nameDiemDen: option2.label, keyDiemDen: option2.value}) }}>
-									<TextInput
-									style={{borderWidth:1, borderColor:'#ccc', padding:10, height:39, width: (widthDevice-60), marginBottom: 10}}
-									editable={false}
-									placeholder="Vui lòng chọn điểm đến"
-									value={this.state.nameDiemDen} />
-								</ModalPicker>
-							</View>
-						</View>
-						<View>
-							<Text style={{marginBottom: 5}}>Ngày đi:</Text>
-							<View style={{flexDirection: 'row'}}>
-								<Text style={{flex: 4, borderWidth:1, borderColor:'#ccc', padding:10, height:39}} onPress={() => this._setDatePickerShow()}>{this.state.fullDate}</Text>
-							</View>
-						</View>
-						<View style={{marginTop: 20}}>
-							<Button block success onPress={() => this._getNot()}><Icon name='ios-search-outline' /> Tìm kiếm</Button>
-						</View>
-					</View>
+					this.renderFormSearch(listItem1, listItem2)
 				}
 
 				{this.state.oneSearch &&
 					<ScrollView>
-						<View style={{flexDirection: 'row', marginTop: -5}}>
+						{this.editFormSearch()}
+
+						{this.state.editFormSearch &&
+							this.renderFormSearch(listItem1, listItem2)
+						}
+						<View style={{flexDirection: 'row'}}>
 							<View style={{flex: 1, alignItems: 'center', justifyContent: 'center', marginTop: 10, backgroundColor: '#b3b3b3', padding: 10}}>
 								<Text style={{color: '#fff'}}>Thời gian</Text>
 							</View>

@@ -8,8 +8,8 @@ import {
 import { Container, Content, InputGroup, View, Icon, Input,Text, Button, Thumbnail, Spinner } from 'native-base';
 import { Col, Row, Grid } from "react-native-easy-grid";
 import {Actions} from 'react-native-router-flux';
+import {domain} from './Config/common';
 
-const domain = 'http://hai-van.local';
 class Welcome extends Component {
 
 	constructor(props) {
@@ -22,10 +22,10 @@ class Welcome extends Component {
 			error: 'false',
 			messageError: []
       };
-		this.props.text = 'ccc';
    }
 
 	componentWillMount() {
+
 		this.setState({
 			loading: true
 		});

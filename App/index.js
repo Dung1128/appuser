@@ -40,7 +40,7 @@ class App extends Component {
 	render() {
 		return(
 			<Router navBar={NavBar} createReducer={reducerCreate}>
-  	       	<Scene key="root">
+  	       	<Scene key="root" ah="xxx">
 
   			 		<Scene key="welcome" component={Welcome} initial />
   	         	<Scene key="home" component={Home} title="Chọn Chuyến" type="reset" />

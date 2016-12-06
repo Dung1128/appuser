@@ -157,6 +157,7 @@ class NavBar extends React.Component {
     this.renderBackButton = this.renderBackButton.bind(this);
     this.renderLeftButton = this.renderLeftButton.bind(this);
     this.renderTitle = this.renderTitle.bind(this);
+	 console.log(this.props);
   }
 
   _onPressBackButton() {

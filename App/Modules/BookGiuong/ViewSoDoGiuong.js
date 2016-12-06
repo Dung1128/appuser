@@ -12,6 +12,7 @@ import {
 	TouchableHighlight,
 	Alert
 } from 'react-native';
+import {domain} from '../../Config/common';
 import { Container, Content, Header, Title, Text, Icon, Button, Card, CardItem, Spinner, Badge } from 'native-base';
 import {Actions} from 'react-native-router-flux';
 import { Col, Row, Grid } from "react-native-easy-grid";
@@ -20,7 +21,7 @@ import ModalPicker from 'react-native-modal-picker';
 
 const heightDevice = Dimensions.get('window').height;
 const widthDevice = Dimensions.get('window').width;
-const domain = 'http://hai-van.local';
+
 class ViewSoDoGiuong extends Component {
 
 	constructor(props) {
@@ -46,11 +47,7 @@ class ViewSoDoGiuong extends Component {
 			checkout: false,
 			dataBook: [],
 			arrBookGiuong: [],
-			themVe: {
-				keyDiemDi: this.props.data.benA,
-				keyDiemDen: this.props.data.benB,
-				totalPriceInt: this.props.data.totalPriceInt
-			},
+			themVe: [],
 			arrThemve: []
 		};
 	}
@@ -67,10 +64,15 @@ class ViewSoDoGiuong extends Component {
 
 	componentDidMount() {
 		this.infoAdm();
-		var that = this;
-		that.setState({
-			loading: true
+		this.setState({
+			themVe: {
+				keyDiemDi: this.props.data.benA,
+				keyDiemDen: this.props.data.benB,
+				totalPriceInt: this.props.data.totalPriceInt,
+				loading: true
+			}
 		});
+		var that = this;
 		// setTimeout(() => {
 			fetch(domain+'/api/api_adm_so_do_giuong.php?not_id='+this.props.data.notId+'&day='+this.props.data.day)
 			.then((response) => response.json())

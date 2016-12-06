@@ -8,11 +8,11 @@ import {
   ScrollView,
   TouchableOpacity
 } from 'react-native';
+import {domain} from '../../Config/common';
 import { Container, Content, InputGroup, Icon, Input, Button, Spinner, Card, CardItem, Badge } from 'native-base';
 import {Actions, ActionConst} from 'react-native-router-flux';
 const heightDevice = Dimensions.get('window').height;
 
-const domain = 'http://hai-van.local';
 class LichSu extends Component {
 
 	constructor(props) {

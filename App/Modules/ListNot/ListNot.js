@@ -8,6 +8,7 @@ import {
    ScrollView,
    TouchableOpacity
 } from 'react-native';
+import {domain} from '../../Config/common';
 import { Text, Button, Card, CardItem, Spinner, Icon } from 'native-base';
 import CalendarPicker from 'react-native-calendar-picker';
 import {Actions} from 'react-native-router-flux';
@@ -17,7 +18,6 @@ import { Col, Row, Grid } from "react-native-easy-grid";
 
 const heightDevice = Dimensions.get('window').height;
 const widthDevice = Dimensions.get('window').width;
-const domain = 'http://hai-van.local';
 const urlApi = domain+'/api/api_user_so_do_giuong.php';
 const currentDate = new Date();
 

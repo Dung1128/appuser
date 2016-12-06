@@ -9,6 +9,7 @@ import {
   ScrollView,
   TextInput
 } from 'react-native';
+import {domain} from '../../Config/common';
 import { Container, Content, InputGroup, Icon, Input, Button, Spinner, Card, CardItem, Badge } from 'native-base';
 import {Actions, ActionConst} from 'react-native-router-flux';
 import  Rating from 'react-native-easy-rating';
@@ -20,7 +21,6 @@ const widthDevice = Dimensions.get('window').width;
 const selectStar = require('../../../App/Skin/Images/select_star.png');
 const unSelectStar = require('../../../App/Skin/Images/unselect_star.png');
 
-const domain = 'http://hai-van.local';
 const url = domain+'/api/api_user_rating.php';
 class DanhGia extends Component {
 
