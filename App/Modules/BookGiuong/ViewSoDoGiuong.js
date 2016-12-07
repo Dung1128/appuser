@@ -189,11 +189,11 @@ class ViewSoDoGiuong extends Component {
 		let dataBook = this.state.dataBook;
 		let arrBookGiuong = this.state.arrBookGiuong;
 		setStatus[id].bvv_status = -2;
-		setStatus[id].bvv_bex_id_a = this.props.data.keyDiemDi;
-		setStatus[id].bvv_bex_id_b = this.props.data.keyDiemDen;
+		setStatus[id].bvv_bex_id_a = this.props.data.benA;
+		setStatus[id].bvv_bex_id_b = this.props.data.benB;
 		setStatus[id].bvv_price = this.props.data.totalPriceInt;
 
-		dataBook.push({'numberGiuong': parseInt(id), 'bvv_bex_id_a': this.props.data.keyDiemDi, 'bvv_bex_id_b': this.props.data.keyDiemDen, 'bvv_price': parseInt(this.props.data.totalPriceInt)});
+		dataBook.push({'numberGiuong': parseInt(id), 'bvv_bex_id_a': this.props.data.benA, 'bvv_bex_id_b': this.props.data.benB, 'bvv_price': parseInt(this.props.data.totalPriceInt)});
 		arrBookGiuong.push({'numberGiuong': parseInt(id)});
 		this.setState({
 			arrVeNumber: setStatus,

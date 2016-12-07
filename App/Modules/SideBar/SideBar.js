@@ -22,6 +22,7 @@ import styles from './style';
 
 const logo = require('../../Skin/Images/logo.png');
 
+const tempInterval = '';
 class SideBar extends Component {
 
    constructor(props) {
@@ -30,6 +31,7 @@ class SideBar extends Component {
          checkLogin: false,
 			dataUser: []
       };
+		console.log(this.props);
    }
 
    _onPressLogout() {
@@ -41,7 +43,6 @@ class SideBar extends Component {
    }
 
 	componentDidMount() {
-		let tempInterval;
 		let that = this;
 		tempInterval = setInterval(function() {
 			AsyncStorage.getItem('infoUser').then((data) => {
@@ -53,7 +54,22 @@ class SideBar extends Component {
 					clearInterval(tempInterval);
 				}
 			}).done();
-		}, 1000);
+		}, 500);
+	}
+
+	componentWillUpdate() {
+		let that = this;
+		tempInterval = setInterval(function() {
+			AsyncStorage.getItem('infoUser').then((data) => {
+				if(data != null) {
+					that.setState({
+						checkLogin: true,
+						dataUser: JSON.parse(data)
+					});
+					clearInterval(tempInterval);
+				}
+			}).done();
+		}, 500);
 	}
 
    render() {
