@@ -207,13 +207,10 @@ class HomeIOS extends Component {
 						<ModalPicker
 							key="diemdi"
 							data={listItem1}
-							initValue="Chọn điểm đi"
 							onChange={(option)=>{ this.setState({nameDiemDi: option.label, keyDiemDi: option.value}) }}>
-							<TextInput
-							style={{borderWidth:1, borderColor:'#ccc', padding:10, height:39, width: (widthDevice-60), marginBottom: 10}}
-							editable={false}
-							placeholder="Vui lòng chọn điểm đi"
-							value={this.state.nameDiemDi} />
+  							<Text style={{borderWidth:1, borderColor:'#ccc', paddingLeft:10, height:40, width: (widthDevice-60), marginBottom: 10}}>
+                {this.state.nameDiemDi == ''? 'Chọn điểm đi' : this.state.nameDiemDi}
+                </Text>
 						</ModalPicker>
 					</View>
 				</View>
@@ -225,18 +222,15 @@ class HomeIOS extends Component {
 							data={listItem2}
 							initValue="Chọn điểm đến"
 							onChange={(option2)=>{ this.setState({nameDiemDen: option2.label, keyDiemDen: option2.value}) }}>
-							<TextInput
-							style={{borderWidth:1, borderColor:'#ccc', padding:10, height:39, width: (widthDevice-60), marginBottom: 10}}
-							editable={false}
-							placeholder="Vui lòng chọn điểm đến"
-							value={this.state.nameDiemDen} />
+							<Text style={{borderWidth:1, borderColor:'#ccc', paddingLeft:10, height:40, width: (widthDevice-60), marginBottom: 10}}>
+							{this.state.nameDiemDen == ''? 'Chọn điểm đến' : this.state.nameDiemDen}</Text>
 						</ModalPicker>
 					</View>
 				</View>
 				<View>
 					<Text style={{marginBottom: 5}}>Ngày đi:</Text>
 					<View style={{flexDirection: 'row'}}>
-						<Text style={{flex: 4, borderWidth:1, borderColor:'#ccc', padding:10, height:39}} onPress={() => this._setDatePickerShow()}>{this.state.fullDate}</Text>
+						<Text style={{flex: 4, borderWidth:1, borderColor:'#ccc', paddingLeft:10, height:40}} onPress={() => this._setDatePickerShow()}>{this.state.fullDate}</Text>
 					</View>
 				</View>
 				<View style={{marginTop: 20}}>
@@ -266,8 +260,7 @@ class HomeIOS extends Component {
 			var tomorrow = new Date(today);
 			tomorrow.setDate(today.getDate()+1);
 			let arrNewDay = tomorrow.toLocaleDateString().split('/');
-			let newDay = arrNewDay[1]+'-'+arrNewDay[0]+'-'+arrNewDay[2];
-
+			let newDay = tomorrow.getDate()+'-'+tomorrow.getMonth()+'-'+tomorrow.getFullYear();
 			this.setState({
 				fullDate: newDay
 			});
