@@ -72,7 +72,6 @@ class DetailNews extends Component {
 				{htmlItem}
 			</Card>
 		);
-		console.log(this.refs['webview']);
 		return html;
 	}
 

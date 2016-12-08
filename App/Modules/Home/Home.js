@@ -11,7 +11,7 @@ import CalendarPicker from 'react-native-calendar-picker';
 import {Actions} from 'react-native-router-flux';
 import {domain} from '../../Config/common';
 
-const urlApi = domain + '/api/api_adm_so_do_giuong.php';
+const urlApi = domain + '/api/api_user_so_do_giuong.php';
 
 class Home extends Component {
    constructor(props) {

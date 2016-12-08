@@ -68,7 +68,7 @@ class ViewSoDoGiuong extends Component {
 			loading: true
 		});
 		var that = this;
-		// setTimeout(() => {
+		setTimeout(() => {
 
 			fetch(domain+'/api/api_adm_so_do_giuong.php?not_id='+this.props.data.notId+'&day='+this.props.data.day, {
 				headers: {
@@ -92,7 +92,7 @@ class ViewSoDoGiuong extends Component {
 				});
 				console.error(error);
 			});
-		// },800);
+		},800);
 	}
 
 	_renderSoDoGiuong(data, tang) {

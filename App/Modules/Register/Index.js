@@ -42,14 +42,6 @@ class Register extends Component {
 			);
 		}
 
-		if(this.state.email == '') {
-			checkValid = false;
-			this.state.cssError.cssErrorEmail = 'cssError';
-			mesValid.push(
-				<Text key="email" style={styles.textErrors}>Bạn vui lòng nhập Email.</Text>
-			);
-		}
-
 		if(this.state.phone == '') {
 			checkValid = false;
 			this.state.cssError.cssErrorPhone = 'cssError';
@@ -84,6 +76,7 @@ class Register extends Component {
 	      });
 	      var that = this;
 			let urlRequest	= domain+'/api/api_user_dang_ky.php?'+encodeURIComponent('fullName='+this.state.fullName+'&email='+this.state.email+'&phone='+this.state.phone+'&password='+this.state.password);
+			console.log(urlRequest);
 	      fetch(urlRequest, {
 				method: 'GET',
 				headers: {
