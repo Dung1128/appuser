@@ -9,7 +9,7 @@ import {
   ScrollView,
   TextInput
 } from 'react-native';
-import {domain} from '../../Config/common';
+import {domain,cache} from '../../Config/common';
 import { Container, Content, InputGroup, Icon, Input, Button, Spinner, Card, CardItem, Badge } from 'native-base';
 import {Actions, ActionConst} from 'react-native-router-flux';
 import  Rating from 'react-native-easy-rating';
@@ -48,7 +48,11 @@ class DanhGia extends Component {
 		});
 		var that = this;
 
-      fetch(url+'?type=0&user_id='+this.props.data.adm_id)
+      fetch(url+'?type=0&user_id='+this.props.data.adm_id, {
+			headers: {
+				'Cache-Control': cache
+			}
+		})
 	      .then((response) => response.json())
 	      .then((responseJson) => {
 				that.setState({
@@ -144,13 +148,17 @@ class DanhGia extends Component {
 		}
 		let params = '?type=1&user_id='+ this.props.data.adm_id+'&did_id='+this.state.did_id+'&rat_values='+rating+'&rat_comment='+this.state.textRating;
 
-		fetch(url+params)
+		fetch(url+params, {
+			headers: {
+				'Cache-Control': cache
+			}
+		})
 		.then((response) => response.json())
 		.then((responseJson) => {
 			alert('Cảm ơn bạn đã gửi đánh giá cho chúng tôi.');
 		})
 		.catch((error) => {
-			console.error(error);
+			//console.error(error);
 		});
 		this.closeModal();
 	}

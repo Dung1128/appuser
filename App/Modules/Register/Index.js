@@ -7,7 +7,7 @@ import {
    View,
 	ScrollView
 } from 'react-native';
-import {domain} from '../../Config/common';
+import {domain,cache} from '../../Config/common';
 import { Button, Grid, Row, Icon, InputGroup, Input, Thumbnail } from 'native-base';
 import {Actions} from 'react-native-router-flux';
 const heightDevice = Dimensions.get('window').height;
@@ -84,9 +84,11 @@ class Register extends Component {
 	      });
 	      var that = this;
 			let urlRequest	= domain+'/api/api_user_dang_ky.php?'+encodeURIComponent('fullName='+this.state.fullName+'&email='+this.state.email+'&phone='+this.state.phone+'&password='+this.state.password);
-			console.log(urlRequest);
 	      fetch(urlRequest, {
-				method: 'GET'
+				method: 'GET',
+				headers: {
+					'Cache-Control': cache
+				}
 			})
 			.then((response) => response.json())
         	.then((responseData) => {

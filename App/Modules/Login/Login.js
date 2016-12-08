@@ -6,6 +6,7 @@ import {
   Image
 } from 'react-native';
 import { Container, Content, InputGroup, Icon, Input, Button, Thumbnail } from 'native-base';
+import {domain} from '../../Config/common';
 
 class Login extends Component {
 
@@ -23,7 +24,7 @@ class Login extends Component {
          loading: true
       });
       var that = this;
-      fetch('http://hai-van.local/api/api_adm_dang_nhap.php?username='+this.state.username+'&password='+this.state.password)
+      fetch(domain + '/api/api_adm_dang_nhap.php?username='+this.state.username+'&password='+this.state.password)
       .then((response) => response.json())
       .then((responseJson) => {
          this.setState({

@@ -118,7 +118,7 @@ class SideBar extends Component {
 							</ListItem>
 						}
 
-					  	<ListItem button iconLeft>
+					  	<ListItem button iconLeft onPress={() => {Actions.ListNews({title: 'Danh sách tin tức'}); this.props.closeDrawer();}}>
 						 	<View style={styles.listItemContainer}>
 								<View style={[styles.iconContainer]}>
 								  <Icon name="ios-happy" style={styles.sidebarIcon} />

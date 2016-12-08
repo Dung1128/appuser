@@ -8,7 +8,7 @@ import {
   ScrollView,
   TouchableOpacity
 } from 'react-native';
-import {domain} from '../../Config/common';
+import {domain,cache} from '../../Config/common';
 import { Container, Content, InputGroup, Icon, Input, Button, Spinner, Card, CardItem, Badge, CheckBox, List, ListItem } from 'native-base';
 import {Actions, ActionConst} from 'react-native-router-flux';
 const heightDevice = Dimensions.get('window').height;
@@ -152,7 +152,11 @@ class LichSu extends Component {
 			loadingOrder: true
 		});
 		let params = 'type=insert&bvv_bvn_id='+this.props.data.id_dieu_do+'&user_id='+this.props.data.dataUser.adm_id+'&gio_xuat_ben='+JSON.stringify(this.props.data.gio_xuat_ben)+'&dataBook='+dataBook+'&address='+this.state.address;
-		fetch(domain+'/api/api_user_save_order.php?'+params)
+		fetch(domain+'/api/api_user_save_order.php?'+params, {
+			headers: {
+				'Cache-Control': cache
+			}
+		})
 		.then((response) => response.json())
 		.then((responseJson) => {
 			that.setState({

@@ -8,7 +8,7 @@ import {
 	ScrollView,
 	TouchableOpacity
 } from 'react-native';
-import {domain} from '../../Config/common';
+import {domain,cache} from '../../Config/common';
 import { Text, Button, Card, CardItem, Spinner, Icon } from 'native-base';
 import CalendarPicker from 'react-native-calendar-picker';
 import {Actions} from 'react-native-router-flux';
@@ -95,7 +95,11 @@ class HomeIOS extends Component {
 
 	componentDidMount() {
 		let that = this;
-      fetch(domain+'/api/api_user_ben.php?type=home')
+      fetch(domain+'/api/api_user_ben.php?type=home', {
+			headers: {
+				'Cache-Control': cache
+			}
+		})
       .then((response) => response.json())
       .then((responseJson) => {
 			let listItem1 = [],
@@ -144,7 +148,11 @@ class HomeIOS extends Component {
 					loading: true,
 					showContentNot: true
 				});
-				fetch(urlApi+'?day='+that.state.fullDate+'&diem_a='+this.state.keyDiemDi+'&diem_b='+this.state.keyDiemDen)
+				fetch(urlApi+'?day='+that.state.fullDate+'&diem_a='+this.state.keyDiemDi+'&diem_b='+this.state.keyDiemDen, {
+					headers: {
+						'Cache-Control': cache
+					}
+				})
             .then((response) => response.json())
             .then((responseJson) => {
                that.setState({
@@ -270,7 +278,11 @@ class HomeIOS extends Component {
 				showContentNot: true,
 				countClickNextDay: false
 			});
-			fetch(urlApi+'?day='+newDay+'&diem_a='+this.state.keyDiemDi+'&diem_b='+this.state.keyDiemDen)
+			fetch(urlApi+'?day='+newDay+'&diem_a='+this.state.keyDiemDi+'&diem_b='+this.state.keyDiemDen, {
+				headers: {
+					'Cache-Control': cache
+				}
+			})
 			.then((response) => response.json())
 			.then((responseJson) => {
 				that.setState({
@@ -312,7 +324,11 @@ class HomeIOS extends Component {
 				showContentNot: true,
 				countClickNextDay: false
 			});
-			fetch(urlApi+'?day='+newDay+'&diem_a='+this.state.keyDiemDi+'&diem_b='+this.state.keyDiemDen)
+			fetch(urlApi+'?day='+newDay+'&diem_a='+this.state.keyDiemDi+'&diem_b='+this.state.keyDiemDen, {
+				headers: {
+					'Cache-Control': cache
+				}
+			})
 			.then((response) => response.json())
 			.then((responseJson) => {
 				that.setState({

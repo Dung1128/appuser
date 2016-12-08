@@ -12,7 +12,7 @@ import {
 import { Icon, Spinner } from 'native-base';
 import {Actions} from 'react-native-router-flux';
 
-import {domain} from '../../Config/common';
+import {domain,cache} from '../../Config/common';
 import styles from './styles';
 
 const heightDevice = Dimensions.get('window').height;
@@ -54,8 +54,11 @@ class GopY extends Component {
 
 		if(checkForm) {
 			let urlApi = domain+'/api/api_user_gop_y.php?'+encodeURIComponent('fullname='+this.state.fullname+'&email='+this.state.email+'&phone='+this.state.phone+'&content='+this.state.content);
-			console.log(urlApi);
-			fetch(urlApi)
+			fetch(urlApi, {
+				headers: {
+					'Cache-Control': cache
+				}
+			})
 			.then((response) => response.json())
 			.then((responseJson) => {
 				if(responseJson.status == 200) {

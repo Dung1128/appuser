@@ -8,7 +8,7 @@ import {
    ScrollView,
    TouchableOpacity
 } from 'react-native';
-import {domain} from '../../Config/common';
+import {domain,cache} from '../../Config/common';
 import { Text, Button, Card, CardItem, Spinner, Icon } from 'native-base';
 import CalendarPicker from 'react-native-calendar-picker';
 import {Actions} from 'react-native-router-flux';
@@ -80,7 +80,11 @@ class ListNot extends Component {
 		});
 		var that = this;
 		console.log('xxx123123123');
-		return fetch(urlApi+'?day='+this.props.data.fullDate+'&diem_a='+this.props.data.keyDiemDi+'&diem_b='+this.props.data.keyDiemDen)
+		fetch(urlApi+'?day='+this.props.data.fullDate+'&diem_a='+this.props.data.keyDiemDi+'&diem_b='+this.props.data.keyDiemDen, {
+			headers: {
+				'Cache-Control': cache
+			}
+		})
 		.then((response) => response.json())
 		.then((responseJson) => {
 
@@ -89,8 +93,6 @@ class ListNot extends Component {
 				loading: true,
 				showContentNot: false
 			});
-			console.log('xxxx');
-			return responseJson.so_do_giuong;
 		})
 		.catch((error) => {
 			that.setState({
@@ -143,7 +145,11 @@ class ListNot extends Component {
 					loading: true,
 					showContentNot: true
 				});
-				fetch(urlApi+'?day='+that.props.data.fullDate+'&diem_a='+this.props.data.keyDiemDi+'&diem_b='+this.props.data.keyDiemDen)
+				fetch(urlApi+'?day='+that.props.data.fullDate+'&diem_a='+this.props.data.keyDiemDi+'&diem_b='+this.props.data.keyDiemDen, {
+					headers: {
+						'Cache-Control': cache
+					}
+				})
             .then((response) => response.json())
             .then((responseJson) => {
                that.setState({
@@ -151,7 +157,6 @@ class ListNot extends Component {
                   loading: false,
 						showContentNot: false
                });
-               return responseJson.so_do_giuong;
             })
             .catch((error) => {
                that.setState({

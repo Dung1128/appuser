@@ -12,7 +12,7 @@ import {
 	TouchableHighlight,
 	Alert
 } from 'react-native';
-import {domain} from '../../Config/common';
+import {domain,cache} from '../../Config/common';
 import { Container, Content, Header, Title, Text, Icon, Button, Card, CardItem, Spinner, Badge } from 'native-base';
 import {Actions} from 'react-native-router-flux';
 import { Col, Row, Grid } from "react-native-easy-grid";
@@ -70,7 +70,11 @@ class ViewSoDoGiuong extends Component {
 		var that = this;
 		// setTimeout(() => {
 
-			fetch(domain+'/api/api_adm_so_do_giuong.php?not_id='+this.props.data.notId+'&day='+this.props.data.day)
+			fetch(domain+'/api/api_adm_so_do_giuong.php?not_id='+this.props.data.notId+'&day='+this.props.data.day, {
+				headers: {
+					'Cache-Control': cache
+				}
+			})
 			.then((response) => response.json())
 			.then((responseJson) => {
 				that.setState({

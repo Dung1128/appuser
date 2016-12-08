@@ -8,7 +8,7 @@ import {
   ScrollView,
   TouchableOpacity
 } from 'react-native';
-import {domain} from '../../Config/common';
+import {domain,cache} from '../../Config/common';
 import { Container, Content, InputGroup, Icon, Input, Button, Spinner, Card, CardItem, Badge } from 'native-base';
 import {Actions, ActionConst} from 'react-native-router-flux';
 const heightDevice = Dimensions.get('window').height;
@@ -32,19 +32,22 @@ class LichSu extends Component {
 		var that = this;
 
 
-      return fetch(domain+'/api/api_user_lich_su_order.php?notId=0&user_id='+this.props.data.adm_id)
-	      .then((response) => response.json())
-	      .then((responseJson) => {
-				that.setState({
-					results: responseJson.dataLichSu,
-					dataBen: responseJson.dataBen,
-					loading: false
-				});
-	         return responseJson.dataLichSu;
-	      })
-	      .catch((error) => {
-	         console.error(error);
-	      });
+      fetch(domain+'/api/api_user_lich_su_order.php?notId=0&user_id='+this.props.data.adm_id, {
+			headers: {
+				'Cache-Control': cache
+			}
+		})
+      .then((response) => response.json())
+      .then((responseJson) => {
+			that.setState({
+				results: responseJson.dataLichSu,
+				dataBen: responseJson.dataBen,
+				loading: false
+			});
+      })
+      .catch((error) => {
+         console.error(error);
+      });
    }
 
 	componentWillMount() {

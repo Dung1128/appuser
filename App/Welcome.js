@@ -8,7 +8,7 @@ import {
 import { Container, Content, InputGroup, View, Icon, Input,Text, Button, Thumbnail, Spinner } from 'native-base';
 import { Col, Row, Grid } from "react-native-easy-grid";
 import {Actions} from 'react-native-router-flux';
-import {domain} from './Config/common';
+import {domain,cache} from './Config/common';
 
 class Welcome extends Component {
 
@@ -60,7 +60,11 @@ class Welcome extends Component {
 	      });
 	      var that = this;
 			let urlRequest	= domain+'/api/api_user_dang_nhap.php?username='+this.state.username+'&password='+this.state.password;
-	      fetch(urlRequest)
+	      fetch(urlRequest, {
+				headers: {
+					'Cache-Control': cache
+				}
+			})
 	      .then((response) => {
 				return response.json()
 			})

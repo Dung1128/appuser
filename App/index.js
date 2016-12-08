@@ -23,6 +23,8 @@ import ListOrder from './Modules/ListOrder/Index';
 import Checkout from './Modules/Checkout/Index';
 import GopY from './Modules/GopY/Index';
 import Contact from './Modules/Contact/Index';
+import ListNews from './Modules/News/ListNews';
+import DetailNews from './Modules/News/DetailNews';
 import Welcome from './Welcome';
 
 const reducerCreate = params => {
@@ -42,8 +44,7 @@ class App extends Component {
 	render() {
 		return(
 			<Router navBar={NavBar} createReducer={reducerCreate}>
-  	       	<Scene key="root" ah="xxx">
-
+  	       	<Scene key="root">
   			 		<Scene key="welcome" component={Welcome} initial type="reset" />
   	         	<Scene key="home" component={Home} title="Chọn Chuyến" type="reset" />
 					<Scene key="Register" component={Register} title="Đăng Ký" />
@@ -56,6 +57,8 @@ class App extends Component {
 					<Scene key="Checkout" component={Checkout} title="Thanh Toán" />
 					<Scene key="gopy" component={GopY} title="Góp Ý" />
 					<Scene key="Contact" component={Contact} title="Liên Hệ" />
+					<Scene key="ListNews" component={ListNews} title="Danh sách tin tức" />
+					<Scene key="DetailNews" component={DetailNews} title="Chi tiết tin tức" />
   	       	</Scene>
        	</Router>
 		);
