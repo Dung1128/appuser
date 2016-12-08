@@ -19,7 +19,7 @@ class Contact extends Component {
 	render() {
 		return(
 			<WebView
-	        source={{uri: domain+'/api/api_user_lien__he.php'}}
+	        source={{uri: domain+'/api/api_user_lien____he.php'}}
 	        style={{marginTop: 60}}
 	      />
 		);

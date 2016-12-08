@@ -139,12 +139,15 @@ class DanhGia extends Component {
 
 	_saveRating() {
 		let rating = this.state.rating;
-		let params = '?type=1&user_id='+ this.props.data.adm_id+'&did_id='+this.state.did_id+'&rat_values='+this.state.rating+'&rat_comment='+this.state.textRating;
-		console.log(url+encodeURI(params));
+		if(rating == 0) {
+			rating = 5;
+		}
+		let params = '?type=1&user_id='+ this.props.data.adm_id+'&did_id='+this.state.did_id+'&rat_values='+rating+'&rat_comment='+this.state.textRating;
+
 		fetch(url+params)
 		.then((response) => response.json())
 		.then((responseJson) => {
-			return responseJson;
+			alert('Cảm ơn bạn đã gửi đánh giá cho chúng tôi.');
 		})
 		.catch((error) => {
 			console.error(error);
@@ -161,31 +164,34 @@ class DanhGia extends Component {
 				 </ScrollView>
 
 			  <Modal style={[styles.modal, styles.modalPopup, {paddingTop: 50}]} position={"top"} ref={"modal3"} isDisabled={this.state.isDisabled}>
+
 				  	<TouchableOpacity onPress={() => this.closeModal()} style={{width: 50, height: 40, position: 'absolute', right: 0, top: 0, padding: 10}}>
 					  	<Icon name="ios-close-circle" />
 				  	</TouchableOpacity>
-					<View style={{flexDirection: 'column', width: widthDevice, padding: 20}}>
-						<Text style={{marginBottom: 20}}>Nơi đi & Nơi đến: <Text style={{fontWeight: 'bold'}}>{this.state.benAA} -> {this.state.benBB}</Text></Text>
-		  				<Text style={{marginBottom: 20}}>Thời gian: <Text style={{fontWeight: 'bold'}}>{this.state.gio_xuat_ben}</Text></Text>
-						<Text>Viết đánh giá:</Text>
-					</View>
-					<View style={{marginTop: 20, marginBottom: 20, borderWidth: 1, borderColor: '#ccc', flexDirection: 'row'}}>
-						<Input placeholder="Viết đánh giá" style={{height: 100}} multiline={true} numberOfLines={4} onChange={(event) => this.setState({textRating: event.nativeEvent.text})} />
-					</View>
-					<View style={{flexDirection: 'row'}}>
-						<Text style={{flex: 1, marginTop: 5}}>Chọn đánh giá: </Text>
-						<Rating
-							style={{flex: 2}}
-							rating={5}
-							max={5}
-							iconWidth={24}
-							iconHeight={24}
-							iconSelected={selectStar}
-							iconUnselected={unSelectStar}
-							onRate={(rating) => this.setState({rating: rating})}/>
-					</View>
-					<View style={{flexDirection: 'row', marginTop: 30}}>
-						<Button block success onPress={() => this._saveRating()}>Gửi Đánh Giá</Button>
+					<View style={{height: 300, paddingBottom: 50}}>
+						<ScrollView>
+							<View style={{flexDirection: 'column', width: widthDevice, padding: 20}}>
+								<Text style={{marginBottom: 20}}>Nơi đi & Nơi đến: <Text style={{fontWeight: 'bold'}}>{this.state.benAA} -> {this.state.benBB}</Text></Text>
+				  				<Text style={{marginBottom: 20}}>Thời gian: <Text style={{fontWeight: 'bold'}}>{this.state.gio_xuat_ben}</Text></Text>
+								<Text>Viết đánh giá:</Text>
+							</View>
+							<View style={{marginTop: 20, marginBottom: 20, borderWidth: 1, borderColor: '#ccc', flexDirection: 'row'}}>
+								<Input placeholder="Viết đánh giá" style={{height: 60}} multiline={true} numberOfLines={4} onChange={(event) => this.setState({textRating: event.nativeEvent.text})} />
+							</View>
+							<View style={{flexDirection: 'row'}}>
+								<Text style={{flex: 1, marginTop: 5}}>Chọn đánh giá: </Text>
+								<Rating
+									style={{flex: 2}}
+									rating={5}
+									max={5}
+									iconWidth={24}
+									iconHeight={24}
+									iconSelected={selectStar}
+									iconUnselected={unSelectStar}
+									onRate={(rating) => this.setState({rating: rating})}/>
+							</View>
+								<Button block success style={{marginTop: 20}} onPress={() => this._saveRating()}>Gửi Đánh Giá</Button>
+						</ScrollView>
 					</View>
 			  </Modal>
          </View>
@@ -200,11 +206,10 @@ const styles = StyleSheet.create({
 	},
 	modal: {
 		alignItems: 'center',
-		top: 80,
-		paddingRight: 20,
-		paddingLeft: 20
+		top: 60,
 	},
 	modalPopup: {
+		padding: 10
 	},
 });
 

@@ -44,7 +44,7 @@ class App extends Component {
 			<Router navBar={NavBar} createReducer={reducerCreate}>
   	       	<Scene key="root" ah="xxx">
 
-  			 		<Scene key="welcome" component={Welcome} initial />
+  			 		<Scene key="welcome" component={Welcome} initial type="reset" />
   	         	<Scene key="home" component={Home} title="Chọn Chuyến" type="reset" />
 					<Scene key="Register" component={Register} title="Đăng Ký" />
 					<Scene key="login" component={Login} title="Đăng Nhập" />

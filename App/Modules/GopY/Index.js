@@ -10,7 +10,7 @@ import {
   TextInput
 } from 'react-native';
 import { Icon, Spinner } from 'native-base';
-import {Actions, ActionConst} from 'react-native-router-flux';
+import {Actions} from 'react-native-router-flux';
 
 import {domain} from '../../Config/common';
 import styles from './styles';
@@ -60,6 +60,7 @@ class GopY extends Component {
 			.then((responseJson) => {
 				if(responseJson.status == 200) {
 					alert('Cảm ơn bạn đã Góp Ý cho hệ thống của chúng tôi.');
+					Actions.welcome({title: 'Đăng Nhập'});
 				}
 			}).catch((error) => {
 				console.error(error);
@@ -101,7 +102,7 @@ class GopY extends Component {
 						<View style={[styles[this.state.errorContent], styles.groupInput]}>
 							<Text>Nội dung góp ý:</Text>
 							<View style={styles.input}>
-								<TextInput multiline={true} numberOfLines={5} placeholder="Nội dung góp ý" style={{height: 80}} onChangeText={(text) => this.setState({content: text})} />
+								<TextInput multiline={true} numberOfLines={5} placeholder="Nội dung góp ý" style={{height: 80, fontSize: 17}} onChangeText={(text) => this.setState({content: text})} />
 							</View>
 						</View>
 						<View style={styles.groupInput}>
