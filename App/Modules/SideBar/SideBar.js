@@ -136,7 +136,7 @@ class SideBar extends Component {
 							</View>
 						</ListItem>
 
-						<ListItem button iconLeft onPress={() => {this.props.closeDrawer(); }}>
+						<ListItem button iconLeft onPress={() => { Actions.Contact({title: 'Liên Hệ'}); this.props.closeDrawer(); }}>
 					  		<View style={styles.listItemContainer}>
 						 		<View style={[styles.iconContainer]}>
 									<Icon name="ios-contacts" style={styles.sidebarIcon} />
@@ -145,7 +145,7 @@ class SideBar extends Component {
 					  		</View>
 				  		</ListItem>
 
-				  		<ListItem button iconLeft onPress={() => { this.props.closeDrawer(); }}>
+				  		<ListItem button iconLeft onPress={() => { Actions.gopy({title: 'Góp Ý'}); this.props.closeDrawer(); }}>
 					 		<View style={styles.listItemContainer}>
 								<View style={[styles.iconContainer]}>
 						  			<Icon name="ios-heart" style={styles.sidebarIcon} />
