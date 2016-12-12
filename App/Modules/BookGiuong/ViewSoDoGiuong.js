@@ -268,54 +268,98 @@ class ViewSoDoGiuong extends Component {
 		if(this.state.checkout) {
 			classContainer = 'containerMarginBottom';
 		}
+		let currentPrice = parseInt(this.props.data.totalPriceInt);
+		let convertPrice = currentPrice.toFixed(0).replace(/./g, function(c, i, a) {
+			return i && c !== "." && ((a.length - i) % 3 === 0) ? ',' + c : c;
+		});
 		return(
 			<View>
 				<ScrollView style={styles[classContainer]}>
+
 					<Card style={styles.paddingContent}>
-						<CardItem header style={{alignItems: 'center', justifyContent: 'center'}}>
-							<View style={{flexDirection: 'row'}}>
-								<View style={{flex: 1}}>
-									<Badge width={5} height={20} backgroundColor={'#d6d7da'}></Badge>
-									<View><Text>Đã có người</Text></View>
+						<CardItem header>
+							<View style={{flexDirection: 'column'}}>
+								<View style={{marginBottom: 10}}>
+									<Text>Nơi đi & Nơi đến: <Text style={{fontWeight: 'bold'}}>{this.state.resultsBen[this.props.data.benA]}</Text> - <Text style={{fontWeight: 'bold'}}>{this.state.resultsBen[this.props.data.benB]}</Text></Text>
+									<Text>Giờ xuất bến: <Text style={{fontWeight: 'bold'}}>{this.props.data.gio_xuat_ben + ' ' + this.props.data.day}</Text></Text>
+									<Text>Giá vé: <Text style={{fontWeight: 'bold'}}>{convertPrice} VNĐ</Text></Text>
 								</View>
-								<View style={{flex: 1}}>
-									<Badge width={5} height={20} backgroundColor={'#ff8c00'}></Badge>
-									<View><Text>Đang chọn</Text></View>
+								<View>
+									<View style={{flexDirection: 'row', flex: 1}}>
+										<View style={{marginRight: 20}}>
+											<View style={{flex: 1}}>
+												<View style={{flexDirection: 'row'}}>
+													<View width={25} height={25} backgroundColor={'#d6d7da'} style={{marginRight: 10,marginTop: -2}}></View>
+													<View><Text>Đã có người</Text></View>
+												</View>
+											</View>
+										</View>
+										<View>
+											<View style={{flex: 1}}>
+												<View style={{flexDirection: 'row'}}>
+													<View width={25} height={25} backgroundColor={'#ff8c00'} style={{marginRight: 10,marginTop: -2}}></View>
+													<View><Text>Đang chọn</Text></View>
+												</View>
+											</View>
+										</View>
+										<View>
+											<View style={{flex: 1}}>
+												<View style={{flexDirection: 'row'}}>
+													<View style={{marginLeft: 5}}></View>
+												</View>
+											</View>
+										</View>
+									</View>
 								</View>
 							</View>
 						</CardItem>
 					</Card>
+
+					{this.state.loading && <Spinner />}
+
 					<View style={{flexDirection: 'column'}}>
-						<Card style={[styles.paddingContent, {flex: 1}]}>
-							<CardItem header style={{alignItems: 'center', justifyContent: 'center'}}>
-								<Text style={{fontSize: 20}}>Tầng 1</Text>
-							</CardItem>
+						{this._renderSoDoGiuong(this.state.results, 1).length > 0 &&
+							<Card style={[styles.paddingContent, {flex: 1}]}>
+								<CardItem header style={{alignItems: 'center', justifyContent: 'center'}}>
+									<Text style={{fontSize: 20}}>Tầng 1</Text>
+								</CardItem>
 
-							<CardItem>
-								{this.state.loading? <Spinner /> : (this._renderSoDoGiuong(this.state.results, 1))}
-								{this.state.loading? <Spinner /> : (this._renderSoDoGiuong(this.state.results, 3))}
-							</CardItem>
-						</Card>
-						<Card style={[styles.paddingContent, {flex: 1}]}>
-							<CardItem header style={{alignItems: 'center', justifyContent: 'center'}}>
-								<Text style={{fontSize: 20}}>Tầng 2</Text>
-							</CardItem>
+								<CardItem>
+									{this._renderSoDoGiuong(this.state.results, 1)}
+									{this._renderSoDoGiuong(this.state.results, 3).length > 0 &&
+										this._renderSoDoGiuong(this.state.results, 3)
+									}
+								</CardItem>
+							</Card>
+						}
 
-							<CardItem>
-								{this.state.loading? <Spinner /> : (this._renderSoDoGiuong(this.state.results, 2))}
-								{this.state.loading? <Spinner /> : (this._renderSoDoGiuong(this.state.results, 4))}
-							</CardItem>
-						</Card>
+						{this._renderSoDoGiuong(this.state.results, 2).length > 0 &&
+							<Card style={[styles.paddingContent, {flex: 1}]}>
+								<CardItem header style={{alignItems: 'center', justifyContent: 'center'}}>
+									<Text style={{fontSize: 20}}>Tầng 2</Text>
+								</CardItem>
+
+								<CardItem>
+									{this._renderSoDoGiuong(this.state.results, 2)}
+									{this._renderSoDoGiuong(this.state.results, 4).length > 0 &&
+										this._renderSoDoGiuong(this.state.results, 4)
+									}
+								</CardItem>
+							</Card>
+						}
 					</View>
-					<Card style={styles.paddingContent}>
-						<CardItem header style={{alignItems: 'center', justifyContent: 'center'}}>
-							<Text style={{fontSize: 20}}>Ghế Sàn</Text>
-						</CardItem>
 
-						<CardItem>
-							{this.state.loading? <Spinner /> : (this._renderSoDoGiuong(this.state.results, 5))}
-						</CardItem>
-					</Card>
+					{this._renderSoDoGiuong(this.state.results, 5).length > 0 &&
+						<Card style={styles.paddingContent}>
+							<CardItem header style={{alignItems: 'center', justifyContent: 'center'}}>
+								<Text style={{fontSize: 20}}>Ghế Sàn</Text>
+							</CardItem>
+
+							<CardItem>
+								{this._renderSoDoGiuong(this.state.results, 5)}
+							</CardItem>
+						</Card>
+					}
 				</ScrollView>
 
 				<View style={{flexDirection: 'row', position: 'absolute', bottom: 0, left: 0}}>
