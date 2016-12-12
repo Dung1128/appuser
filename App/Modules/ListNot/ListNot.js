@@ -79,7 +79,6 @@ class ListNot extends Component {
 			showContentNot: true
 		});
 		var that = this;
-		console.log('xxx123123123');
 		fetch(urlApi+'?day='+this.props.data.fullDate+'&diem_a='+this.props.data.keyDiemDi+'&diem_b='+this.props.data.keyDiemDen, {
 			headers: {
 				'Cache-Control': cache
@@ -192,11 +191,9 @@ class ListNot extends Component {
 				}
 			}
 		}
-		console.log('----');
-		console.log(this.state.results);
 		if(this.state.loading) {
-		let dataNot = this._renderNot(this.state.results);
-	}
+			let dataNot = this._renderNot(this.state.results);
+		}
 		return(
 			<View style={styles.container}>
 				<ScrollView>

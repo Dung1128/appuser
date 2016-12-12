@@ -88,7 +88,6 @@ class DanhGia extends Component {
 
 		for(var i = 0; i < data.length; i++) {
 			var item = data[i];
-			console.log(item);
 			htmlItem.push(
 				<CardItem key={item.dav_did_id+i}>
 					<TouchableOpacity onPress={this._getFormRating.bind(this, item.dav_did_id, dataBen[item.tuy_ben_a], dataBen[item.tuy_ben_b], dataBen[item.dav_diem_a], dataBen[item.dav_diem_b], item.gio_xuat_ben, item.tuy_hanh_trinh)}>
@@ -128,7 +127,6 @@ class DanhGia extends Component {
 	}
 
 	_getFormRating(did_id, benA, benB, benAA, benBB, gio_xuat_ben, hanh_trinh) {
-		console.log('DidID: ' + did_id);
 		this.setState({
 			did_id: did_id,
 			benA: benA,

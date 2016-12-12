@@ -31,7 +31,6 @@ class SideBar extends Component {
          checkLogin: false,
 			dataUser: []
       };
-		console.log(this.props);
    }
 
    _onPressLogout() {

@@ -205,8 +205,6 @@ class ViewSoDoGiuong extends Component {
 			dataBook: dataBook,
 			arrBookGiuong: arrBookGiuong
 		});
-		console.log('-------');
-		console.log(dataBook);
 	}
 
 	_unsetActiveGiuong(id){

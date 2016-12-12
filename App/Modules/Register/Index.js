@@ -76,7 +76,6 @@ class Register extends Component {
 	      });
 	      var that = this;
 			let urlRequest	= domain+'/api/api_user_dang_ky.php?'+encodeURIComponent('fullName='+this.state.fullName+'&email='+this.state.email+'&phone='+this.state.phone+'&password='+this.state.password);
-			console.log(urlRequest);
 	      fetch(urlRequest, {
 				method: 'GET',
 				headers: {
@@ -85,7 +84,6 @@ class Register extends Component {
 			})
 			.then((response) => response.json())
         	.then((responseData) => {
-				console.log(responseData);
             if(responseData.status == 200) {
 					that.setState({
 		            loading: false,
@@ -99,7 +97,7 @@ class Register extends Component {
 				   Actions.welcome({title: 'Đăng Nhập'});
 				}else if(responseData.status == 201) {
 					mesValid.push(
-						<Text key="error_api" style={styles.textErrors}>Số điện thoại không hợp lệ.</Text>
+						<Text key="error_api" style={styles.textErrors}>Số điện thoại đã tồn tại trên hệ thống.</Text>
 					);
 					this.setState({
 						messageError: mesValid,
@@ -147,7 +145,7 @@ class Register extends Component {
 
 						<InputGroup key="group_phone">
 							<Icon name='ios-call' style={styles[this.state.cssError.cssErrorPhone]} />
-							<Input placeholder="Số điện thoại" onChange={(event) => this.setState({phone: event.nativeEvent.text})} />
+							<Input placeholder="Số điện thoại" keyboardType="numeric" onChange={(event) => this.setState({phone: event.nativeEvent.text})} />
 						</InputGroup>
 
 						<InputGroup key="group_password">
