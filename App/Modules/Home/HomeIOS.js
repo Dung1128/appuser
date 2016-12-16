@@ -200,41 +200,54 @@ class HomeIOS extends Component {
 	renderFormSearch(listItem1, listItem2) {
 		let html = [];
 		html.push(
-			<View key="form_search" style={{flexDirection: 'column', padding: 30, marginTop: 10}}>
+			<View key="form_search" style={{flexDirection: 'column', padding: 30, marginTop: 10, width: widthDevice}}>
 				<View>
-					<Text style={{marginBottom: 5}}>Điểm đi:</Text>
-					<View style={{flexDirection: 'row'}}>
-						<ModalPicker
-							key="diemdi"
-							data={listItem1}
-							onChange={(option)=>{ this.setState({nameDiemDi: option.label, keyDiemDi: option.value}) }}>
-  							<Text style={{borderWidth:1, borderColor:'#ccc', paddingLeft:10, height:40, width: (widthDevice-60), marginBottom: 10}}>
-                {this.state.nameDiemDi == ''? 'Chọn điểm đi' : this.state.nameDiemDi}
-                </Text>
-						</ModalPicker>
-					</View>
+					<ModalPicker
+						key="diemdi"
+						data={listItem1}
+						onChange={(option)=>{ this.setState({nameDiemDi: option.label, keyDiemDi: option.value}) }}>
+						 <View style={{flexDirection: 'column', justifyContent: 'center'}}>
+							 <View style={{flexDirection: 'row', alignItems: 'center'}}>
+								 <Icon name="md-bus" style={{width: 30}} />
+								 <Text style={{width: 150, fontSize: 9, marginTop: -10}}>Điểm đi</Text>
+							 </View>
+							 <View style={{borderBottomColor: '#ccc', borderBottomWidth: 1, marginLeft: 30}}>
+								 <Text style={{height:40, alignItems: 'center', justifyContent: 'center', paddingTop: 10, marginTop: -10, paddingLeft: 15}}>{this.state.nameDiemDi == ''? 'Chọn điểm đi' : this.state.nameDiemDi}</Text>
+							 </View>
+						 </View>
+					</ModalPicker>
 				</View>
-				<View>
-					<Text style={{marginBottom: 5}}>Điểm đến:</Text>
-					<View style={{flexDirection: 'row'}}>
-						<ModalPicker
-							key="diemden"
-							data={listItem2}
-							initValue="Chọn điểm đến"
-							onChange={(option2)=>{ this.setState({nameDiemDen: option2.label, keyDiemDen: option2.value}) }}>
-							<Text style={{borderWidth:1, borderColor:'#ccc', paddingLeft:10, height:40, width: (widthDevice-60), marginBottom: 10}}>
-							{this.state.nameDiemDen == ''? 'Chọn điểm đến' : this.state.nameDiemDen}</Text>
-						</ModalPicker>
-					</View>
+				<View style={{marginTop: 20, marginBottom: 20}}>
+					<ModalPicker
+						key="diemden"
+						data={listItem2}
+						initValue="Chọn điểm đến"
+						onChange={(option2)=>{ this.setState({nameDiemDen: option2.label, keyDiemDen: option2.value}) }}>
+						<View style={{flexDirection: 'column', justifyContent: 'center'}}>
+							<View style={{flexDirection: 'row', alignItems: 'center'}}>
+								<Icon name="md-bus" style={{width: 30}} />
+								<Text style={{width: 150, fontSize: 9, marginTop: -10}}>Điểm đi</Text>
+							</View>
+							<View style={{borderBottomColor: '#ccc', borderBottomWidth: 1, marginLeft: 30}}>
+								<Text style={{height:40, alignItems: 'center', justifyContent: 'center', paddingTop: 10, marginTop: -10, paddingLeft: 15}}>{this.state.nameDiemDen == ''? 'Chọn điểm đến' : this.state.nameDiemDen}</Text>
+							</View>
+						</View>
+					</ModalPicker>
 				</View>
-				<View>
-					<Text style={{marginBottom: 5}}>Ngày đi:</Text>
-					<View style={{flexDirection: 'row'}}>
-						<Text style={{flex: 4, borderWidth:1, borderColor:'#ccc', paddingLeft:10, height:40}} onPress={() => this._setDatePickerShow()}>{this.state.fullDate}</Text>
+				<View style={{marginTop: 10, marginBottom: 20}}>
+					<View>
+						<TouchableOpacity onPress={() => this._setDatePickerShow()}>
+							<View style={{flexDirection: 'row', alignItems: 'center'}}>
+								<Icon name="md-calendar" style={{width: 30, flex: 1}} />
+								<View style={{flex: 10, borderBottomColor: '#ccc', borderBottomWidth: 1, marginLeft: 0}}>
+									<Text style={{height:40, alignItems: 'center', justifyContent: 'center', paddingTop: 10, marginTop: -10, paddingLeft: 15}}>{this.state.fullDate == ''? 'Chọn điểm đi' : this.state.fullDate}</Text>
+								</View>
+							</View>
+						</TouchableOpacity>
 					</View>
 				</View>
 				<View style={{marginTop: 20}}>
-					<Button block success onPress={() => this._getNot()}><Icon name='ios-search-outline' /> Tìm kiếm</Button>
+					<Button style={{height: 50}} block success onPress={() => this._getNot()}><Icon name='ios-search-outline' /> Tìm kiếm</Button>
 				</View>
 			</View>
 		);
@@ -394,6 +407,16 @@ class HomeIOS extends Component {
 		return html;
 	}
 
+	convertPrice(price) {
+		let newPrice = 0;
+		if(price > 0) {
+			newPrice = parseInt(price).toFixed(0).replace(/./g, function(c, i, a) {
+				return i && c !== "." && ((a.length - i) % 3 === 0) ? ',' + c : c;
+			});
+		}
+		return(<Text style={{fontWeight: 'bold', color: '#ff931f'}}>{newPrice} VNĐ</Text>);
+	}
+
    render() {
 		let listItem1 = this.state.listItem1;
 		let listItem2 = this.state.listItem2;
@@ -424,7 +447,9 @@ class HomeIOS extends Component {
       return(
 			<View style={styles[classContainer]}>
 				{!this.state.oneSearch &&
-					this.renderFormSearch(listItem1, listItem2)
+					<ScrollView>
+						{this.renderFormSearch(listItem1, listItem2)}
+					</ScrollView>
 				}
 
 				{this.state.oneSearch &&
@@ -455,7 +480,7 @@ class HomeIOS extends Component {
 												</View>
 												<View style={{flex: 1, flexDirection: 'column', justifyContent: 'center',alignItems: 'center'}}>
 													<View style={{padding: 5, alignItems: 'center', justifyContent: 'center'}}>
-														<Text style={{fontWeight: 'bold', color: '#ff931f'}}>{dataNot.price} VNĐ</Text>
+														{this.convertPrice(dataNot.price)}
 													</View>
 		  											<View style={{backgroundColor: '#f9af00', alignItems: 'center', justifyContent: 'center', padding: 10}}>
 														<Text>Chọn Chỗ</Text>
@@ -491,6 +516,7 @@ const styles = StyleSheet.create({
    },
 	columnContainer: {
 		flex: 1,
+		marginTop: 59,
 		flexDirection: 'column',
 		justifyContent: 'center',
 		alignItems: 'center',

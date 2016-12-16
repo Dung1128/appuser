@@ -121,6 +121,17 @@ class ViewSoDoGiuong extends Component {
 				var item = dataTang[i];
 				var htmlChild = [];
 				for(var j in item) {
+					if(Object.keys(item).length <= 2) {
+						if(j == 3) {
+							htmlChild.push(
+								<Col key={i+(j-1)}>
+									<TouchableOpacity style={styles.opacityBg}>
+										<Text style={styles.textCenter}></Text>
+									</TouchableOpacity>
+								</Col>
+							);
+						}
+					}
 					var idGiuong = item[j].sdgct_number;
 					var dataGiuong = this.state.arrVeNumber[idGiuong];
 
@@ -364,9 +375,17 @@ class ViewSoDoGiuong extends Component {
 
 				<View style={{flexDirection: 'row', position: 'absolute', bottom: 0, left: 0}}>
 					  {this.state.checkout &&
-	 				  <TouchableOpacity style={[styles.styleTabbars, {flex: 1, backgroundColor: '#6495ed'}]} onPress={() => Actions.ListOrder({title: 'Danh sách đặt vé', data: {id_dieu_do: this.props.data.id_dieu_do, gio_xuat_ben: this.props.data.day+ ' ' + this.props.data.gio_xuat_ben, dataUser: this.state.infoAdm, dataBook: this.state.dataBook, dataBen: this.props.data.dataBen}})}>
-	 					  <Text style={{color: '#fff'}}>Tiếp tục</Text>
-	 				  </TouchableOpacity>}
+						  <TouchableOpacity style={[styles.styleTabbars, {flex: 1, backgroundColor: '#6495ed'}]} onPress={() => Actions.ListOrder({title: 'Danh sách đặt vé', data: {id_dieu_do: this.props.data.id_dieu_do, gio_xuat_ben: this.props.data.day+ ' ' + this.props.data.gio_xuat_ben, dataUser: this.state.infoAdm, dataBook: this.state.dataBook, dataBen: this.props.data.dataBen}})}>
+						  		<View style={{flexDirection: 'row', flex: 1}}>
+									<View style={{flex: 1, alignItems: 'flex-end', justifyContent: 'center', backgroundColor: 'transparent', paddingRight: 10, marginLeft: 50}}>
+			 					  		<Text style={{color: '#fff'}}>Tiếp tục</Text>
+									</View>
+									<View style={{flex: 1, alignItems: 'flex-start',justifyContent: 'center', backgroundColor: 'transparent', paddingTop: 5}}>
+										<Icon name="md-arrow-round-forward" color={'#fff'} />
+									</View>
+							  	</View>
+		 				  </TouchableOpacity>
+					  }
  			  	</View>
 			</View>
 		);

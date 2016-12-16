@@ -88,7 +88,7 @@ class LichSu extends Component {
 						<CardItem>
 							<View>
 								<Text>Họ tên: <Text style={styles.fontBold}>{this.props.data.dataUser.use_gmail}</Text></Text>
-								<Text>Số điện thoại: {this.props.data.dataUser.use_phone}</Text>
+								<Text>Số điện thoại: <Text style={styles.fontBold}>{this.props.data.dataUser.use_phone}</Text></Text>
 								<Text>Giờ xuất bến: <Text style={styles.fontBold}>{this.props.data.gio_xuat_ben}</Text></Text>
 							</View>
 						</CardItem>
@@ -110,11 +110,12 @@ class LichSu extends Component {
 								<View style={{flex: 1}}>
 									<Text>Chúng tôi có dịch vụ xe trung chuyển đón tại nhà MIỄN PHÍ.</Text>
 								</View>
-								<View style={{flexDirection: 'row', marginTop: 10}}>
-									<TouchableOpacity onPress={() => this._handleCheckBox()} style={{flex: 1}}>
+								<View style={{flexDirection: 'row', marginTop: 10, overflow: 'hidden'}}>
+									<TouchableOpacity onPress={() => this._handleCheckBox()} style={{zIndex: 1, position: 'absolute', top: 0, left: 0, width: widthDevice, height: 50}}></TouchableOpacity>
+									<View style={{flex: 1}}>
 										<View style={[styles[this.state.selectCheckbox], {width: 20, height: 20, borderRadius: 100, borderWidth: 1}]}></View>
-								  </TouchableOpacity>
-								  <Text style={{flex: 6}}>Có sử dụng dịch vụ trung chuyển tại nhà</Text>
+									</View>
+								  	<Text style={{flex: 7, color: 'red'}}>Bạn có muốn sử dụng dịch vụ trung chuyển tại nhà</Text>
 								</View>
 								{this.state.trungChuyen &&
 									<InputGroup key="group_address">
@@ -122,7 +123,7 @@ class LichSu extends Component {
 										<Input placeholder="Địa chỉ cần đón" onChange={(event) => this.setState({address: event.nativeEvent.text})} />
 									</InputGroup>
 								}
-								{this.state.loadingOrder? <Spinner /> : <Button block success onPress={() => this._handleSaveOrder()} style={{marginTop: 10}}>Thanh Toán</Button>}
+								{this.state.loadingOrder? <Spinner /> : <Button block success onPress={() => this._handleSaveOrder()} style={{marginTop: 10, height: 50}}>Thanh Toán</Button>}
 							</View>
 						</CardItem>
 					</Card>
@@ -162,7 +163,7 @@ class LichSu extends Component {
 			that.setState({
 				loadingOrder: false
 			});
-			Actions.Checkout({title: 'Thanh Toán', data: {adm_id: this.props.data.dataUser.adm_id}});
+			Actions.Payment({title: 'Thanh Toán', data: {adm_id: this.props.data.dataUser.adm_id, orderId: responseJson.orderId}});
 		})
 		.catch((error) => {
 			console.error(error);

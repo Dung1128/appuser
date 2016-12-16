@@ -21,6 +21,7 @@ import LichSu from './Modules/LichSu/Index';
 import DanhGia from './Modules/DanhGia/Index';
 import ListOrder from './Modules/ListOrder/Index';
 import Checkout from './Modules/Checkout/Index';
+import Payment from './Modules/Checkout/Payment';
 import GopY from './Modules/GopY/Index';
 import Contact from './Modules/Contact/Index';
 import ListNews from './Modules/News/ListNews';
@@ -54,11 +55,12 @@ class App extends Component {
 					<Scene key="LichSu" component={LichSu} title="Lịch Sử" />
 					<Scene key="DanhGia" component={DanhGia} title="Đánh Giá" />
 					<Scene key="ListOrder" component={ListOrder} title="Danh sách đặt vé" />
-					<Scene key="Checkout" component={Checkout} title="Thanh Toán" />
+					<Scene key="Checkout" component={Checkout} title="Thanh Toán Thành Công" />
 					<Scene key="gopy" component={GopY} title="Góp Ý" />
 					<Scene key="Contact" component={Contact} title="Liên Hệ" />
 					<Scene key="ListNews" component={ListNews} title="Danh sách tin tức" />
 					<Scene key="DetailNews" component={DetailNews} title="Chi tiết tin tức" />
+					<Scene key="Payment" component={Payment} title="Thanh Toán" hideNavBar={true} />
   	       	</Scene>
        	</Router>
 		);

@@ -25,7 +25,6 @@ class Welcome extends Component {
    }
 
 	componentWillMount() {
-
 		this.setState({
 			loading: true
 		});
