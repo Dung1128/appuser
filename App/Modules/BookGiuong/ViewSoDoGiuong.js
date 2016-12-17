@@ -48,7 +48,8 @@ class ViewSoDoGiuong extends Component {
 			dataBook: [],
 			arrBookGiuong: [],
 			themVe: [],
-			arrThemve: []
+			arrThemve: [],
+			twoColumn: 'column'
 		};
 	}
 
@@ -247,31 +248,16 @@ class ViewSoDoGiuong extends Component {
 				}
 			}
 		}
-		// if(!checkGiuongCurrent) {
-		// 	this.setState({
-		// 		loadingModalAction: true
-		// 	});
-		// 	let dataGiuong = this.state.arrVeNumber[this.state.currentIdGiuong];
-		// 	let that = this;
-		// 	let params = '?dav_did_id='+dataGiuong.bvv_bvn_id+'&dav_number='+dataGiuong.bvv_number+'&user_id='+this.props.data.adm_id;
-		// 	fetch(domain+'/api/api_user_remove_ve.php'+params)
-		// 	.then((response) => response.json())
-		// 	.then((responseJson) => {
-		// 		let setStatus = that.state.arrVeNumber;
-		// 		setStatus[that.state.currentIdGiuong].bvv_status = -2;
-		// 		console.log('huy');
-		// 		that.setState({
-		// 			arrVeNumber: setStatus,
-		// 			loadingModalAction: false
-		// 		});
-		// 	})
-		// 	.catch((error) => {
-		// 		that.setState({
-		// 			loadingModalAction: false
-		// 		});
-		// 		console.error(error);
-		// 	});
-		// }
+	}
+
+	_onLayout = event => {
+		let widthDevice = Dimensions.get('window').width;
+		let heightDevice = Dimensions.get('window').height;
+		let twoColumn = (widthDevice >= 600)? 'row' : 'column' ;
+
+    	this.setState({
+			twoColumn: twoColumn
+    	});
 	}
 
 	render() {
@@ -284,10 +270,10 @@ class ViewSoDoGiuong extends Component {
 			return i && c !== "." && ((a.length - i) % 3 === 0) ? ',' + c : c;
 		});
 		return(
-			<View>
-				<ScrollView style={styles[classContainer]}>
+			<View onLayout={this._onLayout}>
+				<ScrollView style={[styles[classContainer]]}>
 
-					<Card style={styles.paddingContent}>
+					<Card style={[styles.paddingContent]}>
 						<CardItem header>
 							<View style={{flexDirection: 'column'}}>
 								<View style={{marginBottom: 10}}>
@@ -328,7 +314,7 @@ class ViewSoDoGiuong extends Component {
 
 					{this.state.loading && <Spinner />}
 
-					<View style={{flexDirection: 'column'}}>
+					<View style={{flexDirection: this.state.twoColumn}}>
 						{this._renderSoDoGiuong(this.state.results, 1).length > 0 &&
 							<Card style={[styles.paddingContent, {flex: 1}]}>
 								<CardItem header style={{alignItems: 'center', justifyContent: 'center'}}>
@@ -512,7 +498,7 @@ const styles = StyleSheet.create({
 		paddingTop: 65
 	},
 	modalPopupOrder: {
-		width:widthDevice,
+		width: widthDevice,
 		paddingRight: 0,
 		paddingLeft: 0
 	},

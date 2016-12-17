@@ -9,7 +9,7 @@ import {
 	TouchableOpacity
 } from 'react-native';
 import {domain,cache} from '../../Config/common';
-import { Text, Button, Card, CardItem, Spinner, Icon } from 'native-base';
+import { Text, Input, Button, Card, CardItem, Spinner, Icon } from 'native-base';
 import CalendarPicker from 'react-native-calendar-picker';
 import {Actions} from 'react-native-router-flux';
 import Modal from 'react-native-modalbox';
@@ -50,7 +50,9 @@ class HomeIOS extends Component {
 			nameDiemDen: '',
 			selectCheckbox: 'borderCheckbox',
 			editFormSearch: false,
-			countClickNextDay: true
+			countClickNextDay: true,
+			search1: false,
+			search2: false
       };
    }
 
@@ -197,44 +199,112 @@ class HomeIOS extends Component {
 		}
 	}
 
+	_handleSearchAutocomplate1(nameDiemDi) {
+		let listItem1 = this.state.listItem1;
+		let html = [];
+		let childHtml = [];
+		for(var i = 0; i < listItem1.length; i++) {
+			if(listItem1[i].label.includes(nameDiemDi)) {
+				let value = listItem1[i].value;
+				let label = listItem1[i].label;
+				childHtml.push(
+					<View key={i} style={{borderBottomWidth: 1, borderBottomColor: '#ccc', padding: 10}}>
+						<TouchableOpacity onPress={() => this.setState({keyDiemDi: value, nameDiemDi: label, search1: false}) }>
+							<Text>{label}</Text>
+						</TouchableOpacity>
+					</View>
+				);
+			}
+		}
+
+		html.push(
+			<View key="scroll_autocomplate1" style={{height: 200, overflow: 'hidden', borderTopWidth: 1, borderTopColor: '#ccc'}}>
+				<ScrollView>
+					{childHtml}
+				</ScrollView>
+			</View>
+		);
+		return html;
+	}
+
+	_handleSearchAutocomplate2(nameDiemDen) {
+		let listItem2 = this.state.listItem2;
+		let html = [];
+		for(var i = 0; i < listItem2.length; i++) {
+			if(listItem2[i].label.includes(nameDiemDen)) {
+				let value = listItem2[i].value;
+				let label = listItem2[i].label;
+				html.push(
+					<View key={i} style={{borderBottomWidth: 1, borderBottomColor: '#ccc', padding: 10}}>
+						<TouchableOpacity onPress={() => this.setState({keyDiemDen: value, nameDiemDen: label, search2: false}) }>
+							<Text>{label}</Text>
+						</TouchableOpacity>
+					</View>
+				);
+			}
+		}
+
+		return html;
+	}
+
+	_handleSetDiemDi(nameDiemDi) {
+		if(nameDiemDi.length > 0) {
+			this.setState({nameDiemDi: nameDiemDi, search1: true});
+		}else {
+			this.setState({nameDiemDi: nameDiemDi, search1: false});
+		}
+	}
+
+	_handleSetDiemDen(nameDiemDen) {
+		if(nameDiemDen.length > 0) {
+			this.setState({nameDiemDen: nameDiemDen, search2: true});
+		}else {
+			this.setState({nameDiemDen: nameDiemDen, search2: false});
+		}
+	}
+
 	renderFormSearch(listItem1, listItem2) {
 		let html = [];
 		html.push(
 			<View key="form_search" style={{flexDirection: 'column', padding: 30, marginTop: 10, width: widthDevice}}>
-				<View>
-					<ModalPicker
-						key="diemdi"
-						data={listItem1}
-						onChange={(option)=>{ this.setState({nameDiemDi: option.label, keyDiemDi: option.value}) }}>
-						 <View style={{flexDirection: 'column', justifyContent: 'center'}}>
-							 <View style={{flexDirection: 'row', alignItems: 'center'}}>
-								 <Icon name="md-bus" style={{width: 30}} />
-								 <Text style={{width: 150, fontSize: 9, marginTop: -10}}>Điểm đi</Text>
-							 </View>
-							 <View style={{borderBottomColor: '#ccc', borderBottomWidth: 1, marginLeft: 30}}>
-								 <Text style={{height:40, alignItems: 'center', justifyContent: 'center', paddingTop: 10, marginTop: -10, paddingLeft: 15}}>{this.state.nameDiemDi == ''? 'Chọn điểm đi' : this.state.nameDiemDi}</Text>
-							 </View>
-						 </View>
-					</ModalPicker>
+				<View style={{zIndex: 3, position: 'relative'}}>
+					<View style={{flexDirection: 'column', justifyContent: 'center'}}>
+						<View style={{flexDirection: 'row', alignItems: 'center'}}>
+							<Icon name="md-bus" style={{width: 30}} />
+							<Text style={{width: 150, fontSize: 9, marginTop: -10}}>Điểm đi</Text>
+						</View>
+						<View style={{borderBottomColor: '#ccc', borderBottomWidth: 1, marginLeft: 30}}>
+							<Input placeholder="Nhập tên điểm đi" value={this.state.nameDiemDi} onChangeText={(nameDiemDi) => this._handleSetDiemDi(nameDiemDi)}  style={{height:40, alignItems: 'center', justifyContent: 'center', paddingTop: 10, marginTop: -10, paddingLeft: 15}} />
+						</View>
+						{this.state.search1 &&
+							<View style={{marginLeft: 30, backgroundColor: '#f6fbff', maxHeight: 200}}>
+								<ScrollView>
+									{this._handleSearchAutocomplate1(this.state.nameDiemDi)}
+								</ScrollView>
+							</View>
+						}
+				 	</View>
 				</View>
-				<View style={{marginTop: 20, marginBottom: 20}}>
-					<ModalPicker
-						key="diemden"
-						data={listItem2}
-						initValue="Chọn điểm đến"
-						onChange={(option2)=>{ this.setState({nameDiemDen: option2.label, keyDiemDen: option2.value}) }}>
+				<View style={{marginTop: 20, marginBottom: 20, zIndex: 2}}>
+
 						<View style={{flexDirection: 'column', justifyContent: 'center'}}>
 							<View style={{flexDirection: 'row', alignItems: 'center'}}>
 								<Icon name="md-bus" style={{width: 30}} />
-								<Text style={{width: 150, fontSize: 9, marginTop: -10}}>Điểm đi</Text>
+								<Text style={{width: 150, fontSize: 9, marginTop: -10}}>Điểm đến</Text>
 							</View>
 							<View style={{borderBottomColor: '#ccc', borderBottomWidth: 1, marginLeft: 30}}>
-								<Text style={{height:40, alignItems: 'center', justifyContent: 'center', paddingTop: 10, marginTop: -10, paddingLeft: 15}}>{this.state.nameDiemDen == ''? 'Chọn điểm đến' : this.state.nameDiemDen}</Text>
+								<Input placeholder="Nhập tên điểm đến" value={this.state.nameDiemDen} onChangeText={(nameDiemDen) => this._handleSetDiemDen(nameDiemDen)}  style={{height:40, alignItems: 'center', justifyContent: 'center', paddingTop: 10, marginTop: -10, paddingLeft: 15}} />
 							</View>
 						</View>
-					</ModalPicker>
+						{this.state.search2 &&
+							<View style={{marginLeft: 30, backgroundColor: '#f6fbff', height: 200}}>
+								<ScrollView>
+									{this._handleSearchAutocomplate2(this.state.nameDiemDen)}
+								</ScrollView>
+							</View>
+						}
 				</View>
-				<View style={{marginTop: 10, marginBottom: 20}}>
+				<View style={{marginTop: 10, marginBottom: 20, zIndex: 1}}>
 					<View>
 						<TouchableOpacity onPress={() => this._setDatePickerShow()}>
 							<View style={{flexDirection: 'row', alignItems: 'center'}}>
@@ -377,7 +447,7 @@ class HomeIOS extends Component {
 
 		if(parseInt(totalDate) > parseInt(newCurrentDate)) {
 			htmlBackArrow.push(
-				<TouchableOpacity key="button_back_arrow" onPress={() => this._handleSearchPrevDay()} style={{flex: 2, alignItems: 'center'}}>
+				<TouchableOpacity key="button_back_arrow" onPress={() => this._handleSearchPrevDay()} style={{flex: 4, alignItems: 'center'}}>
 					<Icon key="back_arrow" name="ios-arrow-back" style={{backgroundColor: '#f5ac00', color: '#fff', height: 35, paddingTop: 3, paddingRight: 10, paddingLeft: 10}} />
 				</TouchableOpacity>
 			);
@@ -385,20 +455,20 @@ class HomeIOS extends Component {
 
 		html.push(
 			<View key="button_search" style={{flexDirection: 'row', paddingRight: 5, paddingLeft: 5, marginTop: 20}}>
-				<View style={{flex: 3, marginRight: 5}}>
+				<View style={{flex: 4, marginRight: 5}}>
 					<View style={{flexDirection: 'row'}}>
 						{htmlBackArrow}
-						<View style={{flex: 6, alignItems: 'center', backgroundColor: '#ffc20d'}}>
+						<View style={{flex: 7, alignItems: 'center', backgroundColor: '#ffc20d'}}>
 							<Text style={{backgroundColor: '#ffc20d', color: '#fff', height: 35, paddingTop: 7, paddingRight: 5, paddingLeft: 5}}>{this.state.fullDate}</Text>
 						</View>
-						<TouchableOpacity key="button_next_arrow" onPress={() => this._handleSearchNextDay()} style={{flex: 2, alignItems: 'center'}}>
+						<TouchableOpacity key="button_next_arrow" onPress={() => this._handleSearchNextDay()} style={{flex: 4, alignItems: 'center'}}>
 							<Icon key="next_arrow" name="ios-arrow-forward" style={{backgroundColor: '#f5ac00', color: '#fff', height: 35, paddingTop: 3, paddingRight: 10, paddingLeft: 10}} />
 						</TouchableOpacity>
 					</View>
 				</View>
-				<View style={{flex: 4, backgroundColor: '#ffc20d', alignItems: 'center', justifyContent: 'center'}}>
+				<View style={{flex: 3, backgroundColor: '#ffc20d', alignItems: 'center', justifyContent: 'center'}}>
 					<TouchableOpacity onPress={() => this.showFormEditSearch()}>
-						<Text style={{color: '#fff'}}>{this.state.editFormSearch? 'Đóng' : 'Sửa nơi đi, nơi đến, ngày đi'}</Text>
+						<Text style={{color: '#fff'}}>{this.state.editFormSearch? 'Đóng' : 'Sửa nơi đi, nơi đến'}</Text>
 					</TouchableOpacity>
 				</View>
 			</View>
