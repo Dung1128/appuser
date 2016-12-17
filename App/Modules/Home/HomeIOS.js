@@ -272,8 +272,7 @@ class HomeIOS extends Component {
 			var today = new Date(arrDay[1]+'/'+arrDay[0]+'/'+arrDay[2]);
 			var tomorrow = new Date(today);
 			tomorrow.setDate(today.getDate()+1);
-			let arrNewDay = tomorrow.toLocaleDateString().split('/');
-			let newDay = tomorrow.getDate()+'-'+tomorrow.getMonth()+'-'+tomorrow.getFullYear();
+			let newDay = tomorrow.getDate()+'-'+(tomorrow.getMonth()+1)+'-'+tomorrow.getFullYear();
 			this.setState({
 				fullDate: newDay
 			});
@@ -317,9 +316,7 @@ class HomeIOS extends Component {
 			var today = new Date(arrDay[1]+'/'+arrDay[0]+'/'+arrDay[2]);
 			var tomorrow = new Date(today);
 			tomorrow.setDate(today.getDate()-1);
-			let arrNewDay = tomorrow.toLocaleDateString().split('/');
-			let newDay = arrNewDay[1]+'-'+arrNewDay[0]+'-'+arrNewDay[2];
-
+			let newDay = tomorrow.getDate()+'-'+(tomorrow.getMonth()+1)+'-'+tomorrow.getFullYear();
 			this.setState({
 				fullDate: newDay
 			});
@@ -380,24 +377,26 @@ class HomeIOS extends Component {
 
 		if(parseInt(totalDate) > parseInt(newCurrentDate)) {
 			htmlBackArrow.push(
-				<TouchableOpacity key="button_back_arrow" onPress={() => this._handleSearchPrevDay()} style={{flex: 1}}>
-					<Icon key="back_arrow" name="ios-arrow-back" style={{backgroundColor: '#f5ac00', color: '#fff', height: 35, paddingTop: 3, paddingLeft: 4}} />
+				<TouchableOpacity key="button_back_arrow" onPress={() => this._handleSearchPrevDay()} style={{flex: 2, alignItems: 'center'}}>
+					<Icon key="back_arrow" name="ios-arrow-back" style={{backgroundColor: '#f5ac00', color: '#fff', height: 35, paddingTop: 3, paddingRight: 10, paddingLeft: 10}} />
 				</TouchableOpacity>
 			);
 		}
 
 		html.push(
 			<View key="button_search" style={{flexDirection: 'row', paddingRight: 5, paddingLeft: 5, marginTop: 20}}>
-				<View style={{flex: 2, marginRight: 50}}>
+				<View style={{flex: 3, marginRight: 5}}>
 					<View style={{flexDirection: 'row'}}>
 						{htmlBackArrow}
-						<Text style={{flex: 5, backgroundColor: '#ffc20d', color: '#fff', height: 35, paddingTop: 7, paddingLeft: 15}}>{this.state.fullDate}</Text>
-						<TouchableOpacity onPress={() => this._handleSearchNextDay()} style={{flex: 1}}>
-							<Icon key="next_arrow" name="ios-arrow-forward" style={{backgroundColor: '#f5ac00', color: '#fff', height: 35, paddingTop: 3, paddingLeft: 5}} />
+						<View style={{flex: 6, alignItems: 'center', backgroundColor: '#ffc20d'}}>
+							<Text style={{backgroundColor: '#ffc20d', color: '#fff', height: 35, paddingTop: 7, paddingRight: 5, paddingLeft: 5}}>{this.state.fullDate}</Text>
+						</View>
+						<TouchableOpacity key="button_next_arrow" onPress={() => this._handleSearchNextDay()} style={{flex: 2, alignItems: 'center'}}>
+							<Icon key="next_arrow" name="ios-arrow-forward" style={{backgroundColor: '#f5ac00', color: '#fff', height: 35, paddingTop: 3, paddingRight: 10, paddingLeft: 10}} />
 						</TouchableOpacity>
 					</View>
 				</View>
-				<View style={{flex: 3, backgroundColor: '#ffc20d', alignItems: 'center', justifyContent: 'center'}}>
+				<View style={{flex: 4, backgroundColor: '#ffc20d', alignItems: 'center', justifyContent: 'center'}}>
 					<TouchableOpacity onPress={() => this.showFormEditSearch()}>
 						<Text style={{color: '#fff'}}>{this.state.editFormSearch? 'Đóng' : 'Sửa nơi đi, nơi đến, ngày đi'}</Text>
 					</TouchableOpacity>

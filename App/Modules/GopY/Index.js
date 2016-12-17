@@ -9,7 +9,7 @@ import {
   ScrollView,
   TextInput
 } from 'react-native';
-import { Icon, Spinner } from 'native-base';
+import { Icon, Spinner, Input } from 'native-base';
 import {Actions} from 'react-native-router-flux';
 
 import {domain,cache} from '../../Config/common';
@@ -87,25 +87,25 @@ class GopY extends Component {
 						<View style={[styles[this.state.errorFullname], styles.groupInput]}>
 							<Text>Họ và Tên:</Text>
 							<View style={styles.input}>
-								<TextInput style={[{height: 30}]} placeholder="Nhập họ và tên" onChangeText={(text) => this.setState({fullname: text})} />
+								<Input style={[{height: 50}]} placeholder="Nhập họ và tên" onChangeText={(text) => this.setState({fullname: text})} />
 							</View>
 						</View>
 						<View style={[styles[this.state.errorEmail], styles.groupInput]}>
 							<Text>Địa chỉ Email:</Text>
-							<View style={styles.input}>
-								<TextInput placeholder="Địa chỉ Email" style={{height: 30}} onChangeText={(text) => this.setState({email: text})} />
+							<View style={[styles.input]}>
+								<Input placeholder="Địa chỉ Email" style={{height: 50}} onChangeText={(text) => this.setState({email: text})} />
 							</View>
 						</View>
 						<View style={[styles[this.state.errorPhone], styles.groupInput]}>
 							<Text>Số điện thoại:</Text>
 							<View style={styles.input}>
-								<TextInput placeholder="Số điện thoại" style={{height: 30}} onChangeText={(text) => this.setState({phone: text})} />
+								<Input placeholder="Số điện thoại" style={{height: 50}} onChangeText={(text) => this.setState({phone: text})} />
 							</View>
 						</View>
 						<View style={[styles[this.state.errorContent], styles.groupInput]}>
 							<Text>Nội dung góp ý:</Text>
 							<View style={styles.input}>
-								<TextInput multiline={true} numberOfLines={5} placeholder="Nội dung góp ý" style={{height: 80, fontSize: 17}} onChangeText={(text) => this.setState({content: text})} />
+								<Input multiline={true} numberOfLines={5} placeholder="Nội dung góp ý" style={{height: 80, fontSize: 17}} onChangeText={(text) => this.setState({content: text})} />
 							</View>
 						</View>
 						<View style={styles.groupInput}>

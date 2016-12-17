@@ -35,12 +35,11 @@ class Checkout extends Component {
 	}
 
 	render() {
-		alert('http://hasonhaivan.com/thanh-toan.html?order='+this.props.data.orderId);
 		return(
 			<View style={{height: height, width: width}}>
-				<View style={{position: 'absolute', top: 0, left: 0, zIndex: 1, backgroundColor: 'transparent', padding: 15}}>
-					<TouchableOpacity onPress={() => this._backPayment()}>
-						<Icon name="md-arrow-round-back" />
+				<View style={{position: 'absolute', bottom: 0, width: width, left: 0, zIndex: 1, backgroundColor: '#ccc', height: 40, alignItems: 'flex-start', justifyContent: 'center'}}>
+					<TouchableOpacity onPress={() => this._backPayment()} style={{width: width}}>
+						<Icon name="md-arrow-round-back" style={{marginLeft: 20}} />
 					</TouchableOpacity>
 				</View>
 
@@ -49,6 +48,7 @@ class Checkout extends Component {
 					startInLoadingState={this.state.loading}
 					automaticallyAdjustContentInsets={false}
 					javaScriptEnabled={true}
+					style={{marginBottom: 40}}
 				/>
 			</View>
 		);
