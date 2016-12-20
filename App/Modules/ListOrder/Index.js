@@ -24,7 +24,8 @@ class LichSu extends Component {
 			trungChuyen: false,
 			address: '',
 			trungChuyen: false,
-			selectCheckbox: 'borderCheckbox'
+			selectCheckbox: 'borderCheckbox',
+			ghi_chu: ''
 		};
    }
 
@@ -123,6 +124,11 @@ class LichSu extends Component {
 										<Input placeholder="Địa chỉ cần đón" onChange={(event) => this.setState({address: event.nativeEvent.text})} />
 									</InputGroup>
 								}
+
+								<InputGroup key="group_ghi_chu">
+									<Icon name='ios-pin' />
+									<Input placeholder="Ghi chú" onChange={(event) => this.setState({ghi_chu: event.nativeEvent.text})} />
+								</InputGroup>
 								{this.state.loadingOrder? <Spinner /> : <Button block success onPress={() => this._handleSaveOrder()} style={{marginTop: 10, height: 50}}>Thanh Toán</Button>}
 							</View>
 						</CardItem>
@@ -152,7 +158,7 @@ class LichSu extends Component {
 		that.setState({
 			loadingOrder: true
 		});
-		let params = 'type=insert&bvv_bvn_id='+this.props.data.id_dieu_do+'&user_id='+this.props.data.dataUser.adm_id+'&gio_xuat_ben='+JSON.stringify(this.props.data.gio_xuat_ben)+'&dataBook='+dataBook+'&address='+this.state.address;
+		let params = 'type=insert&bvv_bvn_id='+this.props.data.id_dieu_do+'&user_id='+this.props.data.dataUser.adm_id+'&gio_xuat_ben='+JSON.stringify(this.props.data.gio_xuat_ben)+'&dataBook='+dataBook+'&address='+this.state.address+'&ghi_chu='+this.state.ghi_chu;
 		fetch(domain+'/api/api_user_save_order.php?'+params, {
 			headers: {
 				'Cache-Control': cache

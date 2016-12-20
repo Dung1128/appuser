@@ -70,7 +70,6 @@ class ViewSoDoGiuong extends Component {
 		});
 		var that = this;
 		setTimeout(() => {
-
 			fetch(domain+'/api/api_adm_so_do_giuong.php?not_id='+this.props.data.notId+'&day='+this.props.data.day, {
 				headers: {
 					'Cache-Control': cache
