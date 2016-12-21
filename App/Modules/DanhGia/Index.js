@@ -174,7 +174,7 @@ class DanhGia extends Component {
 				  	<TouchableOpacity onPress={() => this.closeModal()} style={{width: 50, height: 40, position: 'absolute', right: 0, top: 0, padding: 10}}>
 					  	<Icon name="ios-close-circle" />
 				  	</TouchableOpacity>
-					<View style={{height: 300, paddingBottom: 50}}>
+					<View style={{paddingBottom: 50}}>
 						<ScrollView>
 							<View style={{flexDirection: 'column', width: widthDevice, padding: 20}}>
 								<Text style={{marginBottom: 20}}>Nơi đi & Nơi đến: <Text style={{fontWeight: 'bold'}}>{this.state.benAA} -> {this.state.benBB}</Text></Text>

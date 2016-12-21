@@ -26,6 +26,7 @@ import GopY from './Modules/GopY/Index';
 import Contact from './Modules/Contact/Index';
 import ListNews from './Modules/News/ListNews';
 import DetailNews from './Modules/News/DetailNews';
+import HuongDanSuDung from './Modules/HuongDanSuDung/Index';
 import Welcome from './Welcome';
 
 const reducerCreate = params => {
@@ -61,6 +62,7 @@ class App extends Component {
 					<Scene key="ListNews" component={ListNews} title="Danh sách tin tức" />
 					<Scene key="DetailNews" component={DetailNews} title="Chi tiết tin tức" />
 					<Scene key="Payment" component={Payment} title="Thanh Toán" hideNavBar={true} />
+					<Scene key="HuongDanSuDung" component={HuongDanSuDung} title="Hướng đẫn sử dụng" hideNavBar={true} />
   	       	</Scene>
        	</Router>
 		);

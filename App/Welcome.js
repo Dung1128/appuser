@@ -120,11 +120,11 @@ class Welcome extends Component {
 			<View key="content_login" style={styles.paddingContent}>
 				<InputGroup key="group_username">
 					<Icon name='ios-call' style={styles[this.state.cssError]} />
-					<Input placeholder="Số điện thoại" keyboardType="numeric" onChange={(event) => this.setState({username: event.nativeEvent.text})} />
+					<Input placeholder="Số điện thoại" style={{height: 50}} keyboardType="numeric" onChange={(event) => this.setState({username: event.nativeEvent.text})} />
 				</InputGroup>
 				<InputGroup key="group_password">
 					<Icon name='ios-unlock' style={styles[this.state.cssError]} />
-					<Input placeholder="Mật khẩu" secureTextEntry={true} onChange={(event) => this.setState({password: event.nativeEvent.text})} />
+					<Input placeholder="Mật khẩu" style={{height: 50}} secureTextEntry={true} onChange={(event) => this.setState({password: event.nativeEvent.text})} />
 				</InputGroup>
 
 				{arrValid}
@@ -133,13 +133,13 @@ class Welcome extends Component {
 					<Button
 						block
 						success
-						style={[styles.buttonLogin, {flex: 1}]}
+						style={[styles.buttonLogin, {flex: 1, height: 50}]}
 						onPress={this.handleLogin.bind(this)}
 					>Đăng nhập</Button>
 					<Button
 						block
 						info
-						style={[styles.buttonRegister, {flex: 1}]}
+						style={[styles.buttonRegister, {flex: 1, height: 50}]}
 						onPress={() => Actions.Register({title: 'Đăng Ký', hideNavBar: false})}
 					>Đăng ký</Button>
 				</View>
