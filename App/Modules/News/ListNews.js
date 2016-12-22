@@ -36,6 +36,7 @@ class ListNews extends Component {
 		})
       .then((response) => response.json())
       .then((responseJson) => {
+			console.log(responseJson);
 			that.setState({
 				results: responseJson.dataNews,
 				loading: false

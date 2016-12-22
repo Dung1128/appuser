@@ -31,7 +31,6 @@ class LichSu extends Component {
 		});
 		var that = this;
 
-
       fetch(domain+'/api/api_user_lich_su_order.php?notId=0&user_id='+this.props.data.adm_id, {
 			headers: {
 				'Cache-Control': cache
@@ -85,11 +84,13 @@ class LichSu extends Component {
 					<TouchableOpacity>
 							<View style={{flex: 5}}>
 							<Text>Mã Đơn Hàng: <Text style={styles.fontBold}>{item.oder.ord_ma}</Text></Text>
+							<Text>Thời gian đặt vé: <Text style={styles.fontBold}>{item.oder.ord_time_book}</Text></Text>
 							<Text>Họ tên: <Text style={styles.fontBold}>{item.oder.ord_ten_khach_hang}</Text></Text>
 							<Text>Số điện thoại: {item.oder.ord_phone}</Text>
 							<Text>Tuyến đi: {this.state.dataBen[item.datve.tuy_ben_a]} -> {this.state.dataBen[item.datve.tuy_ben_b]}</Text>
 							<Text>Nơi đi & Nơi đến: {this.state.dataBen[item.datve.dav_diem_a]} -> {this.state.dataBen[item.datve.dav_diem_b]}</Text>
-							<Text>Số ghế: <Text style={styles.fontBold}>{item.datve.number_ghe}</Text></Text>
+							<Text>Thời gian xuất bến: <Text style={styles.fontBold}>{item.oder.ord_time_book}</Text></Text>
+							<Text>Số ghế: <Text style={styles.fontBold}>{item.datve.gio_xuat_ben}</Text></Text>
 							<Text>Tổng tiền: <Text style={styles.fontBold}>{newPrice1 + ' VNĐ'}</Text></Text>
 						</View>
 					</TouchableOpacity>

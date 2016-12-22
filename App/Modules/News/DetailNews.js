@@ -21,6 +21,10 @@ class DetailNews extends Component {
 
 	constructor(props) {
 		super(props);
+		this.state = {
+			webViewHeight: 0,
+			loading: true
+		}
 	}
 
 	_getApiNews() {
@@ -75,30 +79,56 @@ class DetailNews extends Component {
 		return html;
 	}
 
+	componentDidMount() {
+		this.setState({
+			loading: true
+		});
+		var that = this;
+      fetch(domain+'/api/api_user_get_content.php?newsId='+this.props.data.idNews, {
+			headers: {
+				'Cache-Control': cache
+			}
+		})
+      .then((response) => response.json())
+      .then((responseJson) => {
+			that.setState({
+				results: responseJson.data,
+				loading: false
+			});
+      })
+      .catch((error) => {
+         console.error(error);
+      });
+	}
+
 	onNavigationStateChange(navState) {
-    	this.setState({
-      	height: parseInt(navState.title)
-    	});
+		this.setState({
+		  webViewHeight: Number(navState.title)
+		});
   	}
 
 	render() {
 		return(
 			<View>
 				<ScrollView>
-					<WebView
-			        source={{uri: domain+'/api/api_user_news.php?type=1&idNews='+this.props.data.idNews+'&version=0.0.13'}}
-			        style={{marginTop: 59, height: this.state.height}}
-					  startInLoadingState={this.state.loading}
-					  scrollEnabled={false}
-					  automaticallyAdjustContentInsets={false}
-					  javaScriptEnabled={true}
-					  onNavigationStateChange={this.onNavigationStateChange.bind(this)}
-			      />
+					{this.state.loading && <Text>Loading...</Text>}
+					{!this.state.loading &&
+						<WebView
+						  automaticallyAdjustContentInsets={false}
+						  javaScriptEnabled={true}
+						  domStorageEnabled={true}
+						  scrollEnabled={false}
+						  onNavigationStateChange={this.onNavigationStateChange.bind(this)}
+						  style={{marginTop: 59, height: this.state.webViewHeight}}
+						  source={{html: '<html><body>'+this.state.results.new_description+'</body></html>'}}
+						  injectedJavaScript={'document.title = Math.max(window.innerHeight, document.body.offsetHeight, document.documentElement.clientHeight);'}
+				      />
+					}
 
 					<View style={{padding: 10, alignItems: 'center'}}>
 						<Text style={{fontWeight: 'bold'}}>Tin liên quan</Text>
 					</View>
-					{this.state.loading? <Text>Loading...</Text> : this._renderHtmlNews(this.state.results) }
+					{!this.state.loading && this._renderHtmlNews(this.state.results) }
 			  </ScrollView>
 			</View>
 		);

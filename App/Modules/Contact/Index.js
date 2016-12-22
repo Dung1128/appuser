@@ -10,18 +10,68 @@ import {
   TextInput,
   WebView
 } from 'react-native';
-import {domain} from '../../Config/common';
+import {domain, cache} from '../../Config/common';
 import { InputGroup, Icon, Input, Button, Spinner, Card, CardItem } from 'native-base';
 import {Actions, ActionConst} from 'react-native-router-flux';
 
 class Contact extends Component {
 
+	constructor(props) {
+		super(props);
+		this.state = {
+			webViewHeight: 0,
+			loading: true
+		}
+	}
+
+	componentDidMount() {
+		this.setState({
+			loading: true
+		});
+		var that = this;
+
+      fetch(domain+'/api/api_user_get_content.php?type=contact', {
+			headers: {
+				'Cache-Control': cache
+			}
+		})
+      .then((response) => response.json())
+      .then((responseJson) => {
+			that.setState({
+				results: responseJson.data,
+				loading: false
+			});
+      })
+      .catch((error) => {
+         console.error(error);
+      });
+	}
+
+	onNavigationStateChange(navState) {
+		this.setState({
+		  webViewHeight: Number(navState.title)
+		});
+  	}
+
 	render() {
 		return(
-			<WebView
-	        source={{uri: domain+'/api/api_user_lien____he.php'}}
-	        style={{marginTop: 60}}
-	      />
+			<View style={{paddingTop: 60}}>
+				<ScrollView>
+					{this.state.loading && <Text>Loading...</Text>}
+					{!this.state.loading &&
+						<WebView
+						  automaticallyAdjustContentInsets={false}
+						  javaScriptEnabled={true}
+						  domStorageEnabled={true}
+						  scrollEnabled={false}
+						  onNavigationStateChange={this.onNavigationStateChange.bind(this)}
+						  style={{height: this.state.webViewHeight}}
+						  source={{html: '<html><body>'+this.state.results+'</body></html>'}}
+						  injectedJavaScript={'document.title = Math.max(window.innerHeight, document.body.offsetHeight, document.documentElement.clientHeight);'}
+				      />
+					}
+				</ScrollView>
+			</View>
 		);
 	}
 }

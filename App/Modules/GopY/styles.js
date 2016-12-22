@@ -14,7 +14,9 @@ module.exports = StyleSheet.create({
 		marginBottom: 20
 	},
 	input: {
-		borderBottomWidth: 1
+		borderWidth: 1,
+		borderColor: '#ccc',
+		marginTop: 5
 	},
 	errorInput: {
 		borderBottomColor: 'red'

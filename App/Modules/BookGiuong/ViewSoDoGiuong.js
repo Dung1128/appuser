@@ -70,6 +70,7 @@ class ViewSoDoGiuong extends Component {
 		});
 		var that = this;
 		setTimeout(() => {
+		
 			fetch(domain+'/api/api_adm_so_do_giuong.php?not_id='+this.props.data.notId+'&day='+this.props.data.day, {
 				headers: {
 					'Cache-Control': cache
@@ -278,6 +279,15 @@ class ViewSoDoGiuong extends Component {
 								<View style={{marginBottom: 10}}>
 									<Text>Nơi đi & Nơi đến: <Text style={{fontWeight: 'bold'}}>{this.state.resultsBen[this.props.data.benA]}</Text> - <Text style={{fontWeight: 'bold'}}>{this.state.resultsBen[this.props.data.benB]}</Text></Text>
 									<Text>Giờ xuất bến: <Text style={{fontWeight: 'bold'}}>{this.props.data.gio_xuat_ben + ' ' + this.props.data.day}</Text></Text>
+									{this.props.data.laixe1 != '' &&
+										<Text>Lái xe 1: <Text style={{fontWeight: 'bold'}}>{this.props.data.laixe1}</Text></Text>
+									}
+									{this.props.data.laixe2 != '' &&
+										<Text>Lái xe 2: <Text style={{fontWeight: 'bold'}}>{this.props.data.laixe2}</Text></Text>
+									}
+									{this.props.data.tiepvien != '' &&
+										<Text>Tiếp viên: <Text style={{fontWeight: 'bold'}}>{this.props.data.tiepvien}</Text></Text>
+									}
 									<Text>Giá vé: <Text style={{fontWeight: 'bold'}}>{convertPrice} VNĐ</Text></Text>
 								</View>
 								<View>

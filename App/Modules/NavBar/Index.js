@@ -409,18 +409,20 @@ class NavBar extends React.Component {
 			 {alignItems: 'center', justifyContent: 'center'}
         ]}
       >
-        <Animated.Text
-          lineBreakMode="tail"
-          numberOfLines={1}
-          {...this.props.titleProps}
-          style={{alignItems: 'stretch', justifyContent: 'center'}}
-        >
-			  <Image
-				 square
-				 style={{resizeMode: 'contain', height: 30, marginTop: -15}}
-				 source={logo}
-			  />
-        </Animated.Text>
+			<TouchableOpacity onPress={() => Actions.welcome({title: 'Trang Chủ'})}>
+	        	<Animated.Text
+	          	lineBreakMode="tail"
+	          	numberOfLines={1}
+	          	{...this.props.titleProps}
+	          	style={{alignItems: 'stretch', justifyContent: 'center'}}
+	        	>
+				  <Image
+					 square
+					 style={{resizeMode: 'contain', height: 30, marginTop: -15}}
+					 source={logo}
+				  />
+	        	</Animated.Text>
+		  </TouchableOpacity>
       </Animated.View>
     );
   }

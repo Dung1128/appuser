@@ -37,7 +37,8 @@ class SideBar extends Component {
    _onPressLogout() {
       AsyncStorage.removeItem('infoUser');
 		this.setState({
-			checkLogin: false
+			checkLogin: false,
+			dataUser: []
 		});
 		Actions.welcome({type: 'reset'});
    }
@@ -85,6 +86,11 @@ class SideBar extends Component {
 
 				<View style={{height: (height-71), overflow: 'hidden'}}>
 					<ScrollView>
+						{this.state.checkLogin &&
+							<View style={{alignItems: 'center'}}>
+								<Text style={{color: '#fff'}}>Xin Chào: {this.state.dataUser.use_phone}</Text>
+							</View>
+						}
 		           	<List>
 
 							{!this.state.checkLogin &&
@@ -104,6 +110,15 @@ class SideBar extends Component {
 							  			<Icon name="ios-heart" style={styles.sidebarIcon} />
 									</View>
 									<Text style={styles.text}>Hướng dẫn sử dụng</Text>
+						 		</View>
+					 		</ListItem>
+
+							<ListItem button iconLeft onPress={() => { Actions.welcome({title: 'Trang Chủ'}); this.props.closeDrawer(); }}>
+						 		<View style={styles.listItemContainer}>
+									<View style={[styles.iconContainer]}>
+							  			<Icon name="ios-heart" style={styles.sidebarIcon} />
+									</View>
+									<Text style={styles.text}>Đặt vé</Text>
 						 		</View>
 					 		</ListItem>
 

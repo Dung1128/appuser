@@ -89,7 +89,7 @@ class HomeIOS extends Component {
 		let data = [],
 			that = this;
 		Object.keys(results).map(function(key) {
-			data.push({gio_don: results[key].gio_don, soChoTrong: results[key].tongSoChoConLai, tenSoDo: results[key].ten_so_do,price: results[key].price, tuyen: results[key].tuyen, not_id:results[key].not_id, id_dieu_do: results[key].id_dieu_do, did_gio_xuat_ben_that: results[key].did_gio_xuat_ben_that, not_tuy_id: results[key].not_tuy_id, ben_a: results[key].diem_di, ben_b: results[key].diem_den});
+			data.push({laixe1: results[key].laixe1, laixe2: results[key].laixe2, tiepvien: results[key].tiepvien, gio_don: results[key].gio_don, soChoTrong: results[key].tongSoChoConLai, tenSoDo: results[key].ten_so_do,price: results[key].price, tuyen: results[key].tuyen, not_id:results[key].not_id, id_dieu_do: results[key].id_dieu_do, did_gio_xuat_ben_that: results[key].did_gio_xuat_ben_that, not_tuy_id: results[key].not_tuy_id, ben_a: results[key].diem_di, ben_b: results[key].diem_den});
 		});
 
       return data;
@@ -150,6 +150,7 @@ class HomeIOS extends Component {
 					loading: true,
 					showContentNot: true
 				});
+				console.log(urlApi+'?day='+that.state.fullDate+'&diem_a='+this.state.keyDiemDi+'&diem_b='+this.state.keyDiemDen);
 				fetch(urlApi+'?day='+that.state.fullDate+'&diem_a='+this.state.keyDiemDi+'&diem_b='+this.state.keyDiemDen, {
 					headers: {
 						'Cache-Control': cache
@@ -339,7 +340,7 @@ class HomeIOS extends Component {
 							<Text style={{width: 150, fontSize: 9, marginTop: -10}}>Điểm đi</Text>
 						</View>
 						<View style={{borderBottomColor: '#ccc', borderBottomWidth: 1, marginLeft: 30}}>
-							<Input placeholder="Nhập tên điểm đi" value={this.state.nameDiemDi} onChangeText={(nameDiemDi) => this._handleSetDiemDi(nameDiemDi)}  style={{height:40, alignItems: 'center', justifyContent: 'center', paddingTop: 10, marginTop: -10, paddingLeft: 15}} />
+							<Input placeholder="Nhập tỉnh đi" value={this.state.nameDiemDi} onChangeText={(nameDiemDi) => this._handleSetDiemDi(nameDiemDi)}  style={{height:40, alignItems: 'center', justifyContent: 'center', paddingTop: 10, marginTop: -10, paddingLeft: 15}} />
 						</View>
 						{this.state.search1 &&
 							<View style={{marginLeft: 30, backgroundColor: '#f6fbff', maxHeight: 200}}>
@@ -358,7 +359,7 @@ class HomeIOS extends Component {
 								<Text style={{width: 150, fontSize: 9, marginTop: -10}}>Điểm đến</Text>
 							</View>
 							<View style={{borderBottomColor: '#ccc', borderBottomWidth: 1, marginLeft: 30}}>
-								<Input placeholder="Nhập tên điểm đến" value={this.state.nameDiemDen} onChangeText={(nameDiemDen) => this._handleSetDiemDen(nameDiemDen)}  style={{height:40, alignItems: 'center', justifyContent: 'center', paddingTop: 10, marginTop: -10, paddingLeft: 15}} />
+								<Input placeholder="Nhập tỉnh đến" value={this.state.nameDiemDen} onChangeText={(nameDiemDen) => this._handleSetDiemDen(nameDiemDen)}  style={{height:40, alignItems: 'center', justifyContent: 'center', paddingTop: 10, marginTop: -10, paddingLeft: 15}} />
 							</View>
 						</View>
 						{this.state.search2 &&
@@ -605,7 +606,7 @@ class HomeIOS extends Component {
 							{ !this.state.loading && <Card  style={{marginTop: -5}} dataArray={dataNot}
 			                 renderRow={(dataNot) =>
 			                   <CardItem>
-											<TouchableOpacity style={{flexDirection: 'row'}} onPress={() => Actions.ViewSoDoGiuong({title: 'Chọn chỗ', data: {dataBen: this.state.dataBx, id_dieu_do: dataNot.id_dieu_do, totalPriceInt: dataNot.price, adm_id: this.props.data.adm_id, gio_xuat_ben: dataNot.did_gio_xuat_ben_that, notId:dataNot.not_id, day:this.state.fullDate, notTuyenId: dataNot.not_tuy_id, benA: dataNot.ben_a, benB: dataNot.ben_b}})}>
+											<TouchableOpacity style={{flexDirection: 'row'}} onPress={() => Actions.ViewSoDoGiuong({title: 'Chọn chỗ', data: {dataBen: this.state.dataBx, id_dieu_do: dataNot.id_dieu_do, totalPriceInt: dataNot.price, adm_id: this.props.data.adm_id, gio_xuat_ben: dataNot.did_gio_xuat_ben_that, notId:dataNot.not_id, day:this.state.fullDate, notTuyenId: dataNot.not_tuy_id, benA: dataNot.ben_a, benB: dataNot.ben_b, laixe1: dataNot.laixe1, laixe2: dataNot.laixe2, tiepvien: dataNot.tiepvien}})}>
 												<View style={{flex: 2}}>
 													<Text><Text style={{fontWeight: 'bold'}}>{dataNot.gio_don}</Text> - Thời gian đón</Text>
 													<Text><Text style={{fontWeight: 'bold'}}>{dataNot.did_gio_xuat_ben_that}</Text> - Thời gian xuất bến</Text>

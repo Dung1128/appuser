@@ -90,7 +90,7 @@ class DanhGia extends Component {
 			var item = data[i];
 			htmlItem.push(
 				<CardItem key={item.dav_did_id+i}>
-					<TouchableOpacity onPress={this._getFormRating.bind(this, item.dav_did_id, dataBen[item.tuy_ben_a], dataBen[item.tuy_ben_b], dataBen[item.dav_diem_a], dataBen[item.dav_diem_b], item.gio_xuat_ben, item.tuy_hanh_trinh)}>
+					<TouchableOpacity onPress={this._getFormRating.bind(this, item.dav_did_id, dataBen[item.tuy_ben_a], dataBen[item.tuy_ben_b], dataBen[item.dav_diem_a], dataBen[item.dav_diem_b], item.gio_xuat_ben, item.tuy_hanh_trinh, item.laixe1, item.laixe2, item.tiepvien, item.number_ghe)}>
 						<View style={{flex: 5}}>
 							<Text style={{marginBottom: 10}}>Nơi đi & Nơi đến: {dataBen[item.dav_diem_a]} -> {dataBen[item.dav_diem_b]}</Text>
 							<Text style={{marginBottom: 10}}>Thời gian: {item.gio_xuat_ben}</Text>
@@ -126,7 +126,7 @@ class DanhGia extends Component {
 		this.refs.modal3.close();
 	}
 
-	_getFormRating(did_id, benA, benB, benAA, benBB, gio_xuat_ben, hanh_trinh) {
+	_getFormRating(did_id, benA, benB, benAA, benBB, gio_xuat_ben, hanh_trinh, laixe1, laixe2, tiepvien, number_ghe) {
 		this.setState({
 			did_id: did_id,
 			benA: benA,
@@ -134,7 +134,11 @@ class DanhGia extends Component {
 			benAA: benAA,
 			benBB: benBB,
 			hanh_trinh: hanh_trinh,
-			gio_xuat_ben: gio_xuat_ben
+			gio_xuat_ben: gio_xuat_ben,
+			laixe1: laixe1,
+			laixe2: laixe2,
+			tiepvien: tiepvien,
+			number_ghe: number_ghe
 		})
 		this.openModal();
 	}
@@ -176,10 +180,19 @@ class DanhGia extends Component {
 				  	</TouchableOpacity>
 					<View style={{paddingBottom: 50}}>
 						<ScrollView>
-							<View style={{flexDirection: 'column', width: widthDevice, padding: 20}}>
-								<Text style={{marginBottom: 20}}>Nơi đi & Nơi đến: <Text style={{fontWeight: 'bold'}}>{this.state.benAA} -> {this.state.benBB}</Text></Text>
-				  				<Text style={{marginBottom: 20}}>Thời gian: <Text style={{fontWeight: 'bold'}}>{this.state.gio_xuat_ben}</Text></Text>
-								<Text>Viết đánh giá:</Text>
+							<View style={{flexDirection: 'column', width: widthDevice}}>
+								{this.state.laixe1 != '' &&
+									<Text style={{marginBottom: 10}}>Lái xe 1: <Text style={{fontWeight: 'bold'}}>{this.state.laixe1}</Text></Text>
+								}
+								{this.state.laixe2 != '' &&
+									<Text style={{marginBottom: 10}}>Lái xe 2: <Text style={{fontWeight: 'bold'}}>{this.state.laixe2}</Text></Text>
+								}
+								{this.state.tiepvien != '' &&
+									<Text style={{marginBottom: 10}}>Tiếp viên: <Text style={{fontWeight: 'bold'}}>{this.state.tiepvien}</Text></Text>
+								}
+								<Text style={{marginBottom: 10}}>Nơi đi & Nơi đến: <Text style={{fontWeight: 'bold'}}>{this.state.benAA} -> {this.state.benBB}</Text></Text>
+								<Text style={{marginBottom: 10}}>Số ghế: <Text style={{fontWeight: 'bold'}}>{this.state.number_ghe}</Text></Text>
+				  				<Text style={{marginBottom: 10}}>Thời gian: <Text style={{fontWeight: 'bold'}}>{this.state.gio_xuat_ben}</Text></Text>
 							</View>
 							<View style={{marginTop: 20, marginBottom: 20, borderWidth: 1, borderColor: '#ccc', flexDirection: 'row'}}>
 								<Input placeholder="Viết đánh giá" style={{height: 60}} multiline={true} numberOfLines={4} onChange={(event) => this.setState({textRating: event.nativeEvent.text})} />

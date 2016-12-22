@@ -126,7 +126,7 @@ class LichSu extends Component {
 								}
 
 								<InputGroup key="group_ghi_chu">
-									<Icon name='ios-pin' />
+									<Icon name='md-text' />
 									<Input placeholder="Ghi chú" onChange={(event) => this.setState({ghi_chu: event.nativeEvent.text})} />
 								</InputGroup>
 								{this.state.loadingOrder? <Spinner /> : <Button block success onPress={() => this._handleSaveOrder()} style={{marginTop: 10, height: 50}}>Thanh Toán</Button>}
