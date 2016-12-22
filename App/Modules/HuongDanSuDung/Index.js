@@ -59,21 +59,14 @@ class HuongDanSuDung extends Component {
 	}
 
 	 onNavigationStateChange(navState) {
-		 console.log(navState);
 	    this.setState({
 	      webViewHeight: Number(navState.title)
 	    });
   }
 
 	render() {
-		console.log('---');
 		return(
-			<View style={{height: height, width: width, paddingBottom: 50}}>
-				<View style={{position: 'absolute', bottom: 0, width: width, left: 0, zIndex: 1, backgroundColor: '#ccc', height: 40, alignItems: 'flex-start', justifyContent: 'center'}}>
-					<TouchableOpacity onPress={() => this._backPayment()} style={{width: width}}>
-						<Icon name="md-arrow-round-back" style={{marginLeft: 20}} />
-					</TouchableOpacity>
-				</View>
+			<View style={{height: height, width: width,paddingTop: 60}}>
 
 				<ScrollView>
 					{this.state.loading && <Text>Loading...</Text>}
