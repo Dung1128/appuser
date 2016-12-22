@@ -122,9 +122,9 @@ class ViewSoDoGiuong extends Component {
 				var htmlChild = [];
 				for(var j in item) {
 					if(Object.keys(item).length <= 2) {
-						if(j == 3) {
+						if(j == 1) {
 							htmlChild.push(
-								<Col key={i+(j-1)}>
+								<Col key={i+(j+999)}>
 									<TouchableOpacity style={styles.opacityBg}>
 										<Text style={styles.textCenter}></Text>
 									</TouchableOpacity>
