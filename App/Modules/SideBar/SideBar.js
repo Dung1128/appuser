@@ -104,15 +104,6 @@ class SideBar extends Component {
 							</ListItem>
 							}
 
-							<ListItem button iconLeft onPress={() => { Actions.HuongDanSuDung({title: 'Hướng dẫn sử dụng'}); this.props.closeDrawer(); }}>
-						 		<View style={styles.listItemContainer}>
-									<View style={[styles.iconContainer]}>
-							  			<Icon name="ios-heart" style={styles.sidebarIcon} />
-									</View>
-									<Text style={styles.text}>Hướng dẫn sử dụng</Text>
-						 		</View>
-					 		</ListItem>
-
 							<ListItem button iconLeft onPress={() => { Actions.welcome({title: 'Trang Chủ'}); this.props.closeDrawer(); }}>
 						 		<View style={styles.listItemContainer}>
 									<View style={[styles.iconContainer]}>
@@ -179,6 +170,15 @@ class SideBar extends Component {
 						 		</View>
 					 		</ListItem>
 
+							<ListItem button iconLeft onPress={() => { Actions.HuongDanSuDung({title: 'Hướng dẫn sử dụng'}); this.props.closeDrawer(); }}>
+						 		<View style={styles.listItemContainer}>
+									<View style={[styles.iconContainer]}>
+							  			<Icon name="ios-heart" style={styles.sidebarIcon} />
+									</View>
+									<Text style={styles.text}>Hướng dẫn sử dụng</Text>
+						 		</View>
+					 		</ListItem>
+
 							{this.state.checkLogin &&
 			             	<ListItem button iconLeft onPress={() => {this.props.closeDrawer(); this._onPressLogout();}}>
 			                  <View style={styles.listItemContainer}>
@@ -192,7 +192,7 @@ class SideBar extends Component {
 		           	</List>
 					</ScrollView>
 					<View style={{position: 'absolute', bottom: 0, width: width*.8, left: 0, backgroundColor: '#fff', alignItems: 'center', padding: 10}}>
-				  		<Text style={[styles.text, {color: '#777'}]}>Version: 1.1</Text>
+				  		<Text style={[styles.text, {color: '#777'}]}>Version: 1.2</Text>
 				  	</View>
 				</View>
          </View>

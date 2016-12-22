@@ -70,7 +70,7 @@ class ViewSoDoGiuong extends Component {
 		});
 		var that = this;
 		setTimeout(() => {
-		
+
 			fetch(domain+'/api/api_adm_so_do_giuong.php?not_id='+this.props.data.notId+'&day='+this.props.data.day, {
 				headers: {
 					'Cache-Control': cache
@@ -139,7 +139,7 @@ class ViewSoDoGiuong extends Component {
 					if(dataGiuong.bvv_status == -2) {
 						htmlChild.push(
 							<Col key={i+j} style={styles.borderCol}>
-								<TouchableOpacity onPress={this._unsetActiveGiuong.bind(this, idGiuong)} style={[styles.selectGiuongUser, styles.opacityBg]}>
+								<TouchableOpacity onPress={this._unsetActiveGiuong.bind(this, idGiuong, item[j].sdgct_label_full)} style={[styles.selectGiuongUser, styles.opacityBg]}>
 									<Text style={[styles.textCenter, styles.textActiveGiuong]}>{item[j].sdgct_label_full}</Text>
 								</TouchableOpacity>
 							</Col>
@@ -148,7 +148,7 @@ class ViewSoDoGiuong extends Component {
 						if(dataGiuong.bvv_status == -2) {
 							htmlChild.push(
 								<Col key={i+j} style={styles.borderCol}>
-									<TouchableOpacity onPress={this._setActiveGiuong.bind(this, idGiuong)} style={styles.opacityBg}>
+									<TouchableOpacity onPress={this._setActiveGiuong.bind(this, idGiuong,item[j].sdgct_label_full)} style={styles.opacityBg}>
 										<Text style={styles.textCenter}>{item[j].sdgct_label_full}</Text>
 									</TouchableOpacity>
 								</Col>
@@ -158,7 +158,7 @@ class ViewSoDoGiuong extends Component {
 								if(this.state.arrOrder[idGiuong] == undefined) {
 									htmlChild.push(
 										<Col key={i+j} style={styles.borderCol}>
-											<TouchableOpacity onPress={this._setActiveGiuong.bind(this, idGiuong)} style={styles.opacityBg}>
+											<TouchableOpacity onPress={this._setActiveGiuong.bind(this, idGiuong, item[j].sdgct_label_full)} style={styles.opacityBg}>
 												<Text style={styles.textCenter}>{item[j].sdgct_label_full}</Text>
 											</TouchableOpacity>
 										</Col>
@@ -175,7 +175,7 @@ class ViewSoDoGiuong extends Component {
 									}else if(this.state.arrOrder[idGiuong].ord_status >= 0 && dataGiuong.bvv_status == 0) {
 										htmlChild.push(
 											<Col key={i+j} style={styles.borderCol}>
-												<TouchableOpacity onPress={this._setActiveGiuong.bind(this, idGiuong)} style={styles.opacityBg}>
+												<TouchableOpacity onPress={this._setActiveGiuong.bind(this, idGiuong, item[j].sdgct_label_full)} style={styles.opacityBg}>
 													<Text style={styles.textCenter}>{item[j].sdgct_label_full}</Text>
 												</TouchableOpacity>
 											</Col>
@@ -200,7 +200,7 @@ class ViewSoDoGiuong extends Component {
 		return html;
 	}
 
-	_setActiveGiuong(id) {
+	_setActiveGiuong(id, fullLabel) {
 		let setStatus = this.state.arrVeNumber;
 		let dataBook = this.state.dataBook;
 		let arrBookGiuong = this.state.arrBookGiuong;
@@ -209,7 +209,7 @@ class ViewSoDoGiuong extends Component {
 		setStatus[id].bvv_bex_id_b = this.props.data.benB;
 		setStatus[id].bvv_price = this.props.data.totalPriceInt;
 
-		dataBook.push({'numberGiuong': parseInt(id), 'bvv_bex_id_a': this.props.data.benA, 'bvv_bex_id_b': this.props.data.benB, 'bvv_price': parseInt(this.props.data.totalPriceInt)});
+		dataBook.push({labelFull: fullLabel, 'numberGiuong': parseInt(id), 'bvv_bex_id_a': this.props.data.benA, 'bvv_bex_id_b': this.props.data.benB, 'bvv_price': parseInt(this.props.data.totalPriceInt)});
 		arrBookGiuong.push({'numberGiuong': parseInt(id)});
 		this.setState({
 			arrVeNumber: setStatus,
@@ -219,7 +219,7 @@ class ViewSoDoGiuong extends Component {
 		});
 	}
 
-	_unsetActiveGiuong(id){
+	_unsetActiveGiuong(id, fullLabel){
 		let checkGiuongCurrent = false;
 		if(this.state.checkout) {
 			let arrBookGiuong = this.state.arrBookGiuong;
@@ -279,10 +279,10 @@ class ViewSoDoGiuong extends Component {
 								<View style={{marginBottom: 10}}>
 									<Text>Nơi đi & Nơi đến: <Text style={{fontWeight: 'bold'}}>{this.state.resultsBen[this.props.data.benA]}</Text> - <Text style={{fontWeight: 'bold'}}>{this.state.resultsBen[this.props.data.benB]}</Text></Text>
 									<Text>Giờ xuất bến: <Text style={{fontWeight: 'bold'}}>{this.props.data.gio_xuat_ben + ' ' + this.props.data.day}</Text></Text>
-									{this.props.data.laixe1 != '' &&
+									{this.props.data.laixe1 != '' && this.props.data.laixe1 != null &&
 										<Text>Lái xe 1: <Text style={{fontWeight: 'bold'}}>{this.props.data.laixe1}</Text></Text>
 									}
-									{this.props.data.laixe2 != '' &&
+									{this.props.data.laixe2 != '' && this.props.data.laixe2 != null &&
 										<Text>Lái xe 2: <Text style={{fontWeight: 'bold'}}>{this.props.data.laixe2}</Text></Text>
 									}
 									{this.props.data.tiepvien != '' &&

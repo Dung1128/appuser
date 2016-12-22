@@ -44,7 +44,7 @@ class LichSu extends Component {
 					<View style={{flexDirection: 'row'}}>
 						<View style={{flex: 4, alignItems: 'flex-start'}}>
 							<Text>{this.props.data.dataBen[dBook[i].bvv_bex_id_a]} -> {this.props.data.dataBen[dBook[i].bvv_bex_id_b]}</Text>
-							<Text>Số Ghế: {dBook[i].numberGiuong}</Text>
+							<Text>Số Ghế: {dBook[i].labelFull}</Text>
 							<Text>Số Lượng: 1</Text>
 						</View>
 						<View style={{flex: 3, alignItems: 'flex-end'}}>
