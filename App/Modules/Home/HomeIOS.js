@@ -512,7 +512,7 @@ class HomeIOS extends Component {
 
 		if(parseInt(totalDate) > parseInt(newCurrentDate)) {
 			htmlBackArrow.push(
-				<TouchableOpacity key="button_back_arrow" onPress={() => this._handleSearchPrevDay()} style={{flex: 4, alignItems: 'center'}}>
+				<TouchableOpacity key="button_back_arrow" onPress={() => this._handleSearchPrevDay()} style={{flex: 6, alignItems: 'center'}}>
 					<Icon key="back_arrow" name="ios-arrow-back" style={{backgroundColor: '#f5ac00', color: '#fff', height: 35, paddingTop: 3, paddingRight: 10, paddingLeft: 10}} />
 				</TouchableOpacity>
 			);
@@ -523,17 +523,17 @@ class HomeIOS extends Component {
 				<View style={{flex: 4, marginRight: 5}}>
 					<View style={{flexDirection: 'row'}}>
 						{htmlBackArrow}
-						<View style={{flex: 7, alignItems: 'center', backgroundColor: '#ffc20d'}}>
-							<Text style={{backgroundColor: '#ffc20d', color: '#fff', height: 35, paddingTop: 7, paddingRight: 5, paddingLeft: 5}}>{this.state.fullDate}</Text>
+						<View style={{flex: 34, alignItems: 'center', backgroundColor: '#ffc20d'}}>
+							<Text style={{backgroundColor: '#ffc20d', color: '#fff', height: 35, paddingTop: 7}}>{this.state.fullDate}</Text>
 						</View>
-						<TouchableOpacity key="button_next_arrow" onPress={() => this._handleSearchNextDay()} style={{flex: 4, alignItems: 'center'}}>
+						<TouchableOpacity key="button_next_arrow" onPress={() => this._handleSearchNextDay()} style={{flex: 6, alignItems: 'center'}}>
 							<Icon key="next_arrow" name="ios-arrow-forward" style={{backgroundColor: '#f5ac00', color: '#fff', height: 35, paddingTop: 3, paddingRight: 10, paddingLeft: 10}} />
 						</TouchableOpacity>
 					</View>
 				</View>
-				<View style={{flex: 3, backgroundColor: '#ffc20d', alignItems: 'center', justifyContent: 'center'}}>
+				<View style={{flex: 3, backgroundColor: '#42d3ff', alignItems: 'center', justifyContent: 'center'}}>
 					<TouchableOpacity onPress={() => this.showFormEditSearch()}>
-						<Text style={{color: '#fff'}}>{this.state.editFormSearch? 'Đóng' : 'Sửa nơi đi, nơi đến'}</Text>
+						<Text style={{color: '#000'}}>{this.state.editFormSearch? 'Đóng' : 'Sửa nơi đi, nơi đến'}</Text>
 					</TouchableOpacity>
 				</View>
 			</View>
