@@ -3,12 +3,18 @@ import {
 	AppRegistry,
    StyleSheet,
    AsyncStorage,
-	TouchableOpacity
+	TouchableOpacity,
+	ScrollView,
+	Dimensions
 } from 'react-native';
 import { Container, Content, InputGroup, View, Icon, Input,Text, Button, Thumbnail, Spinner } from 'native-base';
 import { Col, Row, Grid } from "react-native-easy-grid";
 import {Actions} from 'react-native-router-flux';
 import {domain,cache} from './Config/common';
+
+import * as base64 from './Components/base64/Index';
+
+let {width, height} = Dimensions.get('window');
 
 class Welcome extends Component {
 
@@ -24,21 +30,64 @@ class Welcome extends Component {
       };
    }
 
-	componentWillMount() {
-		this.setState({
-			loading: true
-		});
-		var that = this;
-      AsyncStorage.getItem('infoUser').then((data) => {
-         let results = JSON.parse(data);
-         if(results != null) {
-            Actions.home({title: 'Chọn Chuyến', data: results});
-         }else {
-				that.setState({
+	async componentWillMount() {
+		try {
+			this.setState({
+				loading: true
+			});
+			let that = this;
+		  	let dataUser = await AsyncStorage.getItem('infoUser');
+			let jsonDataUser = JSON.parse(dataUser);
+
+			if(jsonDataUser != null) {
+				let token = base64.encodeBase64(jsonDataUser.adm_name)+'.'+base64.encodeBase64(jsonDataUser.last_login)+'.'+base64.encodeBase64(''+jsonDataUser.adm_id+'');
+				let dataToken = await AsyncStorage.getItem(token);
+				if(dataToken != null) {
+					fetch(domain+'/api/api_user_dang_nhap.php?type=checkTokenLogin&token='+token, {
+						headers: {
+							'Cache-Control': cache
+						}
+					})
+					.then((response) => response.json())
+					.then((responseJson) => {
+						if(responseJson.status == 200) {
+
+							that.setState({
+								loading: false
+							});
+							Actions.home({title: 'Chọn Chuyến', data: jsonDataUser});
+						}else {
+							that.setState({
+								loading: false,
+								error: 'true',
+								messageError: [{username: 'Tài khoản đã được đăng nhập ở thiết bị khác.'}]
+							});
+						}
+					})
+					.catch((error) => {
+						that.setState({
+							loading: false,
+							error: 'true',
+							messageError: [{username: 'Lỗi hệ thống. Vui lòng liên hệ với bộ phận Kỹ Thuật.'}]
+						});
+						Console.error(error);
+					});
+				}else {
+					this.setState({
+						loading: false
+					});
+				}
+			}else {
+				this.setState({
 					loading: false
 				});
 			}
-      }).done();
+
+	  	} catch (error) {
+			this.setState({
+				loading: false
+			});
+	  	}
 	}
 
    handleLogin() {
@@ -58,7 +107,7 @@ class Welcome extends Component {
 	         loading: true
 	      });
 	      var that = this;
-			let urlRequest	= domain+'/api/api_user_dang_nhap.php?username='+this.state.username+'&password='+this.state.password;
+			let urlRequest	= domain+'/api/api_user_dang_nhap.php?type=login&username='+this.state.username+'&password='+this.state.password;
 	      fetch(urlRequest, {
 				headers: {
 					'Cache-Control': cache
@@ -75,7 +124,9 @@ class Welcome extends Component {
 	         });
 	         if(responseJson.status == 200) {
 	            let result = JSON.stringify(responseJson);
+					let token = base64.encodeBase64(responseJson.adm_name)+'.'+base64.encodeBase64(responseJson.last_login)+'.'+base64.encodeBase64(''+responseJson.adm_id+'');
 	            AsyncStorage.setItem("infoUser", result);
+					AsyncStorage.setItem(token, '1');
 	            Actions.home({title: 'Chọn Chuyến', data: result});
 	         }else {
 					that.setState({
@@ -155,11 +206,13 @@ class Welcome extends Component {
 				<Row size={1}></Row>
 				<Row size={2}>
 					<View>
-						<View style={styles.wrapViewImage}>
-							<Thumbnail size={80} source={require('./Skin/Images/logo.png')} />
-						</View>
-						{ this.state.loading && <Spinner /> }
-						{!this.state.loading && this.renderHtml()}
+						<ScrollView>
+							<View style={styles.wrapViewImage}>
+								<Thumbnail size={80} source={require('./Skin/Images/logo.png')} />
+							</View>
+							{ this.state.loading && <Spinner /> }
+							{!this.state.loading && this.renderHtml()}
+						</ScrollView>
 					</View>
 				</Row>
 				<Row size={1}></Row>
@@ -182,13 +235,13 @@ const styles = StyleSheet.create({
 		color: 'red'
 	},
    paddingContent: {
-      padding: 30
+      paddingRight: 30,
+		paddingLeft: 30
    },
 	wrapViewImage: {
 		flexDirection: 'column',
 		justifyContent: 'center',
 		alignItems: 'center',
-		marginTop: -30
 	},
 
 });

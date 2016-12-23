@@ -9,6 +9,7 @@ import {
 	TouchableOpacity
 } from 'react-native';
 import {domain,cache} from '../../Config/common';
+import * as base64 from '../../Components/base64/Index';
 import { Text, Input, Button, Card, CardItem, Spinner, Icon } from 'native-base';
 import CalendarPicker from 'react-native-calendar-picker';
 import {Actions} from 'react-native-router-flux';
@@ -52,7 +53,8 @@ class HomeIOS extends Component {
 			editFormSearch: false,
 			countClickNextDay: true,
 			search1: false,
-			search2: false
+			search2: false,
+			token: ''
       };
    }
 
@@ -95,9 +97,29 @@ class HomeIOS extends Component {
       return data;
    }
 
-	componentDidMount() {
+	componentWillMount() {
 		let that = this;
-      fetch(domain+'/api/api_user_ben.php?type=home', {
+		let admId = 0,
+		admUsername = '',
+		admLastLogin = '';
+
+		if(this.props.data.adm_id == undefined) {
+
+			AsyncStorage.getItem('infoUser').then((data) => {
+	         let results = JSON.parse(data);
+	         admId = results.adm_id;
+				admUsername = results.adm_name;
+				admLastLogin = results.last_login;
+	      }).done();
+		}else {
+			admId = this.props.data.adm_id;
+			admUsername = this.props.data.adm_name;
+			admLastLogin = this.props.data.last_login;
+		}
+		this.setState({
+			token: base64.encodeBase64(admUsername)+'.'+base64.encodeBase64(admLastLogin)+'.'+base64.encodeBase64(''+admId+'')
+		});
+      fetch(domain+'/api/api_user_ben.php?token='+that.state.token+'&type=home', {
 			headers: {
 				'Cache-Control': cache
 			}
@@ -151,7 +173,7 @@ class HomeIOS extends Component {
 					showContentNot: true
 				});
 				console.log(urlApi+'?day='+that.state.fullDate+'&diem_a='+this.state.keyDiemDi+'&diem_b='+this.state.keyDiemDen);
-				fetch(urlApi+'?day='+that.state.fullDate+'&diem_a='+this.state.keyDiemDi+'&diem_b='+this.state.keyDiemDen, {
+				fetch(urlApi+'?token='+that.state.token+'&day='+that.state.fullDate+'&diem_a='+this.state.keyDiemDi+'&diem_b='+this.state.keyDiemDen, {
 					headers: {
 						'Cache-Control': cache
 					}
@@ -419,7 +441,7 @@ class HomeIOS extends Component {
 				showContentNot: true,
 				countClickNextDay: false
 			});
-			fetch(urlApi+'?day='+newDay+'&diem_a='+this.state.keyDiemDi+'&diem_b='+this.state.keyDiemDen, {
+			fetch(urlApi+'?token='+that.state.token+'&day='+newDay+'&diem_a='+this.state.keyDiemDi+'&diem_b='+this.state.keyDiemDen, {
 				headers: {
 					'Cache-Control': cache
 				}
@@ -463,7 +485,7 @@ class HomeIOS extends Component {
 				showContentNot: true,
 				countClickNextDay: false
 			});
-			fetch(urlApi+'?day='+newDay+'&diem_a='+this.state.keyDiemDi+'&diem_b='+this.state.keyDiemDen, {
+			fetch(urlApi+'?token='+that.state.token+'&day='+newDay+'&diem_a='+this.state.keyDiemDi+'&diem_b='+this.state.keyDiemDen, {
 				headers: {
 					'Cache-Control': cache
 				}
@@ -606,7 +628,7 @@ class HomeIOS extends Component {
 							{ !this.state.loading && <Card  style={{marginTop: -5}} dataArray={dataNot}
 			                 renderRow={(dataNot) =>
 			                   <CardItem>
-											<TouchableOpacity style={{flexDirection: 'row'}} onPress={() => Actions.ViewSoDoGiuong({title: 'Chọn chỗ', data: {dataBen: this.state.dataBx, id_dieu_do: dataNot.id_dieu_do, totalPriceInt: dataNot.price, adm_id: this.props.data.adm_id, gio_xuat_ben: dataNot.did_gio_xuat_ben_that, notId:dataNot.not_id, day:this.state.fullDate, notTuyenId: dataNot.not_tuy_id, benA: dataNot.ben_a, benB: dataNot.ben_b, laixe1: dataNot.laixe1, laixe2: dataNot.laixe2, tiepvien: dataNot.tiepvien}})}>
+											<TouchableOpacity style={{flexDirection: 'row'}} onPress={() => Actions.ViewSoDoGiuong({title: 'Chọn chỗ', data: {dataBen: this.state.dataBx, id_dieu_do: dataNot.id_dieu_do, totalPriceInt: dataNot.price, adm_id: this.props.data.adm_id, adm_name: this.props.data.adm_name, last_login: this.props.data.last_login, gio_xuat_ben: dataNot.did_gio_xuat_ben_that, notId:dataNot.not_id, day:this.state.fullDate, notTuyenId: dataNot.not_tuy_id, benA: dataNot.ben_a, benB: dataNot.ben_b, laixe1: dataNot.laixe1, laixe2: dataNot.laixe2, tiepvien: dataNot.tiepvien}})}>
 												<View style={{flex: 2}}>
 													<Text><Text style={{fontWeight: 'bold'}}>{dataNot.gio_don}</Text> - Thời gian đón</Text>
 													<Text><Text style={{fontWeight: 'bold'}}>{dataNot.did_gio_xuat_ben_that}</Text> - Thời gian xuất bến</Text>

@@ -169,7 +169,7 @@ class LichSu extends Component {
 			that.setState({
 				loadingOrder: false
 			});
-			Actions.Payment({title: 'Thanh Toán', data: {adm_id: this.props.data.dataUser.adm_id, orderId: responseJson.orderId}});
+			Actions.Payment({title: 'Thanh Toán', data: {adm_name: this.props.data.dataUser.adm_name, last_login: this.props.data.dataUser.last_login, adm_id: this.props.data.dataUser.adm_id, orderId: responseJson.orderId}});
 		})
 		.catch((error) => {
 			console.error(error);

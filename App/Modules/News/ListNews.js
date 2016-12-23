@@ -29,6 +29,7 @@ class ListNews extends Component {
 	_getApiNews() {
 		this.setState({loading: true});
 		var that = this;
+		console.log(domain+'/api/api_user_news.php?type=0');
       fetch(domain+'/api/api_user_news.php?type=0', {
 			headers: {
 				'Cache-Control': cache

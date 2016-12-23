@@ -62,7 +62,7 @@ class App extends Component {
 					<Scene key="ListNews" component={ListNews} title="Danh sách tin tức" />
 					<Scene key="DetailNews" component={DetailNews} title="Chi tiết tin tức" />
 					<Scene key="Payment" component={Payment} title="Thanh Toán" hideNavBar={true} />
-					<Scene key="HuongDanSuDung" component={HuongDanSuDung} title="Hướng đẫn sử dụng" hideNavBar={true} />
+					<Scene key="HuongDanSuDung" component={HuongDanSuDung} title="Hướng đẫn sử dụng" />
   	       	</Scene>
        	</Router>
 		);
