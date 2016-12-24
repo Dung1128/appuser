@@ -6,9 +6,11 @@ import {
   View,
   Dimensions,
   ScrollView,
-  TouchableOpacity
+  TouchableOpacity,
+  AsyncStorage
 } from 'react-native';
 import {domain,cache} from '../../Config/common';
+import * as base64 from '../../Components/base64/Index';
 import { Container, Content, InputGroup, Icon, Input, Button, Spinner, Card, CardItem, Badge, CheckBox, List, ListItem } from 'native-base';
 import {Actions, ActionConst} from 'react-native-router-flux';
 const heightDevice = Dimensions.get('window').height;
@@ -25,9 +27,34 @@ class LichSu extends Component {
 			address: '',
 			trungChuyen: false,
 			selectCheckbox: 'borderCheckbox',
-			ghi_chu: ''
+			ghi_chu: '',
+			token: ''
 		};
    }
+
+	componentWillMount() {
+		let that = this;
+		let admId = 0,
+		admUsername = '',
+		admLastLogin = '';
+
+		if(this.props.data.dataUser.adm_id == undefined) {
+
+			AsyncStorage.getItem('infoUser').then((data) => {
+	         let results = JSON.parse(data);
+	         admId = results.adm_id;
+				admUsername = results.adm_name;
+				admLastLogin = results.last_login;
+	      }).done();
+		}else {
+			admId = this.props.data.dataUser.adm_id;
+			admUsername = this.props.data.dataUser.adm_name;
+			admLastLogin = this.props.data.dataUser.last_login;
+		}
+		this.setState({
+			token: base64.encodeBase64(admUsername)+'.'+base64.encodeBase64(admLastLogin)+'.'+base64.encodeBase64(''+admId+'')
+		});
+	}
 
 	_renderOrder() {
 		let dBook = this.props.data.dataBook;
@@ -158,7 +185,8 @@ class LichSu extends Component {
 		that.setState({
 			loadingOrder: true
 		});
-		let params = 'type=insert&bvv_bvn_id='+this.props.data.id_dieu_do+'&user_id='+this.props.data.dataUser.adm_id+'&gio_xuat_ben='+JSON.stringify(this.props.data.gio_xuat_ben)+'&dataBook='+dataBook+'&address='+this.state.address+'&ghi_chu='+this.state.ghi_chu;
+
+		let params = 'token='+that.state.token+'&type=insert&bvv_bvn_id='+this.props.data.id_dieu_do+'&user_id='+this.props.data.dataUser.adm_id+'&gio_xuat_ben='+JSON.stringify(this.props.data.gio_xuat_ben)+'&dataBook='+dataBook+'&address='+this.state.address+'&ghi_chu='+this.state.ghi_chu;
 		fetch(domain+'/api/api_user_save_order.php?'+params, {
 			headers: {
 				'Cache-Control': cache

@@ -24,7 +24,7 @@ class Contact extends Component {
 		}
 	}
 
-	componentDidMount() {
+	componentWillMount() {
 		this.setState({
 			loading: true
 		});
@@ -57,13 +57,14 @@ class Contact extends Component {
 		return(
 			<View style={{paddingTop: 60}}>
 				<ScrollView>
-					{this.state.loading && <Text>Loading...</Text>}
+					{this.state.loading && <Text style={{color: '#000'}}>Loading...</Text>}
 					{!this.state.loading &&
 						<WebView
 						  automaticallyAdjustContentInsets={false}
 						  javaScriptEnabled={true}
 						  domStorageEnabled={true}
 						  scrollEnabled={false}
+						  startInLoadingState={true}
 						  onNavigationStateChange={this.onNavigationStateChange.bind(this)}
 						  style={{height: this.state.webViewHeight}}
 						  source={{html: '<html><body>'+this.state.results+'</body></html>'}}

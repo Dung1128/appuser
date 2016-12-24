@@ -9,6 +9,7 @@ import {
   TouchableOpacity
 } from 'react-native';
 import {domain,cache} from '../../Config/common';
+import * as base64 from '../../Components/base64/Index';
 import { Container, Content, InputGroup, Icon, Input, Button, Spinner, Card, CardItem, Badge } from 'native-base';
 import {Actions, ActionConst} from 'react-native-router-flux';
 const heightDevice = Dimensions.get('window').height;
@@ -18,6 +19,7 @@ class LichSu extends Component {
 	constructor(props) {
       super(props);
 		this.state = {
+			token: '',
 			loading: true,
 			results: [],
 			dataBen: [],
@@ -25,13 +27,13 @@ class LichSu extends Component {
 		};
    }
 
-	_getDanhSachLichSu() {
+	_getDanhSachLichSu(token) {
 		this.setState({
 			loading: true
 		});
 		var that = this;
 
-      fetch(domain+'/api/api_user_lich_su_order.php?notId=0&user_id='+this.props.data.adm_id, {
+      fetch(domain+'/api/api_user_lich_su_order.php?token='+token+'&notId=0&user_id='+this.props.data.adm_id, {
 			headers: {
 				'Cache-Control': cache
 			}
@@ -50,7 +52,31 @@ class LichSu extends Component {
    }
 
 	componentWillMount() {
-		this._getDanhSachLichSu();
+		let that = this;
+		let admId = 0,
+		admUsername = '',
+		admLastLogin = '',
+		token = '';
+
+		if(this.props.data.adm_id == undefined) {
+
+			AsyncStorage.getItem('infoUser').then((data) => {
+	         let results = JSON.parse(data);
+	         admId = results.adm_id;
+				admUsername = results.adm_name;
+				admLastLogin = results.last_login;
+	      }).done();
+		}else {
+			admId = this.props.data.adm_id;
+			admUsername = this.props.data.adm_name;
+			admLastLogin = this.props.data.last_login;
+		}
+		token = base64.encodeBase64(admUsername)+'.'+base64.encodeBase64(admLastLogin)+'.'+base64.encodeBase64(''+admId+'');
+		this.setState({
+			token: token
+		});
+
+		this._getDanhSachLichSu(token);
 	}
 
 	_handleDropdown() {

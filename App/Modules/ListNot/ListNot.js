@@ -9,6 +9,7 @@ import {
    TouchableOpacity
 } from 'react-native';
 import {domain,cache} from '../../Config/common';
+import * as base64 from '../../Components/base64/Index';
 import { Text, Button, Card, CardItem, Spinner, Icon } from 'native-base';
 import CalendarPicker from 'react-native-calendar-picker';
 import {Actions} from 'react-native-router-flux';
@@ -27,6 +28,7 @@ class ListNot extends Component {
 		super(props);
 		let date = new Date();
 		this.state = {
+			token: '',
 			results: [],
 			date: date,
          day: date.getDate(),
@@ -73,13 +75,33 @@ class ListNot extends Component {
    }
 
 	componentWillMount() {
+		let admId = 0,
+		admUsername = '',
+		admLastLogin = '';
+
+		if(this.props.data.adm_id == undefined) {
+
+			AsyncStorage.getItem('infoUser').then((data) => {
+	         let results = JSON.parse(data);
+	         admId = results.adm_id;
+				admUsername = results.adm_name;
+				admLastLogin = results.last_login;
+	      }).done();
+		}else {
+			admId = this.props.data.adm_id;
+			admUsername = this.props.data.adm_name;
+			admLastLogin = this.props.data.last_login;
+		}
+		this.setState({
+			token: base64.encodeBase64(admUsername)+'.'+base64.encodeBase64(admLastLogin)+'.'+base64.encodeBase64(''+admId+'')
+		});
 
 		this.setState({
 			loading: false,
 			showContentNot: true
 		});
 		var that = this;
-		fetch(urlApi+'?day='+this.props.data.fullDate+'&diem_a='+this.props.data.keyDiemDi+'&diem_b='+this.props.data.keyDiemDen, {
+		fetch(urlApi+'?token='+that.state.token+'&day='+this.props.data.fullDate+'&diem_a='+this.props.data.keyDiemDi+'&diem_b='+this.props.data.keyDiemDen, {
 			headers: {
 				'Cache-Control': cache
 			}

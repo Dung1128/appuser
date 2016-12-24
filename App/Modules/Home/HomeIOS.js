@@ -101,7 +101,8 @@ class HomeIOS extends Component {
 		let that = this;
 		let admId = 0,
 		admUsername = '',
-		admLastLogin = '';
+		admLastLogin = '',
+		token = '';
 
 		if(this.props.data.adm_id == undefined) {
 
@@ -116,10 +117,12 @@ class HomeIOS extends Component {
 			admUsername = this.props.data.adm_name;
 			admLastLogin = this.props.data.last_login;
 		}
+		token = base64.encodeBase64(admUsername)+'.'+base64.encodeBase64(admLastLogin)+'.'+base64.encodeBase64(''+admId+'');
 		this.setState({
-			token: base64.encodeBase64(admUsername)+'.'+base64.encodeBase64(admLastLogin)+'.'+base64.encodeBase64(''+admId+'')
+			token: token
 		});
-      fetch(domain+'/api/api_user_ben.php?token='+that.state.token+'&type=home', {
+		console.log(domain+'/api/api_user_ben.php?token='+token+'&use_id='+this.props.data.adm_id+'&type=home');
+      fetch(domain+'/api/api_user_ben.php?token='+token+'&use_id='+this.props.data.adm_id+'&type=home', {
 			headers: {
 				'Cache-Control': cache
 			}
@@ -128,10 +131,12 @@ class HomeIOS extends Component {
       .then((responseJson) => {
 			let listItem1 = [],
 				listItem2 = [];
-			Object.keys(responseJson.dataBx).map(function(key) {
-				listItem1.push({key: key.toString(), label: responseJson.dataBx[key], value: key});
-				listItem2.push({key: key.toString(),  label: responseJson.dataBx[key], value: key});
-			});
+			if(responseJson.status == 200) {
+				Object.keys(responseJson.dataBx).map(function(key) {
+					listItem1.push({key: key.toString(), label: responseJson.dataBx[key], value: key});
+					listItem2.push({key: key.toString(),  label: responseJson.dataBx[key], value: key});
+				});
+			}
 			that.setState({
 				listItem1: listItem1,
 				listItem2: listItem2,
@@ -172,8 +177,8 @@ class HomeIOS extends Component {
 					loading: true,
 					showContentNot: true
 				});
-				console.log(urlApi+'?day='+that.state.fullDate+'&diem_a='+this.state.keyDiemDi+'&diem_b='+this.state.keyDiemDen);
-				fetch(urlApi+'?token='+that.state.token+'&day='+that.state.fullDate+'&diem_a='+this.state.keyDiemDi+'&diem_b='+this.state.keyDiemDen, {
+
+				fetch(urlApi+'?token='+that.state.token+'&use_id='+this.props.data.adm_id+'&day='+that.state.fullDate+'&diem_a='+this.state.keyDiemDi+'&diem_b='+this.state.keyDiemDen, {
 					headers: {
 						'Cache-Control': cache
 					}
@@ -441,7 +446,7 @@ class HomeIOS extends Component {
 				showContentNot: true,
 				countClickNextDay: false
 			});
-			fetch(urlApi+'?token='+that.state.token+'&day='+newDay+'&diem_a='+this.state.keyDiemDi+'&diem_b='+this.state.keyDiemDen, {
+			fetch(urlApi+'?token='+that.state.token+'&use_id='+this.props.data.adm_id+'&day='+newDay+'&diem_a='+this.state.keyDiemDi+'&diem_b='+this.state.keyDiemDen, {
 				headers: {
 					'Cache-Control': cache
 				}
@@ -485,7 +490,7 @@ class HomeIOS extends Component {
 				showContentNot: true,
 				countClickNextDay: false
 			});
-			fetch(urlApi+'?token='+that.state.token+'&day='+newDay+'&diem_a='+this.state.keyDiemDi+'&diem_b='+this.state.keyDiemDen, {
+			fetch(urlApi+'?token='+that.state.token+'&use_id='+this.props.data.adm_id+'&day='+newDay+'&diem_a='+this.state.keyDiemDi+'&diem_b='+this.state.keyDiemDen, {
 				headers: {
 					'Cache-Control': cache
 				}

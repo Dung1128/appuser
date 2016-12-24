@@ -13,6 +13,7 @@ import {
 	Alert
 } from 'react-native';
 import {domain,cache} from '../../Config/common';
+import * as base64 from '../../Components/base64/Index';
 import { Container, Content, Header, Title, Text, Icon, Button, Card, CardItem, Spinner, Badge } from 'native-base';
 import {Actions} from 'react-native-router-flux';
 import { Col, Row, Grid } from "react-native-easy-grid";
@@ -27,6 +28,7 @@ class ViewSoDoGiuong extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
+			token: '',
 			loading: true,
 			results: [],
 			isOpen: false,
@@ -63,14 +65,39 @@ class ViewSoDoGiuong extends Component {
 		}).done();
 	}
 
-	componentDidMount() {
+	componentWillMount() {
+
 		this.infoAdm();
+
+		let admId = 0,
+		admUsername = '',
+		admLastLogin = '',
+		token = '';
+
+		if(this.state.infoAdm.adm_id == undefined) {
+
+			AsyncStorage.getItem('infoUser').then((data) => {
+	         let results = JSON.parse(data);
+	         admId = results.adm_id;
+				admUsername = results.adm_name;
+				admLastLogin = results.last_login;
+	      }).done();
+		}else {
+			admId = this.state.infoAdm.adm_id;
+			admUsername = this.state.infoAdm.adm_name;
+			admLastLogin = this.state.infoAdm.last_login;
+		}
+		token = base64.encodeBase64(admUsername)+'.'+base64.encodeBase64(admLastLogin)+'.'+base64.encodeBase64(''+admId+'');
+		this.setState({
+			token: token
+		});
+
 		this.setState({
 			loading: true
 		});
 		var that = this;
 		setTimeout(() => {
-			fetch(domain+'/api/api_adm_so_do_giuong.php?not_id='+this.props.data.notId+'&day='+this.props.data.day, {
+			fetch(domain+'/api/api_adm_so_do_giuong.php?token='+token+'&adm_id='+this.state.infoAdm.adm_id+'&not_id='+this.props.data.notId+'&day='+this.props.data.day, {
 				headers: {
 					'Cache-Control': cache
 				}

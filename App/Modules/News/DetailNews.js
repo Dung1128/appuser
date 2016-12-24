@@ -118,6 +118,7 @@ class DetailNews extends Component {
 						  javaScriptEnabled={true}
 						  domStorageEnabled={true}
 						  scrollEnabled={false}
+						  startInLoadingState={true}
 						  onNavigationStateChange={this.onNavigationStateChange.bind(this)}
 						  style={{marginTop: 59, height: this.state.webViewHeight}}
 						  source={{html: '<html><body>'+this.state.results.new_description+'</body></html>'}}

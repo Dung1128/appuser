@@ -10,6 +10,7 @@ import {
   TextInput
 } from 'react-native';
 import {domain,cache} from '../../Config/common';
+import * as base64 from '../../Components/base64/Index';
 import { Container, Content, InputGroup, Icon, Input, Button, Spinner, Card, CardItem, Badge } from 'native-base';
 import {Actions, ActionConst} from 'react-native-router-flux';
 import  Rating from 'react-native-easy-rating';
@@ -27,6 +28,7 @@ class DanhGia extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
+			token: '',
 			showDropdown: false,
 			results: [],
 			dataBen: [],
@@ -42,13 +44,13 @@ class DanhGia extends Component {
 		};
 	}
 
-	_getRating() {
+	_getRating(token) {
 		this.setState({
 			loading: true
 		});
 		var that = this;
 
-      fetch(url+'?type=0&user_id='+this.props.data.adm_id, {
+      fetch(url+'?token='+token+'&type=0&user_id='+this.props.data.adm_id, {
 			headers: {
 				'Cache-Control': cache
 			}
@@ -67,7 +69,31 @@ class DanhGia extends Component {
    }
 
 	componentWillMount() {
-		this._getRating();
+		let that = this;
+		let admId = 0,
+		admUsername = '',
+		admLastLogin = '',
+		token = '';
+
+		if(this.props.data.adm_id == undefined) {
+
+			AsyncStorage.getItem('infoUser').then((data) => {
+	         let results = JSON.parse(data);
+	         admId = results.adm_id;
+				admUsername = results.adm_name;
+				admLastLogin = results.last_login;
+	      }).done();
+		}else {
+			admId = this.props.data.adm_id;
+			admUsername = this.props.data.adm_name;
+			admLastLogin = this.props.data.last_login;
+		}
+		token = base64.encodeBase64(admUsername)+'.'+base64.encodeBase64(admLastLogin)+'.'+base64.encodeBase64(''+admId+'');
+		this.setState({
+			token: token
+		});
+
+		this._getRating(token);
 	}
 
 	_handleDropdown() {
@@ -148,7 +174,7 @@ class DanhGia extends Component {
 		if(rating == 0) {
 			rating = 5;
 		}
-		let params = '?type=1&user_id='+ this.props.data.adm_id+'&did_id='+this.state.did_id+'&rat_values='+rating+'&rat_comment='+this.state.textRating;
+		let params = '?token='+this.state.token+'&type=1&user_id='+ this.props.data.adm_id+'&did_id='+this.state.did_id+'&rat_values='+rating+'&rat_comment='+this.state.textRating;
 
 		fetch(url+params, {
 			headers: {
