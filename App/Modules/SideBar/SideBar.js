@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-import { AppRegistry, StyleSheet, Dimensions, Platform, Image, AsyncStorage, ScrollView } from 'react-native';
+import { AppRegistry, StyleSheet, Dimensions, Platform, Image, AsyncStorage, ScrollView, TouchableOpacity } from 'react-native';
 import {
    Container,
    Header,
@@ -111,6 +111,10 @@ class SideBar extends Component {
 		}, 500);
 	}
 
+	_userInfo() {
+
+	}
+
    render() {
       return(
          <View theme={sidebarTheme} style={styles.sidebar}>
@@ -126,7 +130,9 @@ class SideBar extends Component {
 					<ScrollView style={{marginBottom: 30}}>
 						{this.state.checkLogin &&
 							<View style={{alignItems: 'center'}}>
-								<Text style={{color: '#fff'}}>Xin Chào: {this.state.dataUser.use_phone}</Text>
+								<TouchableOpacity onPress={() => {this.props.closeDrawer(); Actions.UserInfo({title: 'Thông tin tài khoản', data: {user_id: this.state.dataUser}}) } }>
+									<Text style={{color: '#fff'}}>Xin Chào: {this.state.dataUser.use_phone}</Text>
+								</TouchableOpacity>
 							</View>
 						}
 		           	<List>

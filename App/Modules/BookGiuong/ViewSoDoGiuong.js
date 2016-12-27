@@ -65,7 +65,7 @@ class ViewSoDoGiuong extends Component {
 		}).done();
 	}
 
-	componentWillMount() {
+	async componentWillMount() {
 
 		this.infoAdm();
 
@@ -75,13 +75,18 @@ class ViewSoDoGiuong extends Component {
 		token = '';
 
 		if(this.state.infoAdm.adm_id == undefined) {
-
-			AsyncStorage.getItem('infoUser').then((data) => {
-	         let results = JSON.parse(data);
-	         admId = results.adm_id;
+			try {
+				let results = await AsyncStorage.getItem('infoUser');
+				results = JSON.parse(results);
+				admId = results.adm_id;
 				admUsername = results.adm_name;
 				admLastLogin = results.last_login;
-	      }).done();
+				this.setState({
+					infoAdm: results
+				});
+			} catch (error) {
+				console.error(error);
+		  	}
 		}else {
 			admId = this.state.infoAdm.adm_id;
 			admUsername = this.state.infoAdm.adm_name;
@@ -104,14 +109,19 @@ class ViewSoDoGiuong extends Component {
 			})
 			.then((response) => response.json())
 			.then((responseJson) => {
-				that.setState({
-					results:responseJson.so_do_giuong,
-					arrVeNumber: responseJson.so_do_giuong.arrVeNumber,
-					resultsBen: that.props.data.dataBen,
-					arrOrder: responseJson.so_do_giuong.arrOrder,
-					loading: false
-				});
-				return responseJson.so_do_giuong;
+				if(responseJson.status != 404) {
+					that.setState({
+						results:responseJson.so_do_giuong,
+						arrVeNumber: responseJson.so_do_giuong.arrVeNumber,
+						resultsBen: that.props.data.dataBen,
+						arrOrder: responseJson.so_do_giuong.arrOrder,
+						loading: false
+					});
+					return responseJson.so_do_giuong;
+				}else if(responseJson.status == 404) {
+					alert('Tài khoản của bạn đã được đăng nhập ở thiết bị khác.');
+					Actions.welcome({type: 'reset'});
+				}
 			})
 			.catch((error) => {
 				that.setState({
@@ -227,22 +237,54 @@ class ViewSoDoGiuong extends Component {
 	}
 
 	_setActiveGiuong(id, fullLabel) {
-		let setStatus = this.state.arrVeNumber;
-		let dataBook = this.state.dataBook;
-		let arrBookGiuong = this.state.arrBookGiuong;
-		setStatus[id].bvv_status = -2;
-		setStatus[id].bvv_bex_id_a = this.props.data.benA;
-		setStatus[id].bvv_bex_id_b = this.props.data.benB;
-		setStatus[id].bvv_price = this.props.data.totalPriceInt;
+		let dataVe = this.state.arrVeNumber;
 
-		dataBook.push({labelFull: fullLabel, 'numberGiuong': parseInt(id), 'bvv_bex_id_a': this.props.data.benA, 'bvv_bex_id_b': this.props.data.benB, 'bvv_price': parseInt(this.props.data.totalPriceInt)});
-		arrBookGiuong.push({'numberGiuong': parseInt(id)});
-		this.setState({
-			arrVeNumber: setStatus,
-			checkout: true,
-			dataBook: dataBook,
-			arrBookGiuong: arrBookGiuong
+		let that = this;
+		fetch(domain+'/api/api_check_ve.php?token='+this.state.token+'&adm_id='+this.state.infoAdm.adm_id+'&numberGiuong='+dataVe[id].bvv_number+'&bvv_id='+dataVe[id].bvv_id, {
+			headers: {
+				'Cache-Control': cache
+			}
+		})
+		.then((response) => response.json())
+		.then((responseJson) => {
+			if(responseJson.status != 404) {
+				let setStatus = this.state.arrVeNumber;
+				let dataBook = this.state.dataBook;
+				let arrBookGiuong = this.state.arrBookGiuong;
+
+				if(responseJson.status == 200) {
+					setStatus[id].bvv_status = -2;
+					setStatus[id].bvv_bex_id_a = that.props.data.benA;
+					setStatus[id].bvv_bex_id_b = that.props.data.benB;
+					setStatus[id].bvv_price = that.props.data.totalPriceInt;
+
+					dataBook.push({labelFull: fullLabel, 'numberGiuong': parseInt(id), 'bvv_bex_id_a': that.props.data.benA, 'bvv_bex_id_b': that.props.data.benB, 'bvv_price': parseInt(that.props.data.totalPriceInt)});
+					arrBookGiuong.push({'numberGiuong': parseInt(id)});
+					that.setState({
+						arrVeNumber: setStatus,
+						checkout: true,
+						dataBook: dataBook,
+						arrBookGiuong: arrBookGiuong
+					});
+				}else if(responseJson.status == 201) {
+					alert('Ghế đã có người đặt. Bạn vui lòng chọn ghế khác.');
+					setStatus[id].bvv_status = 11;
+					that.setState({
+						arrVeNumber: setStatus
+					});
+				}
+			}else if(responseJson.status == 404) {
+				alert('Tài khoản của bạn đã được đăng nhập ở thiết bị khác.');
+				Actions.welcome({type: 'reset'});
+			}
+		})
+		.catch((error) => {
+			that.setState({
+				loading: true
+			});
+			console.error(error);
 		});
+
 	}
 
 	_unsetActiveGiuong(id, fullLabel){

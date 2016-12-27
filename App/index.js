@@ -27,6 +27,7 @@ import Contact from './Modules/Contact/Index';
 import ListNews from './Modules/News/ListNews';
 import DetailNews from './Modules/News/DetailNews';
 import HuongDanSuDung from './Modules/HuongDanSuDung/Index';
+import UserInfo from './Modules/Users/Index';
 import Welcome from './Welcome';
 
 const reducerCreate = params => {
@@ -63,6 +64,7 @@ class App extends Component {
 					<Scene key="DetailNews" component={DetailNews} title="Chi tiết tin tức" />
 					<Scene key="Payment" component={Payment} title="Thanh Toán" hideNavBar={true} />
 					<Scene key="HuongDanSuDung" component={HuongDanSuDung} title="Hướng đẫn sử dụng" />
+					<Scene key="UserInfo" component={UserInfo} title="Thông tin tài khoản" />
   	       	</Scene>
        	</Router>
 		);

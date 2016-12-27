@@ -28,28 +28,35 @@ class LichSu extends Component {
 			trungChuyen: false,
 			selectCheckbox: 'borderCheckbox',
 			ghi_chu: '',
-			token: ''
+			token: '',
+			infoAdm: []
 		};
    }
 
-	componentWillMount() {
+	async componentWillMount() {
 		let that = this;
 		let admId = 0,
 		admUsername = '',
 		admLastLogin = '';
 
-		if(this.props.data.dataUser.adm_id == undefined) {
+		if(this.state.infoAdm.adm_id == undefined) {
 
-			AsyncStorage.getItem('infoUser').then((data) => {
-	         let results = JSON.parse(data);
-	         admId = results.adm_id;
+			try {
+				let results = await AsyncStorage.getItem('infoUser');
+				results = JSON.parse(results);
+				admId = results.adm_id;
 				admUsername = results.adm_name;
 				admLastLogin = results.last_login;
-	      }).done();
+				this.setState({
+					infoAdm: results
+				});
+			} catch (error) {
+				console.error(error);
+		  	}
 		}else {
-			admId = this.props.data.dataUser.adm_id;
-			admUsername = this.props.data.dataUser.adm_name;
-			admLastLogin = this.props.data.dataUser.last_login;
+			admId = this.state.infoAdm.adm_id;
+			admUsername = this.state.infoAdm.adm_name;
+			admLastLogin = this.state.infoAdm.last_login;
 		}
 		this.setState({
 			token: base64.encodeBase64(admUsername)+'.'+base64.encodeBase64(admLastLogin)+'.'+base64.encodeBase64(''+admId+'')
@@ -197,7 +204,14 @@ class LichSu extends Component {
 			that.setState({
 				loadingOrder: false
 			});
-			Actions.Payment({title: 'Thanh Toán', data: {adm_name: this.props.data.dataUser.adm_name, last_login: this.props.data.dataUser.last_login, adm_id: this.props.data.dataUser.adm_id, orderId: responseJson.orderId}});
+			if(responseJson.status != 404) {
+				if(responseJson.status == 200) {
+					Actions.Payment({title: 'Thanh Toán', data: {adm_name: this.props.data.dataUser.adm_name, last_login: this.props.data.dataUser.last_login, adm_id: this.props.data.dataUser.adm_id, orderId: responseJson.orderId}});
+				}
+			}else if(responseJson.status == 404) {
+				alert('Tài khoản của bạn hiện đang được đăng nhập ở thiết bị khác.');
+				Actions.welcome({type: 'reset'});
+			}
 		})
 		.catch((error) => {
 			console.error(error);

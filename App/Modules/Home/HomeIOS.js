@@ -6,7 +6,8 @@ import {
    TextInput,
 	View,
 	ScrollView,
-	TouchableOpacity
+	TouchableOpacity,
+	AsyncStorage
 } from 'react-native';
 import {domain,cache} from '../../Config/common';
 import * as base64 from '../../Components/base64/Index';
@@ -54,7 +55,8 @@ class HomeIOS extends Component {
 			countClickNextDay: true,
 			search1: false,
 			search2: false,
-			token: ''
+			token: '',
+			infoAdm: []
       };
    }
 
@@ -97,32 +99,37 @@ class HomeIOS extends Component {
       return data;
    }
 
-	componentWillMount() {
+	async componentWillMount() {
 		let that = this;
 		let admId = 0,
 		admUsername = '',
 		admLastLogin = '',
 		token = '';
 
-		if(this.props.data.adm_id == undefined) {
-
-			AsyncStorage.getItem('infoUser').then((data) => {
-	         let results = JSON.parse(data);
-	         admId = results.adm_id;
+		if(this.state.infoAdm.adm_id == undefined) {
+			try {
+				let results = await AsyncStorage.getItem('infoUser');
+				results = JSON.parse(results);
+				admId = results.adm_id;
 				admUsername = results.adm_name;
 				admLastLogin = results.last_login;
-	      }).done();
+				this.setState({
+					infoAdm: results
+				});
+			} catch (error) {
+				console.error(error);
+		  	}
 		}else {
-			admId = this.props.data.adm_id;
-			admUsername = this.props.data.adm_name;
-			admLastLogin = this.props.data.last_login;
+			admId = this.state.infoAdm.adm_id;
+			admUsername = this.state.infoAdm.adm_name;
+			admLastLogin = this.state.infoAdm.last_login;
 		}
 		token = base64.encodeBase64(admUsername)+'.'+base64.encodeBase64(admLastLogin)+'.'+base64.encodeBase64(''+admId+'');
 		this.setState({
 			token: token
 		});
-		console.log(domain+'/api/api_user_ben.php?token='+token+'&use_id='+this.props.data.adm_id+'&type=home');
-      fetch(domain+'/api/api_user_ben.php?token='+token+'&use_id='+this.props.data.adm_id+'&type=home', {
+
+      fetch(domain+'/api/api_user_ben.php?token='+token+'&use_id='+admId+'&type=home', {
 			headers: {
 				'Cache-Control': cache
 			}
@@ -185,14 +192,19 @@ class HomeIOS extends Component {
 				})
             .then((response) => response.json())
             .then((responseJson) => {
-               that.setState({
-                  results:responseJson.so_do_giuong,
-                  loading: false,
-						showContentNot: false,
-						oneSearch: true,
-						editFormSearch: false
-               });
-               return responseJson.so_do_giuong;
+					if(responseJson.status != 404) {
+	               that.setState({
+	                  results:responseJson.so_do_giuong,
+	                  loading: false,
+							showContentNot: false,
+							oneSearch: true,
+							editFormSearch: false
+	               });
+	               return responseJson.so_do_giuong;
+					}else if(responseJson.status == 404){
+						alert('Tài khoản của bạn đã được đăng nhập ở thiết bị khác.');
+						Actions.welcome({type: 'reset'});
+					}
             })
             .catch((error) => {
                that.setState({
@@ -453,14 +465,19 @@ class HomeIOS extends Component {
 			})
 			.then((response) => response.json())
 			.then((responseJson) => {
-				that.setState({
-					results:responseJson.so_do_giuong,
-					loading: false,
-					showContentNot: false,
-					oneSearch: true,
-					editFormSearch: false,
-					countClickNextDay: true
-				});
+				if(responseJson.status != 404) {
+					that.setState({
+						results:responseJson.so_do_giuong,
+						loading: false,
+						showContentNot: false,
+						oneSearch: true,
+						editFormSearch: false,
+						countClickNextDay: true
+					});
+				}else if(responseJson.status == 404) {
+					alert('Tài khoản của bạn đã được đăng nhập ở thiết bị khác.');
+					Actions.welcome({type: 'reset'});
+				}
 			})
 			.catch((error) => {
 				that.setState({
@@ -497,14 +514,19 @@ class HomeIOS extends Component {
 			})
 			.then((response) => response.json())
 			.then((responseJson) => {
-				that.setState({
-					results:responseJson.so_do_giuong,
-					loading: false,
-					showContentNot: false,
-					oneSearch: true,
-					editFormSearch: false,
-					countClickNextDay: true
-				});
+				if(responseJson.status != 404) {
+					that.setState({
+						results:responseJson.so_do_giuong,
+						loading: false,
+						showContentNot: false,
+						oneSearch: true,
+						editFormSearch: false,
+						countClickNextDay: true
+					});
+				}else if(responseJson.status == 404) {
+					alert('Tài khoản của bạn đã được đăng nhập ở thiết bị khác.');
+					Actions.welcome({type: 'reset'});
+				}
 			})
 			.catch((error) => {
 				that.setState({

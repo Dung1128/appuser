@@ -7,7 +7,8 @@ import {
   TouchableOpacity,
   Dimensions,
   ScrollView,
-  TextInput
+  TextInput,
+  AsyncStorage
 } from 'react-native';
 import {domain,cache} from '../../Config/common';
 import * as base64 from '../../Components/base64/Index';
@@ -40,60 +41,72 @@ class DanhGia extends Component {
 			gio_xuat_ben: '',
 			did_id: '',
 			textRating: '',
-			hanh_trinh: ''
+			hanh_trinh: '',
+			infoAdm: []
 		};
 	}
 
-	_getRating(token) {
+	_getRating(token, admId) {
 		this.setState({
 			loading: true
 		});
 		var that = this;
 
-      fetch(url+'?token='+token+'&type=0&user_id='+this.props.data.adm_id, {
+      fetch(url+'?token='+token+'&type=0&user_id='+admId, {
 			headers: {
 				'Cache-Control': cache
 			}
 		})
 	      .then((response) => response.json())
 	      .then((responseJson) => {
-				that.setState({
-					results: responseJson.dataRating,
-					dataBen: responseJson.dataBen,
-					loading: false
-				});
+				if(responseJson.status != 404) {
+					that.setState({
+						results: responseJson.dataRating,
+						dataBen: responseJson.dataBen,
+						loading: false
+					});
+				}else if(responseJson.status == 404) {
+					alert('Tài khoản của bạn đã được đăng nhập ở thiết bị khác.');
+					Actions.welcome({type: 'reset'});
+				}
 	      })
 	      .catch((error) => {
 	         console.error(error);
 	      });
    }
 
-	componentWillMount() {
+	async componentWillMount() {
 		let that = this;
 		let admId = 0,
 		admUsername = '',
 		admLastLogin = '',
 		token = '';
 
-		if(this.props.data.adm_id == undefined) {
+		if(this.state.infoAdm.adm_id == undefined) {
 
-			AsyncStorage.getItem('infoUser').then((data) => {
-	         let results = JSON.parse(data);
-	         admId = results.adm_id;
+			try {
+				let results = await AsyncStorage.getItem('infoUser');
+				results = JSON.parse(results);
+				admId = results.adm_id;
 				admUsername = results.adm_name;
 				admLastLogin = results.last_login;
-	      }).done();
+				this.setState({
+					infoAdm: results
+				});
+			} catch (error) {
+				console.error(error);
+		  	}
 		}else {
-			admId = this.props.data.adm_id;
-			admUsername = this.props.data.adm_name;
-			admLastLogin = this.props.data.last_login;
+			admId = this.state.infoAdm.adm_id;
+			admUsername = this.state.infoAdm.adm_name;
+			admLastLogin = this.state.infoAdm.last_login;
 		}
 		token = base64.encodeBase64(admUsername)+'.'+base64.encodeBase64(admLastLogin)+'.'+base64.encodeBase64(''+admId+'');
 		this.setState({
 			token: token
 		});
 
-		this._getRating(token);
+		this._getRating(token, admId);
 	}
 
 	_handleDropdown() {
