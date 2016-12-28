@@ -193,22 +193,23 @@ class Welcome extends Component {
 
    render() {
       return(
-			<Grid>
-				<Row size={1}></Row>
-				<Row size={2}>
-					<View>
-						<ScrollView>
-							<View style={styles.wrapViewImage}>
-								<Thumbnail size={80} source={require('./Skin/Images/logo.png')} />
-							</View>
-							{ this.state.loading && <Spinner /> }
-							{!this.state.loading && this.renderHtml()}
-						</ScrollView>
-					</View>
-				</Row>
-				<Row size={1}></Row>
-			</Grid>
 
+			<View style={{flex: 1, flexDirection: 'column'}}>
+				<View style={{height: height}}>
+						<Grid>
+							<Row size={1}></Row>
+							<Row size={5}>
+								<View>
+									<ScrollView>
+									{ this.state.loading && <Spinner /> }
+									{!this.state.loading && this.renderHtml()}
+									</ScrollView>
+								</View>
+							</Row>
+							<Row size={1}></Row>
+						</Grid>
+				</View>
+			</View>
       );
    }
 }

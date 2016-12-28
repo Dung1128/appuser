@@ -22,7 +22,7 @@ import ModalPicker from 'react-native-modal-picker';
 import StorageHelper from '../../Components/StorageHelper';
 const heightDevice = Dimensions.get('window').height;
 const widthDevice = Dimensions.get('window').width;
-
+const timeSync = 5000;
 class ViewSoDoGiuong extends Component {
 
 	constructor(props) {
@@ -282,6 +282,26 @@ class ViewSoDoGiuong extends Component {
 				}
 			}
 		}
+	}
+
+	componentDidMount() {
+		let that = this;
+		setInterval(function() {
+			fetch(domain+'/api/api_sync_so_do_giuong.php?token='+that.state.token+'&adm_id='+that.state.infoAdm.adm_id+'&notId='+that.props.data.notId+'&day='+that.props.data.day, {
+				headers: {
+			    	'Cache-Control': cache
+			  	}
+			})
+			.then((response) => response.json())
+			.then((responseJson) => {
+				that.setState({
+					arrVeNumber: responseJson.arrVeNumber
+				});
+			})
+			.catch((error) => {
+				console.error(error);
+			});
+		}, timeSync);
 	}
 
 	_onLayout = event => {
