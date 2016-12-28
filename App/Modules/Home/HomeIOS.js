@@ -651,8 +651,9 @@ class HomeIOS extends Component {
 											<TouchableOpacity style={{flexDirection: 'row'}} onPress={() => Actions.ViewSoDoGiuong({title: 'Chọn chỗ', data: {tuyen: dataNot.tuyen, dataBen: this.state.dataBx, id_dieu_do: dataNot.id_dieu_do, totalPriceInt: dataNot.price, adm_id: this.state.infoAdm.adm_id, adm_name: this.props.data.adm_name, last_login: this.props.data.last_login, gio_xuat_ben: dataNot.did_gio_xuat_ben_that, notId:dataNot.not_id, day:this.state.fullDate, notTuyenId: dataNot.not_tuy_id, benA: dataNot.ben_a, benB: dataNot.ben_b, laixe1: dataNot.laixe1, laixe2: dataNot.laixe2, tiepvien: dataNot.tiepvien}})}>
 												<View style={{flex: 2}}>
 													<Text><Text style={{fontWeight: 'bold'}}>{dataNot.gio_don}</Text> - Thời gian đón</Text>
+													<Text style={{fontWeight: 'bold'}}>{this.state.dataBx[dataNot.ben_a]} -> {this.state.dataBx[dataNot.ben_b]}</Text>
 													<Text><Text style={{fontWeight: 'bold'}}>{dataNot.did_gio_xuat_ben_that}</Text> - Thời gian xuất bến</Text>
-													<Text>{this.state.dataBx[dataNot.ben_a]} -> {this.state.dataBx[dataNot.ben_b]}</Text>
+													<Text>Tuyến: <Text style={{fontWeight: 'bold'}}>{dataNot.tuyen}</Text></Text>
 													<Text>{dataNot.tenSoDo}</Text>
 													<Text>Số chỗ trống: {dataNot.soChoTrong}</Text>
 												</View>
