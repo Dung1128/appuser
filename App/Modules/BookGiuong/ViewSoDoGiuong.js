@@ -22,7 +22,7 @@ import ModalPicker from 'react-native-modal-picker';
 import StorageHelper from '../../Components/StorageHelper';
 const heightDevice = Dimensions.get('window').height;
 const widthDevice = Dimensions.get('window').width;
-const timeSync = 1000*60;
+const timeSync = (1000*60)/2;
 class ViewSoDoGiuong extends Component {
 
 	constructor(props) {
