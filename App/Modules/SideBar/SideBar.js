@@ -15,7 +15,6 @@ import {
    ListItem
 } from 'native-base';
 import {domain,cache} from '../../Config/common';
-import * as base64 from '../../Components/base64/Index';
 import { Actions } from 'react-native-router-flux';
 
 import sidebarTheme from './theme-sidebar';
@@ -47,9 +46,7 @@ class SideBar extends Component {
 				})
 				.then((response) => response.json())
 				.then((responseJson) => {
-					let token = base64.encodeBase64(results.adm_name)+'.'+base64.encodeBase64(results.last_login)+'.'+base64.encodeBase64(results.adm_id);
 					AsyncStorage.removeItem('infoUser');
-					AsyncStorage.removeItem(token);
 					that.setState({
 						checkLogin: false,
 						dataUser: []
@@ -75,15 +72,12 @@ class SideBar extends Component {
 				let results = JSON.parse(data);
 				if(results != null) {
 
-					let token = base64.encodeBase64(results.adm_name)+'.'+base64.encodeBase64(results.last_login)+'.'+base64.encodeBase64(results.adm_id);
-					let dataToken = AsyncStorage.removeItem(token);
-					if(dataToken != null) {
 						that.setState({
 							checkLogin: true,
 							dataUser: JSON.parse(data)
 						});
 						clearInterval(tempInterval);
-					}
+
 				}
 			}).done();
 		}, 500);
@@ -96,16 +90,12 @@ class SideBar extends Component {
 				let results = JSON.parse(data);
 				if(results != null) {
 
-					let token = base64.encodeBase64(results.adm_name)+'.'+base64.encodeBase64(results.last_login)+'.'+base64.encodeBase64(results.adm_id);
-					let dataToken = AsyncStorage.removeItem(token);
-					if(dataToken != null) {
-
 						that.setState({
 							checkLogin: true,
 							dataUser: JSON.parse(data)
 						});
 						clearInterval(tempInterval);
-					}
+
 				}
 			}).done();
 		}, 500);
