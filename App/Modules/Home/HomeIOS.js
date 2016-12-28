@@ -254,7 +254,7 @@ class HomeIOS extends Component {
 		}
 
 		html.push(
-			<View key="scroll_autocomplate1" style={{borderTopWidth: 1, borderTopColor: '#ccc'}}>
+			<View key="scroll_autocomplate1" style={{minHeight:0, maxHeight:330, overflow: 'hidden', borderTopWidth: 1, borderTopColor: '#ccc'}}>
 				{childHtml}
 			</View>
 		);
@@ -301,7 +301,8 @@ class HomeIOS extends Component {
 	_handleSearchAutocomplate2(nameDiemDen) {
 		let listItem2 = this.state.listItem2;
 		let listItem2_1 = this._str_slug(this.state.listItem2);
-		let html = [];
+		let html = [],
+			childHtml = [];
 		for(var i = 0; i < listItem2.length; i++) {
 
 			let label = listItem2[i].label.toLowerCase();
@@ -320,7 +321,7 @@ class HomeIOS extends Component {
 			if(check) {
 				let value = listItem2[i].value;
 				let label = listItem2[i].label;
-				html.push(
+				childHtml.push(
 					<View key={i} style={{borderBottomWidth: 1, borderBottomColor: '#ccc', padding: 10}}>
 						<TouchableOpacity onPress={() => this.setState({keyDiemDen: value, nameDiemDen: label, search2: false}) }>
 							<Text>{label}</Text>
@@ -330,6 +331,11 @@ class HomeIOS extends Component {
 			}
 		}
 
+		html.push(
+			<View key="scroll_autocomplate2" style={{minHeight:0, maxHeight:330, overflow: 'hidden', borderTopWidth: 1, borderTopColor: '#ccc'}}>
+				{childHtml}
+			</View>
+		);
 		return html;
 	}
 
@@ -576,7 +582,7 @@ class HomeIOS extends Component {
 				return i && c !== "." && ((a.length - i) % 3 === 0) ? ',' + c : c;
 			});
 		}
-		return(<Text style={{fontWeight: 'bold', color: '#ff931f'}}>{newPrice} VNĐ</Text>);
+		return(<Text style={{fontWeight: 'bold', color: '#ff931f', fontSize: 17}}>{newPrice} VNĐ</Text>);
 	}
 
    render() {
@@ -631,6 +637,13 @@ class HomeIOS extends Component {
 							</View>
 						</View>
 							{ this.state.showContentNot && <Spinner /> }
+							{dataNot.length <= 0 &&
+								<View style={{alignItems: 'center', padding: 10}}>
+									<Text>Không còn chuyến nào đi từ <Text style={{color: 'red'}}>{this.state.nameDiemDi}</Text> đến <Text style={{color: 'red'}}>{this.state.nameDiemDen}</Text></Text>
+									<Text style={{paddingTop: 10}}>Vui lòng chọn ngày khác.</Text>
+								</View>
+							}
+
 							{ !this.state.loading && <Card  style={{marginTop: -5}} dataArray={dataNot}
 			                 renderRow={(dataNot) =>
 

@@ -117,7 +117,7 @@ class SideBar extends Component {
             </Header>
 
 				<View style={{height: (height-71), overflow: 'hidden'}}>
-					<ScrollView style={{marginBottom: 30}}>
+					<ScrollView style={{marginBottom: 70}}>
 						{this.state.checkLogin &&
 							<View style={{alignItems: 'center'}}>
 								<TouchableOpacity onPress={() => {this.props.closeDrawer(); Actions.UserInfo({title: 'Thông tin tài khoản', data: {user_id: this.state.dataUser}}) } }>
