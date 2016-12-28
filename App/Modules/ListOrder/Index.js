@@ -145,7 +145,7 @@ class LichSu extends Component {
 								<View style={{flex: 1}}>
 									<Text>Chúng tôi có dịch vụ xe trung chuyển đón tại nhà MIỄN PHÍ.</Text>
 								</View>
-								<View style={{flexDirection: 'row', marginTop: 10, overflow: 'hidden'}}>
+								<View style={{flexDirection: 'row', marginTop: 10, overflow: 'hidden', marginBottom: 10}}>
 									<TouchableOpacity onPress={() => this._handleCheckBox()} style={{zIndex: 1, position: 'absolute', top: 0, left: 0, width: widthDevice, height: 50}}></TouchableOpacity>
 									<View style={{flex: 1}}>
 										<View style={[styles[this.state.selectCheckbox], {width: 20, height: 20, borderRadius: 100, borderWidth: 1}]}></View>
