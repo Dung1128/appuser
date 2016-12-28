@@ -11,9 +11,7 @@ import { Container, Content, InputGroup, View, Icon, Input,Text, Button, Thumbna
 import { Col, Row, Grid } from "react-native-easy-grid";
 import {Actions} from 'react-native-router-flux';
 import {domain,cache} from './Config/common';
-
-import * as base64 from './Components/base64/Index';
-
+import StorageHelper from './Components/StorageHelper';
 let {width, height} = Dimensions.get('window');
 
 class Welcome extends Component {
@@ -36,49 +34,41 @@ class Welcome extends Component {
 				loading: true
 			});
 			let that = this;
-		  	let dataUser = await AsyncStorage.getItem('infoUser');
+		  	let dataUser = await StorageHelper.getStore('infoUser');
 			let jsonDataUser = JSON.parse(dataUser);
 			if(jsonDataUser != null) {
-				let token = base64.encodeBase64(jsonDataUser.adm_name)+'.'+base64.encodeBase64(jsonDataUser.last_login)+'.'+base64.encodeBase64(''+jsonDataUser.adm_id+'');
 
-				let dataToken = await AsyncStorage.getItem(token);
-				if(dataToken != null) {
-					fetch(domain+'/api/api_user_dang_nhap.php?type=checkTokenLogin&use_id='+jsonDataUser.adm_id+'&token='+token, {
-						headers: {
-							'Cache-Control': cache
-						}
-					})
-					.then((response) => response.json())
-					.then((responseJson) => {
-						if(responseJson.status != 404) {
-							if(responseJson.status == 200) {
+				fetch(domain+'/api/api_user_dang_nhap.php?type=checkTokenLogin&use_id='+jsonDataUser.adm_id+'&token='+jsonDataUser.token, {
+					headers: {
+						'Cache-Control': cache
+					}
+				})
+				.then((response) => response.json())
+				.then((responseJson) => {
+					if(responseJson.status != 404) {
+						if(responseJson.status == 200) {
 
-								that.setState({
-									loading: false
-								});
-								Actions.home({title: 'Chọn Chuyến', data: jsonDataUser});
-							}
-						}else if(responseJson.status == 404) {
 							that.setState({
-								loading: false,
-								error: 'true',
-								messageError: ['Tài khoản đã được đăng nhập ở thiết bị khác.']
+								loading: false
 							});
+							Actions.home({title: 'Chọn Chuyến', data: jsonDataUser});
 						}
-					})
-					.catch((error) => {
+					}else if(responseJson.status == 404) {
 						that.setState({
 							loading: false,
 							error: 'true',
-							messageError: ['Lỗi hệ thống. Vui lòng liên hệ với bộ phận Kỹ Thuật.']
+							messageError: ['Tài khoản đã được đăng nhập ở thiết bị khác.']
 						});
-						Console.error(error);
+					}
+				})
+				.catch((error) => {
+					that.setState({
+						loading: false,
+						error: 'true',
+						messageError: ['Lỗi hệ thống. Vui lòng liên hệ với bộ phận Kỹ Thuật.']
 					});
-				}else {
-					this.setState({
-						loading: false
-					});
-				}
+					Console.error(error);
+				});
 			}else {
 				this.setState({
 					loading: false
@@ -126,10 +116,8 @@ class Welcome extends Component {
 	         });
 	         if(responseJson.status == 200) {
 	            let result = JSON.stringify(responseJson);
-					let token = base64.encodeBase64(responseJson.adm_name)+'.'+base64.encodeBase64(responseJson.last_login)+'.'+base64.encodeBase64(''+responseJson.adm_id+'');
 					AsyncStorage.removeItem('infoUser');
 	            AsyncStorage.setItem("infoUser", result);
-					AsyncStorage.setItem(token, '1');
 	            Actions.home({title: 'Chọn Chuyến', data: result});
 	         }else {
 					that.setState({

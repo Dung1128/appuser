@@ -11,7 +11,7 @@ import {
   AsyncStorage
 } from 'react-native';
 import {domain,cache} from '../../Config/common';
-import * as base64 from '../../Components/base64/Index';
+
 import { Container, Content, InputGroup, Icon, Input, Button, Spinner, Card, CardItem, Badge } from 'native-base';
 import {Actions, ActionConst} from 'react-native-router-flux';
 import  Rating from 'react-native-easy-rating';
@@ -19,7 +19,7 @@ import Modal from 'react-native-modalbox';
 
 const heightDevice = Dimensions.get('window').height;
 const widthDevice = Dimensions.get('window').width;
-
+import StorageHelper from '../../Components/StorageHelper';
 const selectStar = require('../../../App/Skin/Images/select_star.png');
 const unSelectStar = require('../../../App/Skin/Images/unselect_star.png');
 
@@ -76,34 +76,14 @@ class DanhGia extends Component {
    }
 
 	async componentWillMount() {
-		let that = this;
-		let admId = 0,
-		admUsername = '',
-		admLastLogin = '',
-		token = '';
-
-		if(this.state.infoAdm.adm_id == undefined) {
-
-			try {
-				let results = await AsyncStorage.getItem('infoUser');
-				results = JSON.parse(results);
-				admId = results.adm_id;
-				admUsername = results.adm_name;
-				admLastLogin = results.last_login;
-				this.setState({
-					infoAdm: results
-				});
-			} catch (error) {
-				console.error(error);
-		  	}
-		}else {
-			admId = this.state.infoAdm.adm_id;
-			admUsername = this.state.infoAdm.adm_name;
-			admLastLogin = this.state.infoAdm.last_login;
-		}
-		token = base64.encodeBase64(admUsername)+'.'+base64.encodeBase64(admLastLogin)+'.'+base64.encodeBase64(''+admId+'');
+		let results = await StorageHelper.getStore('infoUser');
+		results = JSON.parse(results);
+		let admId = results.adm_id;
+		let token = results.token;
 		this.setState({
-			token: token
+			infoAdm: results,
+			token: token,
+			loading: true
 		});
 
 		this._getRating(token, admId);
