@@ -11,6 +11,7 @@ import {
   ScrollView
 } from 'react-native';
 import {domain,cache} from '../../Config/common';
+import * as base64 from '../../Components/base64/Index';
 import {Button, Icon} from 'native-base';
 import {Actions} from 'react-native-router-flux';
 const {height, width} = Dimensions.get('window');
@@ -20,7 +21,9 @@ class UserInfo extends Component {
       super(props);
 		this.state = {
 			loading: true,
-			webViewHeight: 0
+			webViewHeight: 0,
+			infoAdm: [],
+			token: ''
 		};
    }
 
@@ -35,23 +38,60 @@ class UserInfo extends Component {
       }).done();
 	}
 
-	componentDidMount() {
+	async componentWillMount() {
+		let admId = 0,
+		admUsername = '',
+		admLastLogin = '',
+		token = '';
+
+		if(this.state.infoAdm.adm_id == undefined) {
+			try {
+				let results = await AsyncStorage.getItem('infoUser');
+				results = JSON.parse(results);
+				admId = results.adm_id;
+				admUsername = results.adm_name;
+				admLastLogin = results.last_login;
+				this.setState({
+					infoAdm: results
+				});
+			} catch (error) {
+				console.error(error);
+		  	}
+		}else {
+			admId = this.state.infoAdm.adm_id;
+			admUsername = this.state.infoAdm.adm_name;
+			admLastLogin = this.state.infoAdm.last_login;
+		}
+		token = base64.encodeBase64(admUsername)+'.'+base64.encodeBase64(admLastLogin)+'.'+base64.encodeBase64(''+admId+'');
+
 		this.setState({
+			token: token,
 			loading: true
 		});
+
 		var that = this;
 
-      fetch(domain+'/api/api_user_get_user_info.php?type='+this.props.data.user_id.adm_id, {
+      fetch(domain+'/api/api_user_get_user_info.php?token='+token+'&user_id='+admId, {
 			headers: {
 				'Cache-Control': cache
 			}
 		})
       .then((response) => response.json())
       .then((responseJson) => {
-			that.setState({
-				results: responseJson.data,
-				loading: false
-			});
+			if(responseJson.status != 404) {
+				if(responseJson.status == 200) {
+					that.setState({
+						results: responseJson.dataUser,
+						loading: false
+					});
+				}else if(responseJson.status == 201) {
+					alert('Tài khoản không tồn tại.');
+					Actions.welcome({type: 'reset'});
+				}
+			}else if(responseJson.status == 404) {
+				alert('Tài khoản của bạn đã được đăng nhập ở thiết bị khác.');
+				Actions.welcome({type: 'reset'});
+			}
       })
       .catch((error) => {
          console.error(error);
