@@ -16,7 +16,7 @@ import {
 } from 'native-base';
 import {domain,cache} from '../../Config/common';
 import { Actions } from 'react-native-router-flux';
-
+import Communications from 'react-native-communications';
 import sidebarTheme from './theme-sidebar';
 import styles from './style';
 
@@ -210,6 +210,15 @@ class SideBar extends Component {
 							  			<Icon name="ios-heart" style={styles.sidebarIcon} />
 									</View>
 									<Text style={styles.text}>Hướng dẫn sử dụng</Text>
+						 		</View>
+					 		</ListItem>
+
+							<ListItem button iconLeft onPress={() => { Communications.phonecall('19006776', true); this.props.closeDrawer(); }}>
+						 		<View style={styles.listItemContainer}>
+									<View style={[styles.iconContainer]}>
+							  			<Icon name="ios-call" style={styles.sidebarIcon} />
+									</View>
+									<Text style={styles.text}>HOTLINE: <Text style={{color: '#365DB5', fontWeight: 'bold'}}>19006776</Text></Text>
 						 		</View>
 					 		</ListItem>
 

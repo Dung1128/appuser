@@ -255,9 +255,7 @@ class HomeIOS extends Component {
 
 		html.push(
 			<View key="scroll_autocomplate1" style={{height: 200, overflow: 'hidden', borderTopWidth: 1, borderTopColor: '#ccc'}}>
-				<ScrollView>
-					{childHtml}
-				</ScrollView>
+				{childHtml}
 			</View>
 		);
 		return html;
@@ -364,15 +362,14 @@ class HomeIOS extends Component {
 						<View style={{borderBottomColor: '#ccc', borderBottomWidth: 1, marginLeft: 30}}>
 							<Input placeholder="Nhập tỉnh đi" value={this.state.nameDiemDi} onChangeText={(nameDiemDi) => this._handleSetDiemDi(nameDiemDi)}  style={{height:40, alignItems: 'center', justifyContent: 'center', paddingTop: 10, marginTop: -10, paddingLeft: 15}} />
 						</View>
-						{this.state.search1 &&
-							<View style={{marginLeft: 30, backgroundColor: '#f6fbff', maxHeight: 200}}>
-								<ScrollView>
-									{this._handleSearchAutocomplate1(this.state.nameDiemDi)}
-								</ScrollView>
-							</View>
-						}
 				 	</View>
+					{this.state.search1 &&
+						<View style={{marginLeft: 30, backgroundColor: '#f6fbff'}}>
+							{this._handleSearchAutocomplate1(this.state.nameDiemDi)}
+						</View>
+					}
 				</View>
+
 				<View style={{marginTop: 20, marginBottom: 20, zIndex: 2}}>
 
 						<View style={{flexDirection: 'column', justifyContent: 'center'}}>
@@ -385,10 +382,8 @@ class HomeIOS extends Component {
 							</View>
 						</View>
 						{this.state.search2 &&
-							<View style={{marginLeft: 30, backgroundColor: '#f6fbff', height: 200}}>
-								<ScrollView>
-									{this._handleSearchAutocomplate2(this.state.nameDiemDen)}
-								</ScrollView>
+							<View style={{marginLeft: 30, backgroundColor: '#f6fbff'}}>
+								{this._handleSearchAutocomplate2(this.state.nameDiemDen)}
 							</View>
 						}
 				</View>

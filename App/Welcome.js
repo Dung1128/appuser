@@ -13,6 +13,7 @@ import {Actions} from 'react-native-router-flux';
 import {domain,cache} from './Config/common';
 import StorageHelper from './Components/StorageHelper';
 let {width, height} = Dimensions.get('window');
+import Communications from 'react-native-communications';
 
 class Welcome extends Component {
 
@@ -185,6 +186,10 @@ class Welcome extends Component {
 						onPress={() => Actions.Register({title: 'Đăng Ký', hideNavBar: false})}
 					>Đăng ký</Button>
 				</View>
+				<TouchableOpacity onPress={() => Communications.phonecall('19006776', true)} style={{marginTop: 10, marginBottom: 10, alignItems: 'center'}}>
+					<Text style={{color: 'red'}}>Quên mật khẩu gọi <Text style={{color: '#365DB5', fontWeight: 'bold'}}>19006776</Text></Text>
+				</TouchableOpacity>
+
 			</View>
 		);
 
