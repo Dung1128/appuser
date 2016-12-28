@@ -138,6 +138,15 @@ class SideBar extends Component {
 							</ListItem>
 							}
 
+							<ListItem button iconLeft onPress={() => { Communications.phonecall('19006776', true); this.props.closeDrawer(); }}>
+						 		<View style={styles.listItemContainer}>
+									<View style={[styles.iconContainer]}>
+							  			<Icon name="ios-call" style={styles.sidebarIcon} />
+									</View>
+									<Text style={styles.text}>HOTLINE: <Text style={{color: '#365DB5', fontWeight: 'bold'}}>19006776</Text></Text>
+						 		</View>
+					 		</ListItem>
+
 							<ListItem button iconLeft onPress={() => { Actions.welcome({title: 'Trang Chủ', data: {adm_name: this.state.dataUser.adm_name, last_login: this.state.dataUser.last_login, adm_id: this.state.dataUser.adm_id}}); this.props.closeDrawer(); }}>
 						 		<View style={styles.listItemContainer}>
 									<View style={[styles.iconContainer]}>
@@ -210,15 +219,6 @@ class SideBar extends Component {
 							  			<Icon name="ios-heart" style={styles.sidebarIcon} />
 									</View>
 									<Text style={styles.text}>Hướng dẫn sử dụng</Text>
-						 		</View>
-					 		</ListItem>
-
-							<ListItem button iconLeft onPress={() => { Communications.phonecall('19006776', true); this.props.closeDrawer(); }}>
-						 		<View style={styles.listItemContainer}>
-									<View style={[styles.iconContainer]}>
-							  			<Icon name="ios-call" style={styles.sidebarIcon} />
-									</View>
-									<Text style={styles.text}>HOTLINE: <Text style={{color: '#365DB5', fontWeight: 'bold'}}>19006776</Text></Text>
 						 		</View>
 					 		</ListItem>
 
