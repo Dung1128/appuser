@@ -254,7 +254,7 @@ class HomeIOS extends Component {
 		}
 
 		html.push(
-			<View key="scroll_autocomplate1" style={{height: 200, overflow: 'hidden', borderTopWidth: 1, borderTopColor: '#ccc'}}>
+			<View key="scroll_autocomplate1" style={{borderTopWidth: 1, borderTopColor: '#ccc'}}>
 				{childHtml}
 			</View>
 		);
