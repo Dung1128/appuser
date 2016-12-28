@@ -138,43 +138,36 @@ class ViewSoDoGiuong extends Component {
 					var idGiuong = item[j].sdgct_number;
 					var dataGiuong = this.state.arrVeNumber[idGiuong];
 
-					if(dataGiuong.bvv_status == -2) {
+					if(dataGiuong.lock > 0) {
 						htmlChild.push(
 							<Col key={i+j} style={styles.borderCol}>
-								<TouchableOpacity onPress={this._unsetActiveGiuong.bind(this, idGiuong, item[j].sdgct_label_full)} style={[styles.selectGiuongUser, styles.opacityBg]}>
+								<TouchableOpacity style={[styles.activeGiuong, styles.opacityBg]}>
 									<Text style={[styles.textCenter, styles.textActiveGiuong]}>{item[j].sdgct_label_full}</Text>
 								</TouchableOpacity>
 							</Col>
 						);
 					}else {
+
 						if(dataGiuong.bvv_status == -2) {
 							htmlChild.push(
 								<Col key={i+j} style={styles.borderCol}>
-									<TouchableOpacity onPress={this._setActiveGiuong.bind(this, idGiuong,item[j].sdgct_label_full)} style={styles.opacityBg}>
-										<Text style={styles.textCenter}>{item[j].sdgct_label_full}</Text>
+									<TouchableOpacity onPress={this._unsetActiveGiuong.bind(this, idGiuong, item[j].sdgct_label_full)} style={[styles.selectGiuongUser, styles.opacityBg]}>
+										<Text style={[styles.textCenter, styles.textActiveGiuong]}>{item[j].sdgct_label_full}</Text>
 									</TouchableOpacity>
 								</Col>
 							);
 						}else {
-							if(dataGiuong.bvv_status == 0) {
-								if(this.state.arrOrder[idGiuong] == undefined) {
-									htmlChild.push(
-										<Col key={i+j} style={styles.borderCol}>
-											<TouchableOpacity onPress={this._setActiveGiuong.bind(this, idGiuong, item[j].sdgct_label_full)} style={styles.opacityBg}>
-												<Text style={styles.textCenter}>{item[j].sdgct_label_full}</Text>
-											</TouchableOpacity>
-										</Col>
-									);
-								}else {
-									if(this.state.arrOrder[idGiuong].ord_status >= 0) {
-										htmlChild.push(
-											<Col key={i+j} style={styles.borderCol}>
-												<TouchableOpacity style={[styles.activeGiuong, styles.opacityBg]}>
-													<Text style={[styles.textCenter, styles.textActiveGiuong]}>{item[j].sdgct_label_full}</Text>
-												</TouchableOpacity>
-											</Col>
-										);
-									}else if(this.state.arrOrder[idGiuong].ord_status >= 0 && dataGiuong.bvv_status == 0) {
+							if(dataGiuong.bvv_status == -2) {
+								htmlChild.push(
+									<Col key={i+j} style={styles.borderCol}>
+										<TouchableOpacity onPress={this._setActiveGiuong.bind(this, idGiuong,item[j].sdgct_label_full)} style={styles.opacityBg}>
+											<Text style={styles.textCenter}>{item[j].sdgct_label_full}</Text>
+										</TouchableOpacity>
+									</Col>
+								);
+							}else {
+								if(dataGiuong.bvv_status == 0) {
+									if(this.state.arrOrder[idGiuong] == undefined) {
 										htmlChild.push(
 											<Col key={i+j} style={styles.borderCol}>
 												<TouchableOpacity onPress={this._setActiveGiuong.bind(this, idGiuong, item[j].sdgct_label_full)} style={styles.opacityBg}>
@@ -182,16 +175,34 @@ class ViewSoDoGiuong extends Component {
 												</TouchableOpacity>
 											</Col>
 										);
+									}else {
+										if(this.state.arrOrder[idGiuong].ord_status >= 0) {
+											htmlChild.push(
+												<Col key={i+j} style={styles.borderCol}>
+													<TouchableOpacity style={[styles.activeGiuong, styles.opacityBg]}>
+														<Text style={[styles.textCenter, styles.textActiveGiuong]}>{item[j].sdgct_label_full}</Text>
+													</TouchableOpacity>
+												</Col>
+											);
+										}else if(this.state.arrOrder[idGiuong].ord_status >= 0 && dataGiuong.bvv_status == 0) {
+											htmlChild.push(
+												<Col key={i+j} style={styles.borderCol}>
+													<TouchableOpacity onPress={this._setActiveGiuong.bind(this, idGiuong, item[j].sdgct_label_full)} style={styles.opacityBg}>
+														<Text style={styles.textCenter}>{item[j].sdgct_label_full}</Text>
+													</TouchableOpacity>
+												</Col>
+											);
+										}
 									}
+								}else {
+									htmlChild.push(
+										<Col key={i+j} style={styles.borderCol}>
+											<TouchableOpacity style={[styles.activeGiuong, styles.opacityBg]}>
+												<Text style={[styles.textCenter, styles.textActiveGiuong]}>{item[j].sdgct_label_full}</Text>
+											</TouchableOpacity>
+										</Col>
+									);
 								}
-							}else {
-								htmlChild.push(
-									<Col key={i+j} style={styles.borderCol}>
-										<TouchableOpacity style={[styles.activeGiuong, styles.opacityBg]}>
-											<Text style={[styles.textCenter, styles.textActiveGiuong]}>{item[j].sdgct_label_full}</Text>
-										</TouchableOpacity>
-									</Col>
-								);
 							}
 						}
 					}
@@ -332,6 +343,8 @@ class ViewSoDoGiuong extends Component {
 							<View style={{flexDirection: 'column'}}>
 								<View style={{marginBottom: 10}}>
 									<Text>Nơi đi & Nơi đến: <Text style={{fontWeight: 'bold'}}>{this.state.resultsBen[this.props.data.benA]}</Text> - <Text style={{fontWeight: 'bold'}}>{this.state.resultsBen[this.props.data.benB]}</Text></Text>
+									<Text>Giá vé: <Text style={{fontWeight: 'bold'}}>{convertPrice} VNĐ</Text></Text>
+									<Text>Tuyến: <Text style={{fontWeight: 'bold'}}>{this.props.data.tuyen}</Text></Text>
 									<Text>Giờ xuất bến: <Text style={{fontWeight: 'bold'}}>{this.props.data.gio_xuat_ben + ' ' + this.props.data.day}</Text></Text>
 									{this.props.data.laixe1 != '' && this.props.data.laixe1 != null &&
 										<Text>Lái xe 1: <Text style={{fontWeight: 'bold'}}>{this.props.data.laixe1}</Text></Text>
@@ -342,7 +355,6 @@ class ViewSoDoGiuong extends Component {
 									{this.props.data.tiepvien != '' &&
 										<Text>Tiếp viên: <Text style={{fontWeight: 'bold'}}>{this.props.data.tiepvien}</Text></Text>
 									}
-									<Text>Giá vé: <Text style={{fontWeight: 'bold'}}>{convertPrice} VNĐ</Text></Text>
 								</View>
 								<View>
 									<View style={{flexDirection: 'row', flex: 1}}>
