@@ -19,7 +19,7 @@ import {Actions} from 'react-native-router-flux';
 import { Col, Row, Grid } from "react-native-easy-grid";
 import Modal from 'react-native-modalbox';
 import ModalPicker from 'react-native-modal-picker';
-
+import StorageHelper from '../../Components/StorageHelper';
 const heightDevice = Dimensions.get('window').height;
 const widthDevice = Dimensions.get('window').width;
 
@@ -55,52 +55,18 @@ class ViewSoDoGiuong extends Component {
 		};
 	}
 
-	infoAdm() {
-		var that = this;
-		AsyncStorage.getItem('infoUser').then((data) => {
-			let results = JSON.parse(data);
-			that.setState({
-				infoAdm: results
-			});
-		}).done();
-	}
-
 	async componentWillMount() {
-
-		this.infoAdm();
-
-		let admId = 0,
-		admUsername = '',
-		admLastLogin = '',
-		token = '';
-
-		if(this.state.infoAdm.adm_id == undefined) {
-			try {
-				let results = await AsyncStorage.getItem('infoUser');
-				results = JSON.parse(results);
-				admId = results.adm_id;
-				admUsername = results.adm_name;
-				admLastLogin = results.last_login;
-				this.setState({
-					infoAdm: results
-				});
-			} catch (error) {
-				console.error(error);
-		  	}
-		}else {
-			admId = this.state.infoAdm.adm_id;
-			admUsername = this.state.infoAdm.adm_name;
-			admLastLogin = this.state.infoAdm.last_login;
-		}
-		token = base64.encodeBase64(admUsername)+'.'+base64.encodeBase64(admLastLogin)+'.'+base64.encodeBase64(''+admId+'');
+		let results = await StorageHelper.getStore('infoUser');
+		results = JSON.parse(results);
+		let admId = results.adm_id;
+		let token = results.token;
 		this.setState({
-			token: token
-		});
-
-		this.setState({
+			infoAdm: results,
+			token: token,
 			loading: true
 		});
-		var that = this;
+
+		let that = this;
 		setTimeout(() => {
 			fetch(domain+'/api/api_adm_so_do_giuong.php?token='+token+'&adm_id='+this.state.infoAdm.adm_id+'&not_id='+this.props.data.notId+'&day='+this.props.data.day, {
 				headers: {
