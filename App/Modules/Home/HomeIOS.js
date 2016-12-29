@@ -11,7 +11,7 @@ import {
 } from 'react-native';
 import {domain,cache} from '../../Config/common';
 
-import { Text, Input, Button, Card, CardItem, Spinner, Icon } from 'native-base';
+import { Text, Input, Button, Card, CardItem, Spinner, Icon} from 'native-base';
 import CalendarPicker from 'react-native-calendar-picker';
 import {Actions} from 'react-native-router-flux';
 import Modal from 'react-native-modalbox';
@@ -332,7 +332,7 @@ class HomeIOS extends Component {
 		}
 
 		html.push(
-			<View key="scroll_autocomplate2" style={{minHeight:0, maxHeight:330, overflow: 'hidden', borderTopWidth: 1, borderTopColor: '#ccc'}}>
+			<View key="scroll_autocomplate2" style={{minHeight:0, maxHeight:330, overflow: 'hidden',  borderTopWidth: 1, borderTopColor: '#ccc'}}>
 				{childHtml}
 			</View>
 		);
@@ -359,25 +359,24 @@ class HomeIOS extends Component {
 		let html = [];
 		html.push(
 			<View key="form_search" style={{flexDirection: 'column', padding: 30, marginTop: 10, width: widthDevice}}>
-				<View style={{zIndex: 3, position: 'relative'}}>
+				<View style={{position: 'relative'}}>
 					<View style={{flexDirection: 'column', justifyContent: 'center'}}>
 						<View style={{flexDirection: 'row', alignItems: 'center'}}>
 							<Icon name="md-bus" style={{width: 30}} />
 							<Text style={{width: 150, fontSize: 9, marginTop: -10}}>Điểm đi</Text>
 						</View>
 						<View style={{borderBottomColor: '#ccc', borderBottomWidth: 1, marginLeft: 30}}>
-							<Input placeholder="Nhập tỉnh đi" value={this.state.nameDiemDi} onChangeText={(nameDiemDi) => this._handleSetDiemDi(nameDiemDi)}  style={{height:40, alignItems: 'center', justifyContent: 'center', paddingTop: 10, marginTop: -10, paddingLeft: 15}} />
+							<Input autoFocus={this.state.focus} placeholder="Nhập tỉnh đi" value={this.state.nameDiemDi} onChangeText={(nameDiemDi) => this._handleSetDiemDi(nameDiemDi)}  style={{height:40, alignItems: 'center', justifyContent: 'center', paddingTop: 10, marginTop: -10, paddingLeft: 15}} />
 						</View>
+						{this.state.search1 &&
+							<View style={{marginLeft: 30, backgroundColor: '#f6fbff'}}>
+								{this._handleSearchAutocomplate1(this.state.nameDiemDi)}
+							</View>
+						}
 				 	</View>
-					{this.state.search1 &&
-						<View style={{marginLeft: 30, backgroundColor: '#f6fbff'}}>
-							{this._handleSearchAutocomplate1(this.state.nameDiemDi)}
-						</View>
-					}
 				</View>
 
-				<View style={{marginTop: 20, marginBottom: 20, zIndex: 2}}>
-
+				<View style={{marginTop: 20, marginBottom: 20}}>
 						<View style={{flexDirection: 'column', justifyContent: 'center'}}>
 							<View style={{flexDirection: 'row', alignItems: 'center'}}>
 								<Icon name="md-bus" style={{width: 30}} />
@@ -386,14 +385,14 @@ class HomeIOS extends Component {
 							<View style={{borderBottomColor: '#ccc', borderBottomWidth: 1, marginLeft: 30}}>
 								<Input placeholder="Nhập tỉnh đến" value={this.state.nameDiemDen} onChangeText={(nameDiemDen) => this._handleSetDiemDen(nameDiemDen)}  style={{height:40, alignItems: 'center', justifyContent: 'center', paddingTop: 10, marginTop: -10, paddingLeft: 15}} />
 							</View>
+							{this.state.search2 &&
+								<View style={{marginLeft: 30, backgroundColor: '#f6fbff'}}>
+									{this._handleSearchAutocomplate2(this.state.nameDiemDen)}
+								</View>
+							}
 						</View>
-						{this.state.search2 &&
-							<View style={{marginLeft: 30, backgroundColor: '#f6fbff'}}>
-								{this._handleSearchAutocomplate2(this.state.nameDiemDen)}
-							</View>
-						}
 				</View>
-				<View style={{marginTop: 10, marginBottom: 20, zIndex: 1}}>
+				<View style={{marginTop: 10, marginBottom: 20, zIndex: 1, position: 'relative'}}>
 					<View>
 						<TouchableOpacity onPress={() => this._setDatePickerShow()}>
 							<View style={{flexDirection: 'row', alignItems: 'center'}}>
@@ -405,7 +404,7 @@ class HomeIOS extends Component {
 						</TouchableOpacity>
 					</View>
 				</View>
-				<View style={{marginTop: 20}}>
+				<View style={{marginTop: 20, zIndex: 0, position: 'relative'}}>
 					<Button style={{height: 50}} block success onPress={() => this._getNot()}><Icon name='ios-search-outline' /> Tìm kiếm</Button>
 				</View>
 			</View>
@@ -616,13 +615,13 @@ class HomeIOS extends Component {
       return(
 			<View style={styles[classContainer]}>
 				{!this.state.oneSearch &&
-					<ScrollView>
+					<ScrollView keyboardShouldPersistTaps={true}>
 						{this.renderFormSearch(listItem1, listItem2)}
 					</ScrollView>
 				}
 
 				{this.state.oneSearch &&
-					<ScrollView>
+					<ScrollView keyboardShouldPersistTaps={true}>
 						{this.editFormSearch()}
 
 						{this.state.editFormSearch &&
