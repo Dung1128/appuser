@@ -10,7 +10,7 @@ import {
 	AsyncStorage
 } from 'react-native';
 import {domain,cache} from '../../Config/common';
-
+import fetchData from '../../Components/FetchData';
 import { Text, Input, Button, Card, CardItem, Spinner, Icon} from 'native-base';
 import CalendarPicker from 'react-native-calendar-picker';
 import {Actions} from 'react-native-router-flux';
@@ -111,34 +111,32 @@ class HomeIOS extends Component {
 			token: token
 		});
 
-		let that = this;
-      fetch(domain+'/api/api_user_ben.php?token='+token+'&use_id='+admId+'&type=home', {
-			headers: {
-				'Cache-Control': cache
+		try {
+			let params = {
+				token: token,
+				use_id: admId,
+				type: 'home',
 			}
-		})
-      .then((response) => response.json())
-      .then((responseJson) => {
+			let data = await fetchData('user_ben', params, 'GET');
 			let listItem1 = [],
 				listItem2 = [];
-			if(responseJson.status == 200) {
-				Object.keys(responseJson.dataBx).map(function(key) {
-					listItem1.push({key: key.toString(), label: responseJson.dataBx[key], value: key});
-					listItem2.push({key: key.toString(),  label: responseJson.dataBx[key], value: key});
+			if(data.status == 200) {
+				Object.keys(data.dataBx).map(function(key) {
+					listItem1.push({key: key.toString(), label: data.dataBx[key], value: key});
+					listItem2.push({key: key.toString(),  label: data.dataBx[key], value: key});
 				});
 			}
-			that.setState({
+			this.setState({
 				listItem1: listItem1,
 				listItem2: listItem2,
-				dataBx: responseJson.dataBx
+				dataBx: data.dataBx
 			});
-      })
-      .catch((error) => {
-         console.error(error);
-      });
+		} catch (e) {
+			console.log(e);
+		}
 	}
 
-   _getNot() {
+   async _getNot() {
 		checkData = false;
 		if(this.state.keyDiemDi == '') {
 			checkData = false;
@@ -162,40 +160,39 @@ class HomeIOS extends Component {
 			let newCurrentDate = currentDate.getDate()+(currentDate.getMonth()+1)+currentDate.getFullYear();
 			let selectCurrentDate = this.state.day+this.state.month+this.state.year;
 			if(newCurrentDate <= selectCurrentDate) {
-		      var that = this;
-				that.setState({
+
+				this.setState({
 					loading: true,
 					showContentNot: true
 				});
-
-				fetch(urlApi+'?token='+that.state.token+'&use_id='+this.state.infoAdm.adm_id+'&day='+that.state.fullDate+'&diem_a='+this.state.keyDiemDi+'&diem_b='+this.state.keyDiemDen, {
-					headers: {
-						'Cache-Control': cache
+				try {
+					let params = {
+						token: this.state.token,
+						use_id: this.state.infoAdm.adm_id,
+						day: this.state.fullDate,
+						diem_a: this.state.keyDiemDi,
+						diem_b: this.state.keyDiemDen,
 					}
-				})
-            .then((response) => response.json())
-            .then((responseJson) => {
-					if(responseJson.status != 404) {
-	               that.setState({
-	                  results:responseJson.so_do_giuong,
+					let data = await fetchData('user_so_do_giuong', params, 'GET');
+					if(data.status != 404) {
+	               this.setState({
+	                  results:data.so_do_giuong,
 	                  loading: false,
 							showContentNot: false,
 							oneSearch: true,
 							editFormSearch: false
 	               });
-	               return responseJson.so_do_giuong;
-					}else if(responseJson.status == 404){
+					}else if(data.status == 404){
 						alert('Tài khoản của bạn đã được đăng nhập ở thiết bị khác.');
 						Actions.welcome({type: 'reset'});
 					}
-            })
-            .catch((error) => {
-               that.setState({
+				} catch (e) {
+					console.log(e);
+					this.setState({
                   loading: false,
 						showContentNot: false
                });
-               console.error(error);
-            });
+				}
 			}else {
 				alert('Ngày tháng không hợp lệ!');
 			}
@@ -424,7 +421,7 @@ class HomeIOS extends Component {
 		}
 	}
 
-	_handleSearchNextDay() {
+	async _handleSearchNextDay() {
 		if(this.state.countClickNextDay) {
 			let arrDay = this.state.fullDate.split('-');
 			var today = new Date(arrDay[1]+'/'+arrDay[0]+'/'+arrDay[2]);
@@ -432,48 +429,47 @@ class HomeIOS extends Component {
 			tomorrow.setDate(today.getDate()+1);
 			let newDay = tomorrow.getDate()+'-'+(tomorrow.getMonth()+1)+'-'+tomorrow.getFullYear();
 			this.setState({
-				fullDate: newDay
-			});
-
-			var that = this;
-			that.setState({
+				fullDate: newDay,
 				loading: true,
 				showContentNot: true,
 				countClickNextDay: false
 			});
-			fetch(urlApi+'?token='+that.state.token+'&use_id='+this.state.infoAdm.adm_id+'&day='+newDay+'&diem_a='+this.state.keyDiemDi+'&diem_b='+this.state.keyDiemDen, {
-				headers: {
-					'Cache-Control': cache
+
+			try {
+				let params = {
+					token: this.state.token,
+					use_id: this.state.infoAdm.adm_id,
+					day: newDay,
+					diem_a: this.state.keyDiemDi,
+					diem_b: this.state.keyDiemDen,
 				}
-			})
-			.then((response) => response.json())
-			.then((responseJson) => {
-				if(responseJson.status != 404) {
-					that.setState({
-						results:responseJson.so_do_giuong,
+				let data = await fetchData('user_so_do_giuong', params, 'GET');
+				if(data.status != 404) {
+					this.setState({
+						results:data.so_do_giuong,
 						loading: false,
 						showContentNot: false,
 						oneSearch: true,
 						editFormSearch: false,
 						countClickNextDay: true
 					});
-				}else if(responseJson.status == 404) {
+				}else if(data.status == 404) {
 					alert('Tài khoản của bạn đã được đăng nhập ở thiết bị khác.');
 					Actions.welcome({type: 'reset'});
 				}
-			})
-			.catch((error) => {
-				that.setState({
+			} catch (e) {
+				console.log(e);
+				this.setState({
 					loading: false,
 					showContentNot: false,
 					countClickNextDay: true
 				});
-				console.error(error);
-			});
+			}
+
 		}
 	}
 
-	_handleSearchPrevDay() {
+	async _handleSearchPrevDay() {
 		if(this.state.countClickNextDay) {
 			let arrDay = this.state.fullDate.split('-');
 			var today = new Date(arrDay[1]+'/'+arrDay[0]+'/'+arrDay[2]);
@@ -481,44 +477,42 @@ class HomeIOS extends Component {
 			tomorrow.setDate(today.getDate()-1);
 			let newDay = tomorrow.getDate()+'-'+(tomorrow.getMonth()+1)+'-'+tomorrow.getFullYear();
 			this.setState({
-				fullDate: newDay
-			});
-
-			var that = this;
-			that.setState({
+				fullDate: newDay,
 				loading: true,
 				showContentNot: true,
 				countClickNextDay: false
 			});
-			fetch(urlApi+'?token='+that.state.token+'&use_id='+this.state.infoAdm.adm_id+'&day='+newDay+'&diem_a='+this.state.keyDiemDi+'&diem_b='+this.state.keyDiemDen, {
-				headers: {
-					'Cache-Control': cache
+
+			try {
+				let params = {
+					token: this.state.token,
+					use_id: this.state.infoAdm.adm_id,
+					day: newDay,
+					diem_a: this.state.keyDiemDi,
+					diem_b: this.state.keyDiemDen,
 				}
-			})
-			.then((response) => response.json())
-			.then((responseJson) => {
-				if(responseJson.status != 404) {
-					that.setState({
-						results:responseJson.so_do_giuong,
+				let data = await fetchData('user_so_do_giuong', params, 'GET');
+				if(data.status != 404) {
+					this.setState({
+						results:data.so_do_giuong,
 						loading: false,
 						showContentNot: false,
 						oneSearch: true,
 						editFormSearch: false,
 						countClickNextDay: true
 					});
-				}else if(responseJson.status == 404) {
+				}else if(data.status == 404) {
 					alert('Tài khoản của bạn đã được đăng nhập ở thiết bị khác.');
 					Actions.welcome({type: 'reset'});
 				}
-			})
-			.catch((error) => {
-				that.setState({
+			} catch (e) {
+				console.log(e);
+				this.setState({
 					loading: false,
 					showContentNot: false,
 					countClickNextDay: true
 				});
-				console.error(error);
-			});
+			}
 		}
 	}
 
@@ -635,7 +629,7 @@ class HomeIOS extends Component {
 								<Text style={{color: '#fff'}}>Giá</Text>
 							</View>
 						</View>
-							{ this.state.showContentNot && <Spinner /> }
+							{ this.state.loading && <View style={{alignItems: 'center'}}><Spinner /><Text>Đang tải dữ liệu...</Text></View> }
 							{dataNot.length <= 0 &&
 								<View style={{alignItems: 'center', padding: 10}}>
 									<Text>Không còn chuyến nào đi từ <Text style={{color: 'red'}}>{this.state.nameDiemDi}</Text> đến <Text style={{color: 'red'}}>{this.state.nameDiemDen}</Text></Text>

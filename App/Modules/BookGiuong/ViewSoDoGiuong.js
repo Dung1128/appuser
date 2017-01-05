@@ -13,7 +13,7 @@ import {
 	Alert
 } from 'react-native';
 import {domain,cache} from '../../Config/common';
-import * as base64 from '../../Components/base64/Index';
+import fetchData from '../../Components/FetchData';
 import { Container, Content, Header, Title, Text, Icon, Button, Card, CardItem, Spinner, Badge } from 'native-base';
 import {Actions} from 'react-native-router-flux';
 import { Col, Row, Grid } from "react-native-easy-grid";
@@ -60,41 +60,42 @@ class ViewSoDoGiuong extends Component {
 		results = JSON.parse(results);
 		let admId = results.adm_id;
 		let token = results.token;
+		let data = [];
 		this.setState({
 			infoAdm: results,
 			token: token,
 			loading: true
 		});
 
+		try {
+			let params = {
+				token: token,
+				adm_id: this.state.infoAdm.adm_id,
+				not_id: this.props.data.notId,
+				day: this.props.data.day,
+			}
+			data = await fetchData('adm_so_do_giuong', params, 'GET');
+		} catch (e) {
+			console.log(e);
+			this.setState({
+				loading: true
+			});
+		}
 		let that = this;
 		setTimeout(() => {
-			fetch(domain+'/api/api_adm_so_do_giuong.php?token='+token+'&adm_id='+this.state.infoAdm.adm_id+'&not_id='+this.props.data.notId+'&day='+this.props.data.day, {
-				headers: {
-					'Cache-Control': cache
-				}
-			})
-			.then((response) => response.json())
-			.then((responseJson) => {
-				if(responseJson.status != 404) {
-					that.setState({
-						results:responseJson.so_do_giuong,
-						arrVeNumber: responseJson.so_do_giuong.arrVeNumber,
-						resultsBen: that.props.data.dataBen,
-						arrOrder: responseJson.so_do_giuong.arrOrder,
-						loading: false
-					});
-					return responseJson.so_do_giuong;
-				}else if(responseJson.status == 404) {
-					alert('Tài khoản của bạn đã được đăng nhập ở thiết bị khác.');
-					Actions.welcome({type: 'reset'});
-				}
-			})
-			.catch((error) => {
+			if(data.status != 404) {
 				that.setState({
-					loading: true
+					results:data.so_do_giuong,
+					arrVeNumber: data.so_do_giuong.arrVeNumber,
+					resultsBen: that.props.data.dataBen,
+					arrOrder: data.so_do_giuong.arrOrder,
+					loading: false
 				});
-				console.error(error);
-			});
+				return data.so_do_giuong;
+			}else if(data.status == 404) {
+				alert('Tài khoản của bạn đã được đăng nhập ở thiết bị khác.');
+				Actions.welcome({type: 'reset'});
+			}
 		},800);
 	}
 
@@ -213,54 +214,54 @@ class ViewSoDoGiuong extends Component {
 		return html;
 	}
 
-	_setActiveGiuong(id, fullLabel) {
+	async _setActiveGiuong(id, fullLabel) {
 		let dataVe = this.state.arrVeNumber;
 
-		let that = this;
-		fetch(domain+'/api/api_check_ve.php?token='+this.state.token+'&adm_id='+this.state.infoAdm.adm_id+'&numberGiuong='+dataVe[id].bvv_number+'&bvv_id='+dataVe[id].bvv_id, {
-			headers: {
-				'Cache-Control': cache
+		try {
+			let params = {
+				token: this.state.token,
+				adm_id: this.state.infoAdm.adm_id,
+				numberGiuong: dataVe[id].bvv_number,
+				bvv_id: dataVe[id].bvv_id,
 			}
-		})
-		.then((response) => response.json())
-		.then((responseJson) => {
-			if(responseJson.status != 404) {
+			let data = await fetchData('api_check_ve', params, 'GET');
+			if(data.status != 404) {
 				let setStatus = this.state.arrVeNumber;
+				console.log(setStatus[id]);
 				let dataBook = this.state.dataBook;
 				let arrBookGiuong = this.state.arrBookGiuong;
 
-				if(responseJson.status == 200) {
+				if(data.status == 200) {
 					setStatus[id].bvv_status = -2;
-					setStatus[id].bvv_bex_id_a = that.props.data.benA;
-					setStatus[id].bvv_bex_id_b = that.props.data.benB;
-					setStatus[id].bvv_price = that.props.data.totalPriceInt;
+					setStatus[id].bvv_bex_id_a = this.props.data.benA;
+					setStatus[id].bvv_bex_id_b = this.props.data.benB;
+					setStatus[id].bvv_price = this.props.data.totalPriceInt;
 
-					dataBook.push({labelFull: fullLabel, 'numberGiuong': parseInt(id), 'bvv_bex_id_a': that.props.data.benA, 'bvv_bex_id_b': that.props.data.benB, 'bvv_price': parseInt(that.props.data.totalPriceInt)});
+					dataBook.push({labelFull: fullLabel, 'numberGiuong': parseInt(id), 'bvv_bex_id_a': this.props.data.benA, 'bvv_bex_id_b': this.props.data.benB, 'bvv_price': parseInt(this.props.data.totalPriceInt)});
 					arrBookGiuong.push({'numberGiuong': parseInt(id)});
-					that.setState({
+					this.setState({
 						arrVeNumber: setStatus,
 						checkout: true,
 						dataBook: dataBook,
 						arrBookGiuong: arrBookGiuong
 					});
-				}else if(responseJson.status == 201) {
+				}else if(data.status == 201) {
 					alert('Ghế đã có người đặt. Bạn vui lòng chọn ghế khác.');
 					setStatus[id].bvv_status = 11;
-					that.setState({
+					this.setState({
 						arrVeNumber: setStatus
 					});
 				}
-			}else if(responseJson.status == 404) {
+			}else if(data.status == 404) {
 				alert('Tài khoản của bạn đã được đăng nhập ở thiết bị khác.');
 				Actions.welcome({type: 'reset'});
 			}
-		})
-		.catch((error) => {
-			that.setState({
+		} catch (e) {
+			console.log(e);
+			this.setState({
 				loading: true
 			});
-			console.error(error);
-		});
+		}
 
 	}
 
@@ -387,7 +388,7 @@ class ViewSoDoGiuong extends Component {
 						</CardItem>
 					</Card>
 
-					{this.state.loading && <Spinner />}
+					{this.state.loading && <View style={{alignItems: 'center'}}><Spinner /><Text>Đang tải dữ liệu...</Text></View> }
 
 					<View style={{flexDirection: this.state.twoColumn}}>
 						{this._renderSoDoGiuong(this.state.results, 1).length > 0 &&

@@ -12,6 +12,7 @@ import { Col, Row, Grid } from "react-native-easy-grid";
 import {Actions} from 'react-native-router-flux';
 import {domain,cache} from './Config/common';
 import StorageHelper from './Components/StorageHelper';
+import fetchData from './Components/FetchData';
 let {width, height} = Dimensions.get('window');
 import Communications from 'react-native-communications';
 
@@ -25,65 +26,53 @@ class Welcome extends Component {
 			cssError: 'noError',
 			selectedIndex: 0,
 			error: 'false',
-			messageError: []
+			messageError: [],
+			token: '',
+			infoUser: []
       };
    }
 
 	async componentWillMount() {
-		try {
+		let dataUser = await StorageHelper.getStore('infoUser');
+		let jsonDataUser = JSON.parse(dataUser);
+
+		if(jsonDataUser != null) {
+
 			this.setState({
 				loading: true
 			});
-			let that = this;
-		  	let dataUser = await StorageHelper.getStore('infoUser');
-			let jsonDataUser = JSON.parse(dataUser);
-			if(jsonDataUser != null) {
 
-				fetch(domain+'/api/api_user_dang_nhap.php?type=checkTokenLogin&use_id='+jsonDataUser.adm_id+'&token='+jsonDataUser.token, {
-					headers: {
-						'Cache-Control': cache
+			try {
+				let params = {
+					type: 'checkTokenLogin',
+					use_id: jsonDataUser.adm_id,
+					token: jsonDataUser.token,
+				}
+				let data = await fetchData('login', params, 'GET');
+				if(data.status != 404) {
+					if(data.status == 200) {
+						Actions.home({title: 'Chọn Chuyến', data: jsonDataUser});
 					}
-				})
-				.then((response) => response.json())
-				.then((responseJson) => {
-					if(responseJson.status != 404) {
-						if(responseJson.status == 200) {
-
-							that.setState({
-								loading: false
-							});
-							Actions.home({title: 'Chọn Chuyến', data: jsonDataUser});
-						}
-					}else if(responseJson.status == 404) {
-						that.setState({
-							loading: false,
-							error: 'true',
-							messageError: ['Tài khoản đã được đăng nhập ở thiết bị khác.']
-						});
-					}
-				})
-				.catch((error) => {
-					that.setState({
-						loading: false,
+				}else if(data.status == 404) {
+					this.setState({
 						error: 'true',
-						messageError: ['Lỗi hệ thống. Vui lòng liên hệ với bộ phận Kỹ Thuật.']
+						loading: false,
+						messageError: ['Tài khoản đã được đăng nhập ở thiết bị khác.']
 					});
-					Console.error(error);
-				});
-			}else {
+				}
+			} catch (e) {
 				this.setState({
-					loading: false
+					loading: false,
+					error: 'true',
+					messageError: ['Lỗi hệ thống. Vui lòng liên hệ với bộ phận Kỹ Thuật.']
 				});
+				console.log(e);
 			}
+		}
 
-	  	} catch (error) {
-			this.setState({
-				loading: false
-			});
-	  	}
 	}
 
-   handleLogin() {
+   async handleLogin() {
 		let checkNullForm = false,
 			mesValid = [];
 		if(this.state.username.length == 0) {
@@ -99,41 +88,33 @@ class Welcome extends Component {
 	      this.setState({
 	         loading: true
 	      });
-	      var that = this;
-			let urlRequest	= domain+'/api/api_user_dang_nhap.php?type=login&username='+this.state.username+'&password='+this.state.password;
-	      fetch(urlRequest, {
-				headers: {
-					'Cache-Control': cache
+	      try {
+				let params = {
+					type: 'login',
+					username: this.state.username,
+					password: this.state.password,
 				}
-			})
-	      .then((response) => {
-				return response.json()
-			})
-	      .then((responseJson) => {
-	         that.setState({
-	            loading: false,
-					username: '',
-					password: ''
-	         });
-	         if(responseJson.status == 200) {
-	            let result = JSON.stringify(responseJson);
+				let data = await fetchData('login', params, 'GET');
+	         if(data.status == 200) {
+	            let result = JSON.stringify(data);
 					AsyncStorage.removeItem('infoUser');
 	            AsyncStorage.setItem("infoUser", result);
 	            Actions.home({title: 'Chọn Chuyến', data: result});
 	         }else {
-					that.setState({
+					this.setState({
 						error: 'true',
+						loading: false,
 						messageError: ['Tài khoản hoặc Mật Khẩu không đúng.']
 					});
 				}
-	      })
-	      .catch((error) => {
-	         that.setState({
-	            loading: false,
+	      } catch (e) {
+				this.setState({
 					error: 'true',
+					loading: false,
 					messageError: ['Lỗi hệ thống. Vui lòng liên hệ với bộ phận Kỹ Thuật.']
 	         });
-	      });
+				console.log(e);
+	      }
 		}else {
 			this.setState({
 				error: 'true',
@@ -206,7 +187,7 @@ class Welcome extends Component {
 							<Row size={5}>
 								<View>
 									<ScrollView>
-									{ this.state.loading && <Spinner /> }
+									{ this.state.loading && <View style={{alignItems: 'center'}}><Spinner /><Text>Đang tải dữ liệu...</Text></View> }
 									{!this.state.loading && this.renderHtml()}
 									</ScrollView>
 								</View>
