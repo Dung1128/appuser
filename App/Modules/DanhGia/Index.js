@@ -11,7 +11,7 @@ import {
   AsyncStorage
 } from 'react-native';
 import {domain,cache} from '../../Config/common';
-
+import fetchData from '../../Components/FetchData';
 import { Container, Content, InputGroup, Icon, Input, Button, Spinner, Card, CardItem, Badge } from 'native-base';
 import {Actions, ActionConst} from 'react-native-router-flux';
 import  Rating from 'react-native-easy-rating';
@@ -46,33 +46,28 @@ class DanhGia extends Component {
 		};
 	}
 
-	_getRating(token, admId) {
-		this.setState({
-			loading: true
-		});
-		var that = this;
-
-      fetch(url+'?token='+token+'&type=0&user_id='+admId, {
-			headers: {
-				'Cache-Control': cache
+	async _getRating(token, admId) {
+		try {
+			let params = {
+				token: token,
+				type: '0',
+				user_id: admId,
 			}
-		})
-	      .then((response) => response.json())
-	      .then((responseJson) => {
-				if(responseJson.status != 404) {
-					that.setState({
-						results: responseJson.dataRating,
-						dataBen: responseJson.dataBen,
-						loading: false
-					});
-				}else if(responseJson.status == 404) {
-					alert('Tài khoản của bạn đã được đăng nhập ở thiết bị khác.');
-					Actions.welcome({type: 'reset'});
-				}
-	      })
-	      .catch((error) => {
-	         console.error(error);
-	      });
+			let data = await fetchData('user_rating', params, 'GET');
+			if(data.status != 404) {
+				this.setState({
+					results: data.dataRating,
+					dataBen: data.dataBen,
+					loading: false
+				});
+			}else if(data.status == 404) {
+				alert('Tài khoản của bạn đã được đăng nhập ở thiết bị khác.');
+				Actions.welcome({type: 'reset'});
+			}
+		} catch (e) {
+			console.log(e);
+		}
+
    }
 
 	async componentWillMount() {
@@ -162,34 +157,39 @@ class DanhGia extends Component {
 		this.openModal();
 	}
 
-	_saveRating() {
+	async _saveRating() {
 		let rating = this.state.rating;
 		if(rating == 0) {
 			rating = 5;
 		}
-		let params = '?token='+this.state.token+'&type=1&user_id='+ this.props.data.adm_id+'&did_id='+this.state.did_id+'&rat_values='+rating+'&rat_comment='+this.state.textRating;
 
-		fetch(url+params, {
-			headers: {
-				'Cache-Control': cache
+		try {
+			let params = {
+				token: this.state.token,
+				type: '1',
+				user_id: this.state.infoAdm.adm_id,
+				did_id: this.state.did_id,
+				rat_values: rating,
+				rat_comment: this.state.textRating,
 			}
-		})
-		.then((response) => response.json())
-		.then((responseJson) => {
+			let data = await fetchData('user_rating', params, 'GET');
 			alert('Cảm ơn bạn đã gửi đánh giá cho chúng tôi.');
-		})
-		.catch((error) => {
-			//console.error(error);
-		});
+		} catch (e) {
+			console.log(e);
+		}
 		this.closeModal();
 	}
 
    render() {
-		let renderHtml = this.getListRating(this.state.results, this.state.dataBen);
       return(
          <View style={styles.container}>
 				  <ScrollView>
-					  {this.state.loading? <Text>Loading...</Text> : renderHtml }
+					  {this.state.loading &&
+						  <View style={{alignItems: 'center'}}><Spinner /><Text>Đang tải dữ liệu...</Text></View>
+					  }
+					  {!this.state.loading &&
+						  this.getListRating(this.state.results, this.state.dataBen)
+					  }
 				 </ScrollView>
 
 			  <Modal style={[styles.modal, styles.modalPopup, {paddingTop: 50}]} position={"top"} ref={"modal3"} isDisabled={this.state.isDisabled}>

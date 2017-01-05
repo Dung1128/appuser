@@ -94,7 +94,12 @@ class ListNews extends Component {
       return(
 			<View style={styles.container}>
 				<ScrollView>
-					{this.state.loading? <Text>Loading...</Text> : this._renderHtmlNews(this.state.results) }
+					{this.state.loading &&
+						<View style={{alignItems: 'center'}}><Spinner /><Text>Đang tải dữ liệu...</Text></View>
+					}
+					{!this.state.loading &&
+						this._renderHtmlNews(this.state.results)
+					}
 			  </ScrollView>
 			</View>
       );

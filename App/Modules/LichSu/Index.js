@@ -30,9 +30,6 @@ class LichSu extends Component {
    }
 
 	_getDanhSachLichSu(token, admId) {
-		this.setState({
-			loading: true
-		});
 		var that = this;
 
       fetch(domain+'/api/api_user_lich_su_order.php?token='+token+'&notId=0&user_id='+admId, {
@@ -128,7 +125,12 @@ class LichSu extends Component {
       return(
 			<View style={styles.container}>
 				<ScrollView>
-					{this.state.loading? <Text>Loading...</Text> : this._renderHtmlLichSu(this.state.results) }
+					{this.state.loading &&
+						<View style={{alignItems: 'center'}}><Spinner /><Text>Đang tải dữ liệu...</Text></View>
+					}
+					{!this.state.loading &&
+						this._renderHtmlLichSu(this.state.results)
+					}
 			  </ScrollView>
 			</View>
       );

@@ -9,7 +9,7 @@ import {
   WebView,
   Dimensions
 } from 'react-native';
-import {Button, Icon} from 'native-base';
+import {Button, Icon, Spinner} from 'native-base';
 import {Actions} from 'react-native-router-flux';
 const {height, width} = Dimensions.get('window');
 class Checkout extends Component {
@@ -22,6 +22,7 @@ class Checkout extends Component {
    }
 
 	_backPayment() {
+		let that = this;
 		AsyncStorage.getItem('infoUser').then((data) => {
          let results = JSON.parse(data);
          if(results != null) {
@@ -43,13 +44,14 @@ class Checkout extends Component {
 					</TouchableOpacity>
 				</View>
 
-				<WebView
-					source={{uri: 'http://hasonhaivan.com/thanh-toan.html?order='+this.props.data.orderId}}
-					startInLoadingState={this.state.loading}
-					automaticallyAdjustContentInsets={false}
-					javaScriptEnabled={true}
-					style={{marginBottom: 40}}
-				/>
+					<WebView
+						source={{uri: 'http://hasonhaivan.com/thanh-toan.html?order='+this.props.data.orderId}}
+						startInLoadingState={this.state.loading}
+						automaticallyAdjustContentInsets={false}
+						javaScriptEnabled={true}
+						style={{marginBottom: 40}}
+					/>
+				
 			</View>
 		);
 	}

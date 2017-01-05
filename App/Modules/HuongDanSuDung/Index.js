@@ -11,7 +11,7 @@ import {
   ScrollView
 } from 'react-native';
 import {domain,cache} from '../../Config/common';
-import {Button, Icon} from 'native-base';
+import {Button, Icon, Spinner} from 'native-base';
 import {Actions} from 'react-native-router-flux';
 const {height, width} = Dimensions.get('window');
 class HuongDanSuDung extends Component {
@@ -41,21 +41,23 @@ class HuongDanSuDung extends Component {
 		});
 		var that = this;
 
-      fetch(domain+'/api/api_user_get_content.php?type=huongdanuser', {
-			headers: {
-				'Cache-Control': cache
-			}
-		})
-      .then((response) => response.json())
-      .then((responseJson) => {
-			that.setState({
-				results: responseJson.data,
-				loading: false
-			});
-      })
-      .catch((error) => {
-         console.error(error);
-      });
+		setTimeout(() => {
+	      fetch(domain+'/api/api_user_get_content.php?type=huongdanuser', {
+				headers: {
+					'Cache-Control': cache
+				}
+			})
+	      .then((response) => response.json())
+	      .then((responseJson) => {
+				that.setState({
+					results: responseJson.data,
+					loading: false
+				});
+	      })
+	      .catch((error) => {
+	         console.error(error);
+	      });
+		}, 500);
 	}
 
 	 onNavigationStateChange(navState) {
@@ -69,7 +71,9 @@ class HuongDanSuDung extends Component {
 			<View style={{height: height, width: width,paddingTop: 60}}>
 
 				<ScrollView>
-					{this.state.loading && <Text>Loading...</Text>}
+					{this.state.loading &&
+						<View style={{alignItems: 'center'}}><Spinner /><Text>Đang tải dữ liệu...</Text></View>
+					}
 					{!this.state.loading &&
 						<WebView
 							automaticallyAdjustContentInsets={false}
