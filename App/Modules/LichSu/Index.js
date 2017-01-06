@@ -109,8 +109,8 @@ class LichSu extends Component {
 								<Text>Số điện thoại: {item.oder.ord_phone}</Text>
 								<Text>Tuyến đi: {this.state.dataBen[item.datve.tuy_ben_a]} -> {this.state.dataBen[item.datve.tuy_ben_b]}</Text>
 								<Text>Nơi đi & Nơi đến: {this.state.dataBen[item.datve.dav_diem_a]} -> {this.state.dataBen[item.datve.dav_diem_b]}</Text>
-								<Text>Thời gian xuất bến: <Text style={styles.fontBold}>{item.oder.ord_time_book}</Text></Text>
-								<Text>Số ghế: <Text style={styles.fontBold}>{item.datve.gio_xuat_ben}</Text></Text>
+								<Text>Thời gian xuất bến: <Text style={styles.fontBold}>{item.datve.gio_xuat_ben}</Text></Text>
+								<Text>Số ghế: <Text style={styles.fontBold}>{item.datve.number_ghe}</Text></Text>
 								<Text>Tổng tiền: <Text style={styles.fontBold}>{newPrice1 + ' VNĐ'}</Text></Text>
 							</View>
 						</TouchableOpacity>
