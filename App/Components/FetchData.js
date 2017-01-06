@@ -3,18 +3,17 @@ import {domain, cache} from '../Config/common';
 
 const API_URL = {
   login: domain+'/api/api_user_dang_nhap.php',
+  register: domain+'/api/api_user_dang_ky.php',
   user_ben: domain+'/api/api_user_ben.php',
   user_so_do_giuong: domain+'/api/api_user_so_do_giuong.php',
   adm_so_do_giuong: domain+'/api/api_adm_so_do_giuong.php',
   api_check_ve: domain+'/api/api_check_ve.php',
   user_rating: domain+'/api/api_user_rating.php',
   user_gop_y: domain+'/api/api_user_gop_y.php',
-  adm_so_do_giuong_update: domain+'/api/api_adm_so_do_giuong_update.php',
-  adm_price_ben: domain+'/api/api_adm_price_ben.php',
-  adm_ben: domain+'/api/api_adm_ben.php',
-  adm_them_ve: domain+'/api/api_adm_them_ve.php',
-  adm_get_danh_sach: domain+'/api/api_adm_get_danh_sach.php',
-  adm_danh_sach_cho: domain+'/api/api_adm_danh_sach_cho.php',
+  user_save_order: domain+'/api/api_user_save_order.php',
+  user_lich_su_order: domain+'/api/api_user_lich_su_order.php',
+  user_tin_lien_quan: domain+'/api/api_user_tin_lien_quan.php',
+  user_news: domain+'/api/api_user_news.php',
   user_get_content: domain+'/api/api_user_get_content.php',
   adm_get_time_sync: domain+'/api/api_adm_get_time_sync.php',
 }
