@@ -38,9 +38,7 @@ class Welcome extends Component {
 
 		if(jsonDataUser != null) {
 
-			this.setState({
-				loading: true
-			});
+			this.setState({loading: true});
 
 			try {
 				let params = {

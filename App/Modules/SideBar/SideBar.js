@@ -94,7 +94,7 @@ class SideBar extends Component {
 					<ScrollView style={{marginBottom: 70}}>
 						{this.state.checkLogin &&
 							<View style={{alignItems: 'center'}}>
-								<TouchableOpacity onPress={() => {this.props.closeDrawer(); Actions.UserInfo({title: 'Thông tin tài khoản', data: {user_id: this.state.dataUser}}) } }>
+								<TouchableOpacity onPress={() => { this.props.closeDrawer(); Actions.UserInfo({title: 'Thông tin tài khoản'}) } }>
 									{this.state.dataUser.adm_fullname != '' &&
 										<Text style={{color: '#fff'}}>Xin Chào: <Text style={{color: 'orange'}}>{this.state.dataUser.adm_fullname}</Text></Text>
 									}

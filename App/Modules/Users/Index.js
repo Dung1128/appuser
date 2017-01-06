@@ -11,7 +11,8 @@ import {
   ScrollView
 } from 'react-native';
 import {domain,cache} from '../../Config/common';
-import {Button, Icon} from 'native-base';
+import StorageHelper from '../../Components/StorageHelper';
+import {Button, Icon, Spinner} from 'native-base';
 import {Actions} from 'react-native-router-flux';
 const {height, width} = Dimensions.get('window');
 class UserInfo extends Component {
@@ -38,35 +39,43 @@ class UserInfo extends Component {
 	}
 
 	async componentWillMount() {
-		
+
+		let results = await StorageHelper.getStore('infoUser');
+		results = JSON.parse(results);
+		let admId = results.adm_id;
+		let token = results.token;
+		this.setState({
+			infoAdm: results,
+			token: token
+		});
 
 		var that = this;
 
-      fetch(domain+'/api/api_user_get_user_info.php?token='+token+'&user_id='+admId, {
-			headers: {
-				'Cache-Control': cache
-			}
-		})
-      .then((response) => response.json())
-      .then((responseJson) => {
-			if(responseJson.status != 404) {
-				if(responseJson.status == 200) {
-					that.setState({
-						results: responseJson.dataUser,
-						loading: false
-					});
-				}else if(responseJson.status == 201) {
-					alert('Tài khoản không tồn tại.');
-					Actions.welcome({type: 'reset'});
-				}
-			}else if(responseJson.status == 404) {
-				alert('Tài khoản của bạn đã được đăng nhập ở thiết bị khác.');
-				Actions.welcome({type: 'reset'});
-			}
-      })
-      .catch((error) => {
-         console.error(error);
-      });
+      // fetch(domain+'/api/api_user_get_user_info.php?token='+token+'&user_id='+admId, {
+		// 	headers: {
+		// 		'Cache-Control': cache
+		// 	}
+		// })
+      // .then((response) => response.json())
+      // .then((responseJson) => {
+		// 	if(responseJson.status != 404) {
+		// 		if(responseJson.status == 200) {
+		// 			that.setState({
+		// 				results: responseJson.dataUser,
+		// 				loading: false
+		// 			});
+		// 		}else if(responseJson.status == 201) {
+		// 			alert('Tài khoản không tồn tại.');
+		// 			Actions.welcome({type: 'reset'});
+		// 		}
+		// 	}else if(responseJson.status == 404) {
+		// 		alert('Tài khoản của bạn đã được đăng nhập ở thiết bị khác.');
+		// 		Actions.welcome({type: 'reset'});
+		// 	}
+      // })
+      // .catch((error) => {
+      //    console.error(error);
+      // });
 	}
 
 	 onNavigationStateChange(navState) {
@@ -80,7 +89,7 @@ class UserInfo extends Component {
 			<View style={{height: height, width: width,paddingTop: 60}}>
 
 				<ScrollView>
-					{this.state.loading && <Text>Loading...</Text>}
+					{this.state.loading && <View style={{alignItems: 'center'}}><Spinner /><Text>Đang tải dữ liệu...</Text></View>}
 					{!this.state.loading &&
 						<WebView
 							automaticallyAdjustContentInsets={false}
