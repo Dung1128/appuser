@@ -35,34 +35,12 @@ class SideBar extends Component {
    }
 
    _onPressLogout() {
-		let that = this;
-		AsyncStorage.getItem('infoUser').then((data) => {
-         let results = JSON.parse(data);
-         if(results != null) {
-				fetch(domain+'/api/api_user_dang_nhap.php?type=logout&adm_id='+results.adm_id, {
-					headers: {
-						'Cache-Control': cache
-					}
-				})
-				.then((response) => response.json())
-				.then((responseJson) => {
-					AsyncStorage.removeItem('infoUser');
-					that.setState({
-						checkLogin: false,
-						dataUser: []
-					});
-					Actions.welcome({type: 'reset'});
-				})
-				.catch((error) => {
-					that.setState({
-						loading: false,
-						error: 'true',
-						messageError: [{username: 'Lỗi hệ thống. Vui lòng liên hệ với bộ phận Kỹ Thuật.'}]
-					});
-					Console.log(error);
-				});
-         }
-      }).done();
+		AsyncStorage.removeItem('infoUser');
+		this.setState({
+			checkLogin: false,
+			dataUser: []
+		});
+		Actions.welcome({type: 'reset'});
    }
 
 	componentDidMount() {
@@ -71,13 +49,11 @@ class SideBar extends Component {
 			AsyncStorage.getItem('infoUser').then((data) => {
 				let results = JSON.parse(data);
 				if(results != null) {
-
-						that.setState({
-							checkLogin: true,
-							dataUser: JSON.parse(data)
-						});
-						clearInterval(tempInterval);
-
+					that.setState({
+						checkLogin: true,
+						dataUser: JSON.parse(data)
+					});
+					clearInterval(tempInterval);
 				}
 			}).done();
 		}, 500);
@@ -89,13 +65,11 @@ class SideBar extends Component {
 			AsyncStorage.getItem('infoUser').then((data) => {
 				let results = JSON.parse(data);
 				if(results != null) {
-
-						that.setState({
-							checkLogin: true,
-							dataUser: JSON.parse(data)
-						});
-						clearInterval(tempInterval);
-
+					that.setState({
+						checkLogin: true,
+						dataUser: JSON.parse(data)
+					});
+					clearInterval(tempInterval);
 				}
 			}).done();
 		}, 500);
@@ -121,7 +95,10 @@ class SideBar extends Component {
 						{this.state.checkLogin &&
 							<View style={{alignItems: 'center'}}>
 								<TouchableOpacity onPress={() => {this.props.closeDrawer(); Actions.UserInfo({title: 'Thông tin tài khoản', data: {user_id: this.state.dataUser}}) } }>
-									<Text style={{color: '#fff'}}>Xin Chào: {this.state.dataUser.use_phone}</Text>
+									{this.state.dataUser.adm_fullname != '' &&
+										<Text style={{color: '#fff'}}>Xin Chào: <Text style={{color: 'orange'}}>{this.state.dataUser.adm_fullname}</Text></Text>
+									}
+									<Text style={{color: '#fff'}}>SĐT: <Text style={{color: 'orange'}}>{this.state.dataUser.use_phone}</Text></Text>
 								</TouchableOpacity>
 							</View>
 						}

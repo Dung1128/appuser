@@ -11,7 +11,6 @@ import {
   ScrollView
 } from 'react-native';
 import {domain,cache} from '../../Config/common';
-import * as base64 from '../../Components/base64/Index';
 import {Button, Icon} from 'native-base';
 import {Actions} from 'react-native-router-flux';
 const {height, width} = Dimensions.get('window');
@@ -39,35 +38,7 @@ class UserInfo extends Component {
 	}
 
 	async componentWillMount() {
-		let admId = 0,
-		admUsername = '',
-		admLastLogin = '',
-		token = '';
-
-		if(this.state.infoAdm.adm_id == undefined) {
-			try {
-				let results = await AsyncStorage.getItem('infoUser');
-				results = JSON.parse(results);
-				admId = results.adm_id;
-				admUsername = results.adm_name;
-				admLastLogin = results.last_login;
-				this.setState({
-					infoAdm: results
-				});
-			} catch (error) {
-				console.error(error);
-		  	}
-		}else {
-			admId = this.state.infoAdm.adm_id;
-			admUsername = this.state.infoAdm.adm_name;
-			admLastLogin = this.state.infoAdm.last_login;
-		}
-		token = base64.encodeBase64(admUsername)+'.'+base64.encodeBase64(admLastLogin)+'.'+base64.encodeBase64(''+admId+'');
-
-		this.setState({
-			token: token,
-			loading: true
-		});
+		
 
 		var that = this;
 

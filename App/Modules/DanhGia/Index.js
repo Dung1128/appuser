@@ -47,26 +47,31 @@ class DanhGia extends Component {
 	}
 
 	async _getRating(token, admId) {
+		let data = [];
 		try {
 			let params = {
 				token: token,
 				type: '0',
 				user_id: admId,
 			}
-			let data = await fetchData('user_rating', params, 'GET');
+			data = await fetchData('user_rating', params, 'GET');
+		} catch (e) {
+			console.log(e);
+		}
+
+		let that = this;
+		setTimeout(() => {
 			if(data.status != 404) {
-				this.setState({
-					results: data.dataRating,
-					dataBen: data.dataBen,
+				that.setState({
+					results: (data.dataRating != null)? data.dataRating: [],
+					dataBen: (data.dataBen != null)? data.dataBen : [],
 					loading: false
 				});
 			}else if(data.status == 404) {
 				alert('Tài khoản của bạn đã được đăng nhập ở thiết bị khác.');
 				Actions.welcome({type: 'reset'});
 			}
-		} catch (e) {
-			console.log(e);
-		}
+		}, 500);
 
    }
 
@@ -100,26 +105,36 @@ class DanhGia extends Component {
 		let html = [],
 			htmlItem = [];
 
-		for(var i = 0; i < data.length; i++) {
-			var item = data[i];
+		if(data.length > 0) {
+			for(var i = 0; i < data.length; i++) {
+				var item = data[i];
+				htmlItem.push(
+					<CardItem key={item.dav_did_id+i}>
+						<TouchableOpacity onPress={this._getFormRating.bind(this, item.dav_did_id, dataBen[item.tuy_ben_a], dataBen[item.tuy_ben_b], dataBen[item.dav_diem_a], dataBen[item.dav_diem_b], item.gio_xuat_ben, item.tuy_hanh_trinh, item.laixe1, item.laixe2, item.tiepvien, item.number_ghe)}>
+							<View style={{flex: 5}}>
+								<Text style={{marginBottom: 10}}>Nơi đi & Nơi đến: {dataBen[item.dav_diem_a]} -> {dataBen[item.dav_diem_b]}</Text>
+								<Text style={{marginBottom: 10}}>Thời gian: {item.gio_xuat_ben}</Text>
+								<Text style={{marginBottom: 10}}>Số ghế: {item.number_ghe}</Text>
+								<Text style={{marginBottom: 5}}>Đánh giá: {item.totalRating}/5</Text>
+								<Rating
+		  						    rating={item.totalRating}
+		  						    max={5}
+		  						    iconWidth={24}
+		  						    iconHeight={24}
+		  						    iconSelected={selectStar}
+		  						    iconUnselected={unSelectStar}
+									 editable={false}/>
+							</View>
+						</TouchableOpacity>
+					</CardItem>
+				);
+			}
+		}else {
 			htmlItem.push(
-				<CardItem key={item.dav_did_id+i}>
-					<TouchableOpacity onPress={this._getFormRating.bind(this, item.dav_did_id, dataBen[item.tuy_ben_a], dataBen[item.tuy_ben_b], dataBen[item.dav_diem_a], dataBen[item.dav_diem_b], item.gio_xuat_ben, item.tuy_hanh_trinh, item.laixe1, item.laixe2, item.tiepvien, item.number_ghe)}>
-						<View style={{flex: 5}}>
-							<Text style={{marginBottom: 10}}>Nơi đi & Nơi đến: {dataBen[item.dav_diem_a]} -> {dataBen[item.dav_diem_b]}</Text>
-							<Text style={{marginBottom: 10}}>Thời gian: {item.gio_xuat_ben}</Text>
-							<Text style={{marginBottom: 10}}>Số ghế: {item.number_ghe}</Text>
-							<Text style={{marginBottom: 5}}>Đánh giá: {item.totalRating}/5</Text>
-							<Rating
-	  						    rating={item.totalRating}
-	  						    max={5}
-	  						    iconWidth={24}
-	  						    iconHeight={24}
-	  						    iconSelected={selectStar}
-	  						    iconUnselected={unSelectStar}
-								 editable={false}/>
-						</View>
-					</TouchableOpacity>
+				<CardItem key="null">
+					<View style={{flex: 5, alignItems: 'center'}}>
+						<Text style={{color: 'red'}}>Bạn chưa có chuyến đi nào. Không thể đánh giá!</Text>
+					</View>
 				</CardItem>
 			);
 		}

@@ -11,6 +11,7 @@ import {
   ScrollView
 } from 'react-native';
 import {domain,cache} from '../../Config/common';
+import fetchData from '../../Components/FetchData';
 import {Button, Icon, Spinner} from 'native-base';
 import {Actions} from 'react-native-router-flux';
 const {height, width} = Dimensions.get('window');
@@ -35,28 +36,32 @@ class HuongDanSuDung extends Component {
       }).done();
 	}
 
-	componentDidMount() {
+	async componentWillMount() {
 		this.setState({
 			loading: true
 		});
+		let data = [];
+		try {
+			let params = {
+				type: 'huongdanuser'
+			}
+			data = await fetchData('user_get_content', params, 'GET');
+		} catch (e) {
+			console.log(e);
+		}
 		var that = this;
 
 		setTimeout(() => {
-	      fetch(domain+'/api/api_user_get_content.php?type=huongdanuser', {
-				headers: {
-					'Cache-Control': cache
-				}
-			})
-	      .then((response) => response.json())
-	      .then((responseJson) => {
-				that.setState({
-					results: responseJson.data,
-					loading: false
-				});
-	      })
-	      .catch((error) => {
-	         console.error(error);
-	      });
+
+			let des = '';
+
+			that.setState({
+				results: {
+					new_description: (data.data.length > 0) ? data.data.new_description : 'Hiện tại chưa có bài hướng dẫn. Bạn vui lòng quay lại sau!'
+				},
+				loading: false
+			});
+
 		}, 500);
 	}
 

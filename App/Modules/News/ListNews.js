@@ -12,7 +12,7 @@ import {
 } from 'react-native';
 import { Icon, Spinner, CardItem, Card } from 'native-base';
 import {Actions} from 'react-native-router-flux';
-
+import fetchData from '../../Components/FetchData';
 import {domain, cache} from '../../Config/common';
 import styles from './styles';
 
@@ -26,29 +26,28 @@ class ListNews extends Component {
 		};
    }
 
-	_getApiNews() {
+	async _getApiNews() {
 		this.setState({loading: true});
-		var that = this;
-		console.log(domain+'/api/api_user_news.php?type=0');
-      fetch(domain+'/api/api_user_news.php?type=0', {
-			headers: {
-				'Cache-Control': cache
+		let data = [];
+		try {
+			let params = {
+				type: '0'
 			}
-		})
-      .then((response) => response.json())
-      .then((responseJson) => {
-			console.log(responseJson);
+			data = await fetchData('user_news', params, 'GET');
+		} catch (e) {
+			console.log(e);
+		}
+		let that = this;
+      setTimeout(() => {
 			that.setState({
-				results: responseJson.dataNews,
+				results: data.dataNews,
 				loading: false
 			});
-      })
-      .catch((error) => {
-         console.error(error);
-      });
+      }, 500);
+
    }
 
-	componentWillMount() {
+	async componentWillMount() {
 		this._getApiNews();
 	}
 
@@ -69,7 +68,7 @@ class ListNews extends Component {
 							<View style={{flex: 1, marginRight: 5}}>
 								<Image
 									square
-									style={{resizeMode: 'contain', height: 50}}
+									style={{resizeMode: 'contain', flex: 1}}
 									source={{uri: item.new_avatar}}
 								/>
 							</View>

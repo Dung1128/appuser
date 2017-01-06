@@ -11,12 +11,9 @@ import {Actions, Scene, Router, Schema, ActionConst, Reducer} from 'react-native
 
 import NavBar from './Modules/NavBar/Index';
 import Home from './Modules/Home/HomeIOS';
-import Login from './Modules/Login/Login';
 import SideBar from './Modules/SideBar/SideBar';
 import Register from './Modules/Register/Index';
-import Errors from './Modules/Errors/Errors';
 import ViewSoDoGiuong from './Modules/BookGiuong/ViewSoDoGiuong';
-import ListNot from './Modules/ListNot/ListNot';
 import LichSu from './Modules/LichSu/Index';
 import DanhGia from './Modules/DanhGia/Index';
 import ListOrder from './Modules/ListOrder/Index';
@@ -51,8 +48,6 @@ class App extends Component {
   			 		<Scene key="welcome" component={Welcome} initial type="reset" />
   	         	<Scene key="home" component={Home} title="Chọn Chuyến" type="reset" />
 					<Scene key="Register" component={Register} title="Đăng Ký" />
-					<Scene key="login" component={Login} title="Đăng Nhập" />
-					<Scene key="ListNot" component={ListNot} title="Danh sách chuyến xe" />
 					<Scene key="ViewSoDoGiuong" component={ViewSoDoGiuong} title="Chọn Chỗ" />
 					<Scene key="LichSu" component={LichSu} title="Lịch Sử" />
 					<Scene key="DanhGia" component={DanhGia} title="Đánh Giá" />

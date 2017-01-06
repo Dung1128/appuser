@@ -11,6 +11,7 @@ import {
 } from 'react-native';
 import {domain,cache} from '../../Config/common';
 import StorageHelper from '../../Components/StorageHelper';
+import fetchData from '../../Components/FetchData';
 import { Container, Content, InputGroup, Icon, Input, Button, Spinner, Card, CardItem, Badge } from 'native-base';
 import {Actions, ActionConst} from 'react-native-router-flux';
 const heightDevice = Dimensions.get('window').height;
@@ -29,30 +30,32 @@ class LichSu extends Component {
 		};
    }
 
-	_getDanhSachLichSu(token, admId) {
-		var that = this;
-
-      fetch(domain+'/api/api_user_lich_su_order.php?token='+token+'&notId=0&user_id='+admId, {
-			headers: {
-				'Cache-Control': cache
+	async _getDanhSachLichSu(token, admId) {
+		let data = [];
+		try {
+			let params = {
+				token: token,
+				notId: '0',
+				user_id: admId,
 			}
-		})
-      .then((response) => response.json())
-      .then((responseJson) => {
-			if(responseJson.status != 404) {
+			data = await fetchData('user_lich_su_order', params, 'GET');
+		} catch (e) {
+			console.log(e);
+		}
+
+		let that = this;
+		setTimeout(() => {
+			if(data.status != 404) {
 				that.setState({
-					results: responseJson.dataLichSu,
-					dataBen: responseJson.dataBen,
+					results: data.dataLichSu,
+					dataBen: data.dataBen,
 					loading: false
 				});
-			}else if(responseJson.status == 404) {
+			}else if(data.status == 404) {
 				alert('Tài khoản của bạn đã được đăng nhập ở thiết bị khác.');
 				Actions.welcome({type: 'reset'});
 			}
-      })
-      .catch((error) => {
-         console.error(error);
-      });
+		}, 500);
    }
 
 	async componentWillMount() {
@@ -85,31 +88,41 @@ class LichSu extends Component {
 		let html = [],
 			htmlItem = [];
 
-		for(var i = 0; i < data.length; i++) {
-			var item = data[i];
-			var price1 = parseInt(item.datve.price);
-			var price2 = parseInt(item.datve.dav_price);
-			var newPrice1 = price1.toFixed(0).replace(/./g, function(c, i, a) {
-				return i && c !== "." && ((a.length - i) % 3 === 0) ? ',' + c : c;
-			});
-			var newPrice2 = price2.toFixed(0).replace(/./g, function(c, i, a) {
-				return i && c !== "." && ((a.length - i) % 3 === 0) ? ',' + c : c;
-			});
+		if(data.length > 0) {
+			for(var i = 0; i < data.length; i++) {
+				var item = data[i];
+				var price1 = parseInt(item.datve.price);
+				var price2 = parseInt(item.datve.dav_price);
+				var newPrice1 = price1.toFixed(0).replace(/./g, function(c, i, a) {
+					return i && c !== "." && ((a.length - i) % 3 === 0) ? ',' + c : c;
+				});
+				var newPrice2 = price2.toFixed(0).replace(/./g, function(c, i, a) {
+					return i && c !== "." && ((a.length - i) % 3 === 0) ? ',' + c : c;
+				});
+				htmlItem.push(
+					<CardItem key={item.datve.dav_did_id+i}>
+						<TouchableOpacity>
+								<View style={{flex: 5}}>
+								<Text>Mã Đơn Hàng: <Text style={styles.fontBold}>{item.oder.ord_ma}</Text></Text>
+								<Text>Thời gian đặt vé: <Text style={styles.fontBold}>{item.oder.ord_time_book}</Text></Text>
+								<Text>Họ tên: <Text style={styles.fontBold}>{item.oder.ord_ten_khach_hang}</Text></Text>
+								<Text>Số điện thoại: {item.oder.ord_phone}</Text>
+								<Text>Tuyến đi: {this.state.dataBen[item.datve.tuy_ben_a]} -> {this.state.dataBen[item.datve.tuy_ben_b]}</Text>
+								<Text>Nơi đi & Nơi đến: {this.state.dataBen[item.datve.dav_diem_a]} -> {this.state.dataBen[item.datve.dav_diem_b]}</Text>
+								<Text>Thời gian xuất bến: <Text style={styles.fontBold}>{item.oder.ord_time_book}</Text></Text>
+								<Text>Số ghế: <Text style={styles.fontBold}>{item.datve.gio_xuat_ben}</Text></Text>
+								<Text>Tổng tiền: <Text style={styles.fontBold}>{newPrice1 + ' VNĐ'}</Text></Text>
+							</View>
+						</TouchableOpacity>
+					</CardItem>
+				);
+			}
+		}else {
 			htmlItem.push(
-				<CardItem key={item.datve.dav_did_id+i}>
-					<TouchableOpacity>
-							<View style={{flex: 5}}>
-							<Text>Mã Đơn Hàng: <Text style={styles.fontBold}>{item.oder.ord_ma}</Text></Text>
-							<Text>Thời gian đặt vé: <Text style={styles.fontBold}>{item.oder.ord_time_book}</Text></Text>
-							<Text>Họ tên: <Text style={styles.fontBold}>{item.oder.ord_ten_khach_hang}</Text></Text>
-							<Text>Số điện thoại: {item.oder.ord_phone}</Text>
-							<Text>Tuyến đi: {this.state.dataBen[item.datve.tuy_ben_a]} -> {this.state.dataBen[item.datve.tuy_ben_b]}</Text>
-							<Text>Nơi đi & Nơi đến: {this.state.dataBen[item.datve.dav_diem_a]} -> {this.state.dataBen[item.datve.dav_diem_b]}</Text>
-							<Text>Thời gian xuất bến: <Text style={styles.fontBold}>{item.oder.ord_time_book}</Text></Text>
-							<Text>Số ghế: <Text style={styles.fontBold}>{item.datve.gio_xuat_ben}</Text></Text>
-							<Text>Tổng tiền: <Text style={styles.fontBold}>{newPrice1 + ' VNĐ'}</Text></Text>
-						</View>
-					</TouchableOpacity>
+				<CardItem key="null">
+					<View style={{flex: 5, alignItems: 'center'}}>
+						<Text style={{color: 'red'}}>Bạn chưa có đơn hàng đặt vé nào!</Text>
+					</View>
 				</CardItem>
 			);
 		}

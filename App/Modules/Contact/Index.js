@@ -11,6 +11,7 @@ import {
   WebView
 } from 'react-native';
 import {domain, cache} from '../../Config/common';
+import fetchData from '../../Components/FetchData';
 import { InputGroup, Icon, Input, Button, Spinner, Card, CardItem } from 'native-base';
 import {Actions, ActionConst} from 'react-native-router-flux';
 
@@ -24,27 +25,30 @@ class Contact extends Component {
 		}
 	}
 
-	componentWillMount() {
+	async componentWillMount() {
 		this.setState({
 			loading: true
 		});
-		var that = this;
-
-      fetch(domain+'/api/api_user_get_content.php?type=contact', {
-			headers: {
-				'Cache-Control': cache
+		let data = [];
+		try {
+			let params = {
+				type: 'contact'
 			}
-		})
-      .then((response) => response.json())
-      .then((responseJson) => {
-			that.setState({
-				results: responseJson.data,
+			data = await fetchData('user_get_content', params, 'GET');
+		} catch (e) {
+			console.log(e);
+			this.setState({
 				loading: false
 			});
-      })
-      .catch((error) => {
-         console.error(error);
-      });
+		}
+		var that = this;
+
+		setTimeout(() => {
+			that.setState({
+				results: data.data,
+				loading: false
+			});
+		}, 500);
 	}
 
 	onNavigationStateChange(navState) {
@@ -57,7 +61,9 @@ class Contact extends Component {
 		return(
 			<View style={{paddingTop: 60}}>
 				<ScrollView>
-					{this.state.loading && <Text style={{color: '#000'}}>Loading...</Text>}
+					{this.state.loading &&
+						<View style={{alignItems: 'center'}}><Spinner /><Text>Đang tải dữ liệu...</Text></View>
+					}
 					{!this.state.loading &&
 						<WebView
 						  automaticallyAdjustContentInsets={false}

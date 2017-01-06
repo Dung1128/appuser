@@ -13,6 +13,8 @@ import { Icon, Spinner, Input } from 'native-base';
 import {Actions} from 'react-native-router-flux';
 
 import {domain,cache} from '../../Config/common';
+import fetchData from '../../Components/FetchData';
+
 import styles from './styles';
 
 const heightDevice = Dimensions.get('window').height;
@@ -26,11 +28,11 @@ class GopY extends Component {
 			fullname: '',
 			email: '',
 			phone: '',
-			content: ''
+			content: '',
 		};
 	}
 
-	_handleGopY() {
+	async _handleGopY() {
 		let listError = [];
 		let checkForm = true;
 		if(this.state.fullname == '') {
@@ -53,21 +55,22 @@ class GopY extends Component {
 		});
 
 		if(checkForm) {
-			let urlApi = domain+'/api/api_user_gop_y.php?'+encodeURIComponent('fullname='+this.state.fullname+'&email='+this.state.email+'&phone='+this.state.phone+'&content='+this.state.content);
-			fetch(urlApi, {
-				headers: {
-					'Cache-Control': cache
+			try {
+				let params = {
+					fullname: this.state.fullname,
+					email: this.state.email,
+					phone: this.state.phone,
+					content: this.state.content,
 				}
-			})
-			.then((response) => response.json())
-			.then((responseJson) => {
-				if(responseJson.status == 200) {
+				let data = await fetchData('user_gop_y', params, 'GET');
+				if(data.status == 200) {
 					alert('Cảm ơn bạn đã Góp Ý cho hệ thống của chúng tôi.');
 					Actions.welcome({title: 'Đăng Nhập'});
 				}
-			}).catch((error) => {
-				console.error(error);
-			});
+			} catch (e) {
+				console.log(e);
+			}
+
 		}
 	}
 

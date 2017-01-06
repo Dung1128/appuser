@@ -8,6 +8,7 @@ import {
 	ScrollView
 } from 'react-native';
 import {domain,cache} from '../../Config/common';
+import fetchData from '../../Components/FetchData';
 import { Button, Grid, Row, Icon, InputGroup, Input, Thumbnail } from 'native-base';
 import {Actions} from 'react-native-router-flux';
 const heightDevice = Dimensions.get('window').height;
@@ -30,7 +31,7 @@ class Register extends Component {
       };
    }
 
-	handleRegister() {
+	async handleRegister() {
 		let mesValid = [];
 		this.state.cssError = [];
 		let checkValid = true;
@@ -71,21 +72,17 @@ class Register extends Component {
 		});
 
 		if(checkValid) {
-			this.setState({
-	         loading: true
-	      });
-	      var that = this;
-			let urlRequest	= domain+'/api/api_user_dang_ky.php?'+encodeURIComponent('fullName='+this.state.fullName+'&email='+this.state.email+'&phone='+this.state.phone+'&password='+this.state.password);
-	      fetch(urlRequest, {
-				method: 'GET',
-				headers: {
-					'Cache-Control': cache
+			this.setState({loading: true});
+	      try {
+				let params = {
+					fullName: this.state.fullName,
+					email: this.state.email,
+					phone: this.state.phone,
+					password: this.state.password,
 				}
-			})
-			.then((response) => response.json())
-        	.then((responseData) => {
-            if(responseData.status == 200) {
-					that.setState({
+				let data = await fetchData('register', params, 'GET');
+				if(data.status == 200) {
+					this.setState({
 		            loading: false,
 						fullName: '',
 			         email: '',
@@ -95,33 +92,40 @@ class Register extends Component {
 		         });
 					alert('Đăng ký thành công.');
 				   Actions.welcome({title: 'Đăng Nhập'});
-				}else if(responseData.status == 201) {
+				}else if(data.status == 201) {
 					mesValid.push(
 						<Text key="error_api" style={styles.textErrors}>Số điện thoại đã tồn tại trên hệ thống.</Text>
 					);
 					this.setState({
 						messageError: mesValid,
-						loading: false
+						loading: false,
+						cssError: {
+							cssErrorPhone: 'cssError'
+						}
 					});
 				}else {
 					mesValid.push(
 						<Text key="error_api" style={styles.textErrors}>Số điện thoại đã tồn tại trên hệ thống.</Text>
 					);
-					that.setState({
+					this.setState({
 		            loading: false,
-						messageError: mesValid
+						messageError: mesValid,
+						cssError: {
+							cssErrorPhone: 'cssError'
+						}
 		         });
 				}
-        	})
-			.catch((error) => {
+	      } catch (e) {
+				console.log(e);
 				mesValid.push(
 					<Text key="error_api" style={styles.textErrors}>Lỗi hệ thống. Vui lòng liên hệ với bộ phận Kỹ Thuật.</Text>
 				);
-				that.setState({
+				this.setState({
 	            loading: false,
 					messageError: mesValid
 	         });
-	      }).done();
+	      }
+
 		}
 	}
 

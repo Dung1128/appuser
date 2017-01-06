@@ -12,7 +12,7 @@ import {
 } from 'react-native';
 import { Icon, Spinner, CardItem, Card } from 'native-base';
 import {Actions} from 'react-native-router-flux';
-
+import fetchData from '../../Components/FetchData';
 import {domain, cache} from '../../Config/common';
 import styles from './styles';
 const heightDevice = Dimensions.get('window').height;
@@ -23,33 +23,28 @@ class DetailNews extends Component {
 		super(props);
 		this.state = {
 			webViewHeight: 0,
-			loading: true
+			loading: true,
+			results: [],
+			resultsLq: []
 		}
 	}
 
-	_getApiNews() {
+	async _getApiNews() {
 		this.setState({loading: true});
-		var that = this;
-      fetch(domain+'/api/api_user_tin_lien_quan.php?idNews='+this.props.data.idNews, {
-			headers: {
-				'Cache-Control': cache
+		let data = [];
+		try {
+			let params = {
+				idNews: this.props.data.idNews
 			}
-		})
-      .then((response) => response.json())
-      .then((responseJson) => {
-			that.setState({
-				results: responseJson.dataNews,
-				loading: false
+			data = await fetchData('user_tin_lien_quan', params, 'GET');
+			this.setState({
+				resultsLq: data.dataNews
 			});
-      })
-      .catch((error) => {
-         console.error(error);
-      });
-   }
+		} catch (e) {
+			console.log(e);
+		}
 
-	componentWillMount() {
-		this._getApiNews();
-	}
+   }
 
 	_onPressDetailNews(id) {
 		Actions.DetailNews({title: 'Chi Tiết Tin Tức', data: {idNews: id}});
@@ -79,27 +74,24 @@ class DetailNews extends Component {
 		return html;
 	}
 
-	componentWillMount() {
-		this.setState({
-			loading: true
-		});
+	async componentWillMount() {
+		this.setState({loading: true});
+		let data = [];
+		try {
+			let params = {
+				newsId: this.props.data.idNews,
+			}
+			data = await fetchData('user_get_content', params, 'GET');
+		} catch (e) {
+			console.log(e);
+		}
+		this._getApiNews();
 		var that = this;
 		setTimeout(() => {
-	      fetch(domain+'/api/api_user_get_content.php?newsId='+this.props.data.idNews, {
-				headers: {
-					'Cache-Control': cache
-				}
-			})
-	      .then((response) => response.json())
-	      .then((responseJson) => {
-				that.setState({
-					results: responseJson.data,
-					loading: false
-				});
-	      })
-	      .catch((error) => {
-	         console.error(error);
-	      });
+			that.setState({
+				results: data.data,
+				loading: false
+			});
 		}, 1000);
 	}
 
@@ -130,12 +122,14 @@ class DetailNews extends Component {
 				      />
 					}
 
-					{!this.state.loading &&
+					{!this.state.loading && this.state.resultsLq.length > 0 &&
 						<View style={{padding: 10, alignItems: 'center'}}>
 							<Text style={{fontWeight: 'bold'}}>Tin liên quan</Text>
 						</View>
 					}
-					{!this.state.loading && this._renderHtmlNews(this.state.results) }
+					{!this.state.loading && this.state.resultsLq.length > 0 &&
+						this._renderHtmlNews(this.state.resultsLq)
+					}
 			  </ScrollView>
 			</View>
 		);

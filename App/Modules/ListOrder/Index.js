@@ -10,9 +10,10 @@ import {
   AsyncStorage
 } from 'react-native';
 import {domain,cache} from '../../Config/common';
-import * as base64 from '../../Components/base64/Index';
+import fetchData from '../../Components/FetchData';
 import { Container, Content, InputGroup, Icon, Input, Button, Spinner, Card, CardItem, Badge, CheckBox, List, ListItem } from 'native-base';
 import {Actions, ActionConst} from 'react-native-router-flux';
+import StorageHelper from '../../Components/StorageHelper';
 const heightDevice = Dimensions.get('window').height;
 const widthDevice = Dimensions.get('window').width;
 class LichSu extends Component {
@@ -34,33 +35,14 @@ class LichSu extends Component {
    }
 
 	async componentWillMount() {
-		let that = this;
-		let admId = 0,
-		admUsername = '',
-		admLastLogin = '';
-
-		if(this.state.infoAdm.adm_id == undefined) {
-
-			try {
-				let results = await AsyncStorage.getItem('infoUser');
-				results = JSON.parse(results);
-				admId = results.adm_id;
-				admUsername = results.adm_name;
-				admLastLogin = results.last_login;
-				this.setState({
-					infoAdm: results
-				});
-			} catch (error) {
-				console.error(error);
-		  	}
-		}else {
-			admId = this.state.infoAdm.adm_id;
-			admUsername = this.state.infoAdm.adm_name;
-			admLastLogin = this.state.infoAdm.last_login;
-		}
+		let results = await StorageHelper.getStore('infoUser');
+		results = JSON.parse(results);
+		let token = results.token;
 		this.setState({
-			token: base64.encodeBase64(admUsername)+'.'+base64.encodeBase64(admLastLogin)+'.'+base64.encodeBase64(''+admId+'')
+			infoAdm: results,
+			token: token
 		});
+
 	}
 
 	_renderOrder() {
@@ -122,7 +104,7 @@ class LichSu extends Component {
 
 						<CardItem>
 							<View>
-								<Text>Họ tên: <Text style={styles.fontBold}>{this.props.data.dataUser.use_gmail}</Text></Text>
+								<Text>Họ tên: <Text style={styles.fontBold}>{this.props.data.dataUser.adm_fullname}</Text></Text>
 								<Text>Số điện thoại: <Text style={styles.fontBold}>{this.props.data.dataUser.use_phone}</Text></Text>
 								<Text>Giờ xuất bến: <Text style={styles.fontBold}>{this.props.data.gio_xuat_ben}</Text></Text>
 							</View>
@@ -186,36 +168,43 @@ class LichSu extends Component {
 		}
 	}
 
-	_handleSaveOrder() {
+	async _handleSaveOrder() {
 		let dataBook = JSON.stringify(this.props.data.dataBook);
 		let that = this;
-		that.setState({
+		this.setState({
 			loadingOrder: true
 		});
 
-		let params = 'token='+that.state.token+'&type=insert&bvv_bvn_id='+this.props.data.id_dieu_do+'&user_id='+this.props.data.dataUser.adm_id+'&gio_xuat_ben='+JSON.stringify(this.props.data.gio_xuat_ben)+'&dataBook='+dataBook+'&address='+this.state.address+'&ghi_chu='+this.state.ghi_chu;
-		fetch(domain+'/api/api_user_save_order.php?'+params, {
-			headers: {
-				'Cache-Control': cache
+		try {
+			let params = {
+				token: this.state.token,
+				type: 'insert',
+				bvv_bvn_id: this.props.data.id_dieu_do,
+				user_id: this.props.data.dataUser.adm_id,
+				gio_xuat_ben: this.props.data.gio_xuat_ben,
+				dataBook: dataBook,
+				address: this.state.address,
+				ghi_chu: this.state.ghi_chu,
 			}
-		})
-		.then((response) => response.json())
-		.then((responseJson) => {
-			that.setState({
-				loadingOrder: false
-			});
-			if(responseJson.status != 404) {
-				if(responseJson.status == 200) {
-					Actions.Payment({title: 'Thanh Toán', data: {adm_name: this.props.data.dataUser.adm_name, last_login: this.props.data.dataUser.last_login, adm_id: this.props.data.dataUser.adm_id, orderId: responseJson.orderId}});
+			let data = await fetchData('user_save_order', params, 'GET');
+			if(data.status != 404) {
+				if(data.status == 200) {
+					Actions.Payment({title: 'Thanh Toán', data: {adm_name: this.props.data.dataUser.adm_name, last_login: this.props.data.dataUser.last_login, adm_id: this.props.data.dataUser.adm_id, orderId: data.orderId}});
 				}
-			}else if(responseJson.status == 404) {
+			}else if(data.status == 404) {
 				alert('Tài khoản của bạn hiện đang được đăng nhập ở thiết bị khác.');
 				Actions.welcome({type: 'reset'});
 			}
-		})
-		.catch((error) => {
-			console.error(error);
-		});
+			this.setState({
+				loadingOrder: false
+			});
+		} catch (e) {
+			console.log(e);
+			this.setState({
+				loadingOrder: false
+			});
+		}
+
 	}
 
    render() {
