@@ -9,7 +9,6 @@ import {
 	TouchableOpacity,
 	AsyncStorage
 } from 'react-native';
-import {domain,cache} from '../../Config/common';
 import fetchData from '../../Components/FetchData';
 import { Text, Input, Button, Card, CardItem, Spinner, Icon} from 'native-base';
 import CalendarPicker from 'react-native-calendar-picker';
@@ -21,7 +20,6 @@ import StorageHelper from '../../Components/StorageHelper';
 
 const heightDevice = Dimensions.get('window').height;
 const widthDevice = Dimensions.get('window').width;
-const urlApi = domain+'/api/api_user_so_do_giuong.php';
 const currentDate = new Date();
 
 class HomeIOS extends Component {
@@ -101,7 +99,6 @@ class HomeIOS extends Component {
    }
 
 	async componentWillMount() {
-
 		let results = await StorageHelper.getStore('infoUser');
 		results = JSON.parse(results);
 		let admId = results.adm_id;

@@ -212,7 +212,7 @@ class SideBar extends Component {
 		           	</List>
 					</ScrollView>
 					<View style={{position: 'absolute', bottom: 0, width: width*.8, left: 0, backgroundColor: '#fff', alignItems: 'center', padding: 10}}>
-				  		<Text style={[styles.text, {color: '#777'}]}>Version: 1.3</Text>
+				  		<Text style={[styles.text, {color: '#777'}]}>Version: 1.4</Text>
 				  	</View>
 				</View>
          </View>

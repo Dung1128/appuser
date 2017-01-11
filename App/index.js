@@ -41,6 +41,7 @@ const reducerCreate = params => {
 };
 
 class App extends Component {
+
 	render() {
 		return(
 			<Router navBar={NavBar} createReducer={reducerCreate}>

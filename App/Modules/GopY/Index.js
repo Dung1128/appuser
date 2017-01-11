@@ -17,7 +17,7 @@ import fetchData from '../../Components/FetchData';
 
 import styles from './styles';
 
-const heightDevice = Dimensions.get('window').height;
+const height = Dimensions.get('window').height;
 const widthDevice = Dimensions.get('window').width;
 
 class GopY extends Component {
@@ -26,9 +26,11 @@ class GopY extends Component {
 		super(props);
 		this.state = {
 			fullname: '',
+			title: '',
 			email: '',
 			phone: '',
 			content: '',
+			height: height
 		};
 	}
 
@@ -58,6 +60,7 @@ class GopY extends Component {
 			try {
 				let params = {
 					fullname: this.state.fullname,
+					title: this.state.title,
 					email: this.state.email,
 					phone: this.state.phone,
 					content: this.state.content,
@@ -82,10 +85,21 @@ class GopY extends Component {
 		}
 	}
 
+	_onLayout = event => {
+		let widthDevice = Dimensions.get('window').width;
+		let height = Dimensions.get('window').height;
+		let twoColumn = (widthDevice >= 600)? 'row' : 'column' ;
+
+    	this.setState({
+			twoColumn: twoColumn,
+			height: height
+    	});
+	}
+
 	render() {
 		return(
-			<View style={[styles.container]}>
-				<ScrollView>
+			<View style={[style.container]} onLayout={this._onLayout}>
+				<ScrollView style={{marginBottom: 50}}>
 					<View style={{flex: 1, flexDirection: 'column', alignItems: 'center', justifyContent: 'center'}}>
 						<View style={[styles[this.state.errorFullname], styles.groupInput]}>
 							<Text>Họ và Tên:</Text>
@@ -103,6 +117,12 @@ class GopY extends Component {
 							<Text>Số điện thoại:</Text>
 							<View style={styles.input}>
 								<Input style={{height: 50}} onChangeText={(text) => this.setState({phone: text})} />
+							</View>
+						</View>
+						<View style={[styles[this.state.errorFullname], styles.groupInput]}>
+							<Text>Tiêu đề:</Text>
+							<View style={styles.input}>
+								<Input style={[{height: 50}]} onChangeText={(text) => this.setState({title: text})} />
 							</View>
 						</View>
 						<View style={[styles[this.state.errorContent], styles.groupInput]}>
@@ -125,5 +145,13 @@ class GopY extends Component {
 		);
 	}
 }
+
+const style = StyleSheet.create({
+	container: {
+		paddingTop: 62,
+		height: height,
+		margin: 20
+	}
+})
 
 export default GopY

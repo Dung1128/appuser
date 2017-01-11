@@ -1,21 +1,22 @@
 import { Actions } from 'react-native-router-flux'
-import {domain, cache} from '../Config/common';
+import * as common from '../Config/common';
 
 const API_URL = {
-  login: domain+'/api/api_user_dang_nhap.php',
-  register: domain+'/api/api_user_dang_ky.php',
-  user_ben: domain+'/api/api_user_ben.php',
-  user_so_do_giuong: domain+'/api/api_user_so_do_giuong.php',
-  adm_so_do_giuong: domain+'/api/api_adm_so_do_giuong.php',
-  api_check_ve: domain+'/api/api_check_ve.php',
-  user_rating: domain+'/api/api_user_rating.php',
-  user_gop_y: domain+'/api/api_user_gop_y.php',
-  user_save_order: domain+'/api/api_user_save_order.php',
-  user_lich_su_order: domain+'/api/api_user_lich_su_order.php',
-  user_tin_lien_quan: domain+'/api/api_user_tin_lien_quan.php',
-  user_news: domain+'/api/api_user_news.php',
-  user_get_content: domain+'/api/api_user_get_content.php',
-  adm_get_time_sync: domain+'/api/api_adm_get_time_sync.php',
+  login: common.domain+'/api/api_user_dang_nhap.php',
+  register: common.domain+'/api/api_user_dang_ky.php',
+  user_ben: common.domain+'/api/api_user_ben.php',
+  user_so_do_giuong: common.domain+'/api/api_user_so_do_giuong.php',
+  adm_so_do_giuong: common.domain+'/api/api_adm_so_do_giuong.php',
+  api_check_ve: common.domain+'/api/api_check_ve.php',
+  user_rating: common.domain+'/api/api_user_rating.php',
+  user_gop_y: common.domain+'/api/api_user_gop_y.php',
+  user_save_order: common.domain+'/api/api_user_save_order.php',
+  user_lich_su_order: common.domain+'/api/api_user_lich_su_order.php',
+  user_tin_lien_quan: common.domain+'/api/api_user_tin_lien_quan.php',
+  user_news: common.domain+'/api/api_user_news.php',
+  user_get_content: common.domain+'/api/api_user_get_content.php',
+  adm_get_time_sync: common.domain+'/api/api_adm_get_time_sync.php',
+  api_check_version: common.domain+'/api/api_check_version.php',
 }
 
 const API_HEADERS  = {
@@ -40,7 +41,7 @@ const fetchData = async (type, param={}, method="GET", retry=undefined) => {
     // Khai báo headers mặc định
     let headers = {
       "Content-Type"    : "multipart/form-data",
-		"Cache-Control"   : cache,
+		"Cache-Control"   : common.cache,
     }
 
     // Gán lại headers nếu có

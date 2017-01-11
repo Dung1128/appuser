@@ -22,7 +22,7 @@ import ModalPicker from 'react-native-modal-picker';
 import StorageHelper from '../../Components/StorageHelper';
 const heightDevice = Dimensions.get('window').height;
 const widthDevice = Dimensions.get('window').width;
-const timeSync = (1000*60)/2;
+
 class ViewSoDoGiuong extends Component {
 
 	constructor(props) {
@@ -45,14 +45,42 @@ class ViewSoDoGiuong extends Component {
 			type: '',
 			infoAdm: [],
 			chuyenVaoCho: this.props.data.chuyenVaoCho,
-			arrOrder: [],
 			checkout: false,
 			dataBook: [],
 			arrBookGiuong: [],
+			arrNumberGiuong: [],
 			themVe: [],
 			arrThemve: [],
-			twoColumn: 'column'
+			twoColumn: 'column',
+			timeSync: (1000*60),
+			clearTimeout: '',
+			clearSync: ''
 		};
+	}
+
+	getSyncArrVeNumber() {
+		let that = this;
+		this.state.clearSync = setInterval(() => {
+			fetch(domain+'/api/api_sync_so_do_giuong.php?type=user&token='+that.state.token+'&adm_id='+that.state.infoAdm.adm_id+'&notId='+that.props.data.notId+'&day='+that.props.data.day, {
+				headers: {
+			    	'Cache-Control': cache
+			  	}
+			})
+			.then((response) => response.json())
+			.then((responseJson) => {
+				let dataVeNumber = responseJson.arrVeNumber;
+				let dataBookGiuong = that.state.arrBookGiuong;
+				for(var i = 0; i < dataBookGiuong.length; i++) {
+					dataVeNumber[dataBookGiuong[i].numberGiuong].bvv_status = -2;
+				}
+				that.setState({
+					arrVeNumber: dataVeNumber
+				});
+			})
+			.catch((error) => {
+				console.error(error);
+			});
+		}, this.state.timeSync);
 	}
 
 	async componentWillMount() {
@@ -60,6 +88,12 @@ class ViewSoDoGiuong extends Component {
 		results = JSON.parse(results);
 		let admId = results.adm_id;
 		let token = results.token;
+		let time_sync = 60;
+		let objTimeSync = await fetchData('adm_get_time_sync', {type: 'user'}, 'GET');
+		if(objTimeSync.time_sync >= 60) {
+			time_sync = objTimeSync.time_sync;
+		}
+		this.state.timeSync = (1000*time_sync);
 		let data = [];
 		this.setState({
 			infoAdm: results,
@@ -82,13 +116,12 @@ class ViewSoDoGiuong extends Component {
 			});
 		}
 		let that = this;
-		setTimeout(() => {
+		this.state.clearTimeout = setTimeout(() => {
 			if(data.status != 404) {
 				that.setState({
 					results:data.so_do_giuong,
 					arrVeNumber: data.so_do_giuong.arrVeNumber,
 					resultsBen: that.props.data.dataBen,
-					arrOrder: data.so_do_giuong.arrOrder,
 					loading: false
 				});
 				return data.so_do_giuong;
@@ -96,7 +129,18 @@ class ViewSoDoGiuong extends Component {
 				alert('Tài khoản của bạn đã được đăng nhập ở thiết bị khác.');
 				Actions.welcome({type: 'reset'});
 			}
-		},800);
+		},1000);
+
+		this.getSyncArrVeNumber();
+	}
+
+	componentWillUpdate(nextProps, nextState) {
+		nextState.arrVeNumber = nextState.arrVeNumber;
+	}
+
+	componentWillUnmount() {
+		clearTimeout(this.state.clearTimeout);
+		clearInterval(this.state.clearSync);
 	}
 
 	_renderSoDoGiuong(data, tang) {
@@ -138,6 +182,7 @@ class ViewSoDoGiuong extends Component {
 					}
 					var idGiuong = item[j].sdgct_number;
 					var dataGiuong = this.state.arrVeNumber[idGiuong];
+					let arrNumberGiuong = this.state.arrNumberGiuong;
 
 					if(dataGiuong.lock > 0) {
 						htmlChild.push(
@@ -148,7 +193,6 @@ class ViewSoDoGiuong extends Component {
 							</Col>
 						);
 					}else {
-
 						if(dataGiuong.bvv_status == -2) {
 							htmlChild.push(
 								<Col key={i+j} style={styles.borderCol}>
@@ -159,6 +203,7 @@ class ViewSoDoGiuong extends Component {
 							);
 						}else {
 							if(dataGiuong.bvv_status == -2) {
+
 								htmlChild.push(
 									<Col key={i+j} style={styles.borderCol}>
 										<TouchableOpacity onPress={this._setActiveGiuong.bind(this, idGiuong,item[j].sdgct_label_full)} style={styles.opacityBg}>
@@ -167,8 +212,8 @@ class ViewSoDoGiuong extends Component {
 									</Col>
 								);
 							}else {
-								if(dataGiuong.bvv_status == 0) {
-									if(this.state.arrOrder[idGiuong] == undefined) {
+
+									if(dataGiuong.bvv_status == 0) {
 										htmlChild.push(
 											<Col key={i+j} style={styles.borderCol}>
 												<TouchableOpacity onPress={this._setActiveGiuong.bind(this, idGiuong, item[j].sdgct_label_full)} style={styles.opacityBg}>
@@ -177,35 +222,19 @@ class ViewSoDoGiuong extends Component {
 											</Col>
 										);
 									}else {
-										if(this.state.arrOrder[idGiuong].ord_status >= 0) {
-											htmlChild.push(
-												<Col key={i+j} style={styles.borderCol}>
-													<TouchableOpacity style={[styles.activeGiuong, styles.opacityBg]}>
-														<Text style={[styles.textCenter, styles.textActiveGiuong]}>{item[j].sdgct_label_full}</Text>
-													</TouchableOpacity>
-												</Col>
-											);
-										}else if(this.state.arrOrder[idGiuong].ord_status >= 0 && dataGiuong.bvv_status == 0) {
-											htmlChild.push(
-												<Col key={i+j} style={styles.borderCol}>
-													<TouchableOpacity onPress={this._setActiveGiuong.bind(this, idGiuong, item[j].sdgct_label_full)} style={styles.opacityBg}>
-														<Text style={styles.textCenter}>{item[j].sdgct_label_full}</Text>
-													</TouchableOpacity>
-												</Col>
-											);
-										}
+
+										htmlChild.push(
+											<Col key={i+j} style={styles.borderCol}>
+												<TouchableOpacity style={[styles.activeGiuong, styles.opacityBg]}>
+													<Text style={[styles.textCenter, styles.textActiveGiuong]}>{item[j].sdgct_label_full}</Text>
+												</TouchableOpacity>
+											</Col>
+										);
 									}
-								}else {
-									htmlChild.push(
-										<Col key={i+j} style={styles.borderCol}>
-											<TouchableOpacity style={[styles.activeGiuong, styles.opacityBg]}>
-												<Text style={[styles.textCenter, styles.textActiveGiuong]}>{item[j].sdgct_label_full}</Text>
-											</TouchableOpacity>
-										</Col>
-									);
-								}
+
 							}
 						}
+
 					}
 				}
 				html.push(<Grid key={i}>{htmlChild}</Grid>);
@@ -216,7 +245,7 @@ class ViewSoDoGiuong extends Component {
 
 	async _setActiveGiuong(id, fullLabel) {
 		let dataVe = this.state.arrVeNumber;
-
+console.log(dataVe[id]);
 		try {
 			let params = {
 				token: this.state.token,
@@ -227,9 +256,9 @@ class ViewSoDoGiuong extends Component {
 			let data = await fetchData('api_check_ve', params, 'GET');
 			if(data.status != 404) {
 				let setStatus = this.state.arrVeNumber;
-				console.log(setStatus[id]);
 				let dataBook = this.state.dataBook;
 				let arrBookGiuong = this.state.arrBookGiuong;
+				let arrNumberGiuong = this.state.arrNumberGiuong;
 
 				if(data.status == 200) {
 					setStatus[id].bvv_status = -2;
@@ -239,11 +268,13 @@ class ViewSoDoGiuong extends Component {
 
 					dataBook.push({labelFull: fullLabel, 'numberGiuong': parseInt(id), 'bvv_bex_id_a': this.props.data.benA, 'bvv_bex_id_b': this.props.data.benB, 'bvv_price': parseInt(this.props.data.totalPriceInt)});
 					arrBookGiuong.push({'numberGiuong': parseInt(id)});
+					arrNumberGiuong[parseInt(id)] = true;
 					this.setState({
 						arrVeNumber: setStatus,
 						checkout: true,
 						dataBook: dataBook,
-						arrBookGiuong: arrBookGiuong
+						arrBookGiuong: arrBookGiuong,
+						arrNumberGiuong: arrNumberGiuong
 					});
 				}else if(data.status == 201) {
 					alert('Ghế đã có người đặt. Bạn vui lòng chọn ghế khác.');
@@ -267,6 +298,7 @@ class ViewSoDoGiuong extends Component {
 
 	_unsetActiveGiuong(id, fullLabel){
 		let checkGiuongCurrent = false;
+		let that = this;
 		if(this.state.checkout) {
 			let arrBookGiuong = this.state.arrBookGiuong;
 			for(var i in arrBookGiuong) {
@@ -274,46 +306,26 @@ class ViewSoDoGiuong extends Component {
 					checkGiuongCurrent = true;
 					let dataBook = this.state.dataBook;
 					let setStatus = this.state.arrVeNumber;
+					let arrNumberGiuong = this.state.arrNumberGiuong;
 					setStatus[id].bvv_status = 0;
 
+					arrNumberGiuong.splice(arrBookGiuong[i].numberGiuong, 1);
 					arrBookGiuong.splice(i, 1);
 					dataBook.splice(i, 1);
 
-					this.setState({
+					that.setState({
 						arrVeNumber: setStatus,
-						loadingModalAction: false,
 						arrBookGiuong: arrBookGiuong,
-						dataBook: dataBook
+						dataBook: dataBook,
+						arrNumberGiuong: arrNumberGiuong
 					});
 
 					if(dataBook.length == 0 && arrBookGiuong.length == 0) {
-						this.setState({
-							checkout: false
-						});
+						that.setState({checkout: false});
 					}
 				}
 			}
 		}
-	}
-
-	componentDidMount() {
-		let that = this;
-		setInterval(function() {
-			fetch(domain+'/api/api_sync_so_do_giuong.php?token='+that.state.token+'&adm_id='+that.state.infoAdm.adm_id+'&notId='+that.props.data.notId+'&day='+that.props.data.day, {
-				headers: {
-			    	'Cache-Control': cache
-			  	}
-			})
-			.then((response) => response.json())
-			.then((responseJson) => {
-				that.setState({
-					arrVeNumber: responseJson.arrVeNumber
-				});
-			})
-			.catch((error) => {
-				console.error(error);
-			});
-		}, timeSync);
 	}
 
 	_onLayout = event => {
