@@ -54,11 +54,9 @@ class HuongDanSuDung extends Component {
 		setTimeout(() => {
 
 			let des = '';
-
+console.log(data.data);
 			that.setState({
-				results: {
-					new_description: (data.data.length > 0) ? data.data.new_description : 'Hiện tại chưa có bài hướng dẫn. Bạn vui lòng quay lại sau!'
-				},
+				results: (data.data.length > 0) ? data.data : 'Hiện tại chưa có bài hướng dẫn. Bạn vui lòng quay lại sau!',
 				loading: false
 			});
 
@@ -88,7 +86,7 @@ class HuongDanSuDung extends Component {
 							startInLoadingState={true}
 							onNavigationStateChange={this.onNavigationStateChange.bind(this)}
 							style={{height: this.state.webViewHeight}}
-							source={{html: '<html><body>'+this.state.results.new_description+'</body></html>'}}
+							source={{html: '<html><body>'+this.state.results+'</body></html>'}}
 							injectedJavaScript={'document.title = Math.max(window.innerHeight, document.body.offsetHeight, document.documentElement.clientHeight);'}
 						/>
 					}

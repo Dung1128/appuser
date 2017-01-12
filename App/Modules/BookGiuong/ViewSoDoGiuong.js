@@ -245,7 +245,7 @@ class ViewSoDoGiuong extends Component {
 
 	async _setActiveGiuong(id, fullLabel) {
 		let dataVe = this.state.arrVeNumber;
-console.log(dataVe[id]);
+
 		try {
 			let params = {
 				token: this.state.token,
