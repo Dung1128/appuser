@@ -13,7 +13,7 @@ import {
 import { Icon, Spinner, CardItem, Card } from 'native-base';
 import {Actions} from 'react-native-router-flux';
 import fetchData from '../../Components/FetchData';
-import {domain, cache} from '../../Config/common';
+import * as common from '../../Config/common';
 import styles from './styles';
 
 class ListNews extends Component {

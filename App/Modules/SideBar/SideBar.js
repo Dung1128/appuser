@@ -91,15 +91,15 @@ class SideBar extends Component {
             </Header>
 
 				<View style={{height: (height-71), overflow: 'hidden'}}>
-					<ScrollView style={{marginBottom: 70}}>
+					<ScrollView style={{marginBottom: 40}}>
 						{this.state.checkLogin &&
 							<View style={{alignItems: 'center'}}>
-								<TouchableOpacity onPress={() => { this.props.closeDrawer(); Actions.UserInfo({title: 'Thông tin tài khoản'}) } }>
+								{/* <TouchableOpacity onPress={() => { this.props.closeDrawer(); Actions.UserInfo({title: 'Thông tin tài khoản'}) } }> */}
 									{this.state.dataUser.adm_fullname != '' &&
 										<Text style={{color: '#fff'}}>Xin Chào: <Text style={{color: 'orange'}}>{this.state.dataUser.adm_fullname}</Text></Text>
 									}
 									<Text style={{color: '#fff'}}>SĐT: <Text style={{color: 'orange'}}>{this.state.dataUser.use_phone}</Text></Text>
-								</TouchableOpacity>
+								{/* </TouchableOpacity> */}
 							</View>
 						}
 		           	<List>

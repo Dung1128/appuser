@@ -13,7 +13,6 @@ import {
 import { Icon, Spinner, CardItem, Card } from 'native-base';
 import {Actions} from 'react-native-router-flux';
 import fetchData from '../../Components/FetchData';
-import {domain, cache} from '../../Config/common';
 import styles from './styles';
 const heightDevice = Dimensions.get('window').height;
 
