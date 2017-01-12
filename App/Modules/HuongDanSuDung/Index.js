@@ -54,7 +54,6 @@ class HuongDanSuDung extends Component {
 		setTimeout(() => {
 
 			let des = '';
-console.log(data.data);
 			that.setState({
 				results: (data.data.length > 0) ? data.data : 'Hiện tại chưa có bài hướng dẫn. Bạn vui lòng quay lại sau!',
 				loading: false

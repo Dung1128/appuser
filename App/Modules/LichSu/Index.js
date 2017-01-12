@@ -15,12 +15,15 @@ import fetchData from '../../Components/FetchData';
 import { Container, Content, InputGroup, Icon, Input, Button, Spinner, Card, CardItem, Badge } from 'native-base';
 import {Actions, ActionConst} from 'react-native-router-flux';
 const heightDevice = Dimensions.get('window').height;
+const widthDevice = Dimensions.get('window').width;
 
 class LichSu extends Component {
 
 	constructor(props) {
       super(props);
 		this.state = {
+			height: heightDevice,
+			width: widthDevice,
 			token: '',
 			loading: true,
 			results: [],
@@ -134,9 +137,18 @@ class LichSu extends Component {
 		return html;
 	}
 
+	_onLayout = event => {
+		let heightDevice = Dimensions.get('window').height;
+		let widthDevice = Dimensions.get('window').width;
+		this.setState({
+			height: heightDevice,
+			width: widthDevice
+		});
+	}
+
    render() {
       return(
-			<View style={styles.container}>
+			<View style={[styles.container, {height: this.state.height}]} onLayout={this._onLayout}>
 				<ScrollView>
 					{this.state.loading &&
 						<View style={{alignItems: 'center'}}><Spinner /><Text>Đang tải dữ liệu...</Text></View>
@@ -153,7 +165,6 @@ class LichSu extends Component {
 const styles = StyleSheet.create({
 	container: {
 		paddingTop: 59,
-		height: heightDevice,
 	},
    marginButton: {
       marginTop: 10

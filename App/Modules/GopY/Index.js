@@ -15,8 +15,6 @@ import {Actions} from 'react-native-router-flux';
 import {domain,cache} from '../../Config/common';
 import fetchData from '../../Components/FetchData';
 
-import styles from './styles';
-
 const height = Dimensions.get('window').height;
 const widthDevice = Dimensions.get('window').width;
 
@@ -30,7 +28,12 @@ class GopY extends Component {
 			email: '',
 			phone: '',
 			content: '',
-			height: height
+			height: height,
+			width: widthDevice,
+			errorFullname: '',
+			errorPhone: '',
+			errorContent: '',
+			listError: []
 		};
 	}
 
@@ -92,53 +95,55 @@ class GopY extends Component {
 
     	this.setState({
 			twoColumn: twoColumn,
-			height: height
+			height: height,
+			width: widthDevice
     	});
 	}
 
 	render() {
 		return(
-			<View style={[style.container]} onLayout={this._onLayout}>
-				<ScrollView style={{marginBottom: 50}}>
-					<View style={{flex: 1, flexDirection: 'column', alignItems: 'center', justifyContent: 'center'}}>
-						<View style={[styles[this.state.errorFullname], styles.groupInput]}>
+			<View style={[styles.container, {width: this.state.width, height: this.state.height}]} onLayout={this._onLayout}>
+				<ScrollView style={{width: this.state.width}} keyboardShouldPersistTaps={true}>
+					<View style={{width: this.state.width, justifyContent: 'center', alignItems: 'center', paddingTop: 10}}>
+						<View style={[styles.groupInput, {width: (this.state.width-40)}]}>
 							<Text>Họ và Tên:</Text>
-							<View style={styles.input}>
+							<View style={styles.input, styles[this.state.errorFullname]}>
 								<Input style={[{height: 50}]} onChangeText={(text) => this.setState({fullname: text})} />
 							</View>
 						</View>
-						<View style={[styles[this.state.errorEmail], styles.groupInput]}>
+						<View style={[styles.groupInput, {width: (this.state.width-40)}]}>
 							<Text>Địa chỉ Email:</Text>
 							<View style={[styles.input]}>
 								<Input style={{height: 50}} onChangeText={(text) => this.setState({email: text})} />
 							</View>
 						</View>
-						<View style={[styles[this.state.errorPhone], styles.groupInput]}>
+						<View style={[styles.groupInput, {width: (this.state.width-40)}]}>
 							<Text>Số điện thoại:</Text>
-							<View style={styles.input}>
+							<View style={styles.input, styles[this.state.errorPhone]}>
 								<Input style={{height: 50}} onChangeText={(text) => this.setState({phone: text})} />
 							</View>
 						</View>
-						<View style={[styles[this.state.errorFullname], styles.groupInput]}>
+						<View style={[styles.groupInput, {width: (this.state.width-40)}]}>
 							<Text>Tiêu đề:</Text>
 							<View style={styles.input}>
 								<Input style={[{height: 50}]} onChangeText={(text) => this.setState({title: text})} />
 							</View>
 						</View>
-						<View style={[styles[this.state.errorContent], styles.groupInput]}>
+						<View style={[styles.groupInput, {width: (this.state.width-40)}]}>
 							<Text>Nội dung góp ý:</Text>
-							<View style={styles.input}>
+							<View style={styles.input, styles[this.state.errorContent]}>
 								<Input multiline={true} numberOfLines={5} style={{height: 80, fontSize: 17}} onChangeText={(text) => this.setState({content: text})} />
 							</View>
 						</View>
-						<View style={styles.groupInput}>
+						<View style={{alignItems: 'flex-start', justifyContent: 'flex-start', width: (this.state.width-40), marginBottom: 10}}>
+							{this.state.listError}
+						</View>
+						<View style={[styles.groupInput, {width: (this.state.width-40)}]}>
 							<TouchableOpacity style={styles.button} onPress={() => this._handleGopY()}>
 								<Text style={{fontSize: 15, color: '#fff'}}>Gửi Góp Ý</Text>
 							</TouchableOpacity>
 						</View>
-						<View style={{alignItems: 'flex-start', justifyContent: 'flex-start'}}>
-							{this.state.listError}
-						</View>
+
 					</View>
 				</ScrollView>
 			</View>
@@ -146,11 +151,37 @@ class GopY extends Component {
 	}
 }
 
-const style = StyleSheet.create({
+const styles = StyleSheet.create({
 	container: {
 		paddingTop: 62,
-		height: height,
-		margin: 20
+		flex: 1
+	},
+	groupInput: {
+		marginBottom: 20
+	},
+	input: {
+		borderWidth: 1,
+		borderColor: '#ccc',
+		marginTop: 5
+	},
+	errorInput: {
+		borderWidth: 1,
+		borderColor: 'red',
+		marginTop: 5
+	},
+	noErrorInput: {
+		borderWidth: 1,
+		borderColor: '#ccc',
+		marginTop: 5
+	},
+	button: {
+		backgroundColor: '#6495ed',
+		alignItems: 'center',
+		justifyContent: 'center',
+		padding: 15
+	},
+	colorTextError: {
+		color: 'red'
 	}
 })
 

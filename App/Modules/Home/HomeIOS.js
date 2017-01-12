@@ -27,6 +27,8 @@ class HomeIOS extends Component {
       super(props);
       let date = new Date();
       this.state = {
+			width: widthDevice,
+			height: heightDevice,
          date: date,
          day: date.getDate(),
          month: (date.getMonth()+1),
@@ -248,7 +250,7 @@ class HomeIOS extends Component {
 		}
 
 		html.push(
-			<View key="scroll_autocomplate1" style={{minHeight:0, maxHeight:330, overflow: 'hidden', borderTopWidth: 1, borderTopColor: '#ccc'}}>
+			<View key="scroll_autocomplate1" style={{minHeight:0, maxHeight:350, overflow: 'hidden', borderTopWidth: 1, borderTopColor: '#ccc'}}>
 				{childHtml}
 			</View>
 		);
@@ -326,7 +328,7 @@ class HomeIOS extends Component {
 		}
 
 		html.push(
-			<View key="scroll_autocomplate2" style={{minHeight:0, maxHeight:330, overflow: 'hidden',  borderTopWidth: 1, borderTopColor: '#ccc'}}>
+			<View key="scroll_autocomplate2" style={{minHeight:0, maxHeight:350, overflow: 'hidden',  borderTopWidth: 1, borderTopColor: '#ccc'}}>
 				{childHtml}
 			</View>
 		);
@@ -352,7 +354,7 @@ class HomeIOS extends Component {
 	renderFormSearch(listItem1, listItem2) {
 		let html = [];
 		html.push(
-			<View key="form_search" style={{flexDirection: 'column', padding: 30, marginTop: 10, width: widthDevice}}>
+			<View key="form_search" style={{flexDirection: 'column', padding: 30, marginTop: 10, width: this.state.width}}>
 				<View style={{position: 'relative'}}>
 					<View style={{flexDirection: 'column', justifyContent: 'center'}}>
 						<View style={{flexDirection: 'row', alignItems: 'center'}}>
@@ -575,6 +577,15 @@ class HomeIOS extends Component {
 		return(<Text style={{fontWeight: 'bold', color: '#ff931f', fontSize: 17}}>{newPrice} VNĐ</Text>);
 	}
 
+	_onLayout = event => {
+		let heightDevice = Dimensions.get('window').height;
+		let widthDevice = Dimensions.get('window').width;
+		this.setState({
+			height: heightDevice,
+			width: widthDevice
+		});
+	}
+
    render() {
 		let listItem1 = this.state.listItem1;
 		let listItem2 = this.state.listItem2;
@@ -604,7 +615,7 @@ class HomeIOS extends Component {
 		}
 
       return(
-			<View style={styles[classContainer]}>
+			<View style={styles[classContainer]} onLayout={this._onLayout}>
 				{!this.state.oneSearch &&
 					<ScrollView keyboardShouldPersistTaps={true}>
 						{this.renderFormSearch(listItem1, listItem2)}

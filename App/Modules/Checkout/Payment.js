@@ -17,7 +17,9 @@ class Checkout extends Component {
    constructor(props) {
       super(props);
 		this.state = {
-			loading: true
+			loading: true,
+			height: height,
+			width: width
 		};
    }
 
@@ -35,9 +37,18 @@ class Checkout extends Component {
       }).done();
 	}
 
+	_onLayout = event => {
+		let heightDevice = Dimensions.get('window').height;
+		let widthDevice = Dimensions.get('window').width;
+		this.setState({
+			height: heightDevice,
+			width: widthDevice
+		});
+	}
+
 	render() {
 		return(
-			<View style={{height: height, width: width}}>
+			<View style={{height: this.state.height, width: this.state.width}} onLayout={this._onLayout}>
 				<View style={{position: 'absolute', bottom: 0, width: width, left: 0, zIndex: 1, backgroundColor: '#ccc', height: 40, alignItems: 'flex-start', justifyContent: 'center'}}>
 					<TouchableOpacity onPress={() => this._backPayment()} style={{width: width}}>
 						<Icon name="md-arrow-round-back" style={{marginLeft: 20}} />
@@ -49,9 +60,9 @@ class Checkout extends Component {
 						startInLoadingState={this.state.loading}
 						automaticallyAdjustContentInsets={false}
 						javaScriptEnabled={true}
-						style={{marginBottom: 40}}
+						style={{marginBottom: 40, width: this.state.width}}
 					/>
-				
+
 			</View>
 		);
 	}

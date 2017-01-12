@@ -21,6 +21,8 @@ class LichSu extends Component {
 	constructor(props) {
       super(props);
 		this.state = {
+			width: widthDevice,
+			height: heightDevice,
 			loading: true,
 			results: '',
 			loadingOrder: false,
@@ -94,8 +96,8 @@ class LichSu extends Component {
 		);
 		return(
 			<Container>
-				<Content style={styles.wrapOrder}>
-					<Card style={{width: widthDevice}}>
+				<Content keyboardShouldPersistTaps={true}>
+					<Card style={{width: this.state.widthDevice}}>
 						<CardItem>
 							<View>
 								<Text style={{fontSize: 20}}>Đơn hàng</Text>
@@ -123,7 +125,7 @@ class LichSu extends Component {
 						{html}
 						{totalHtml}
 						<CardItem>
-							<View style={{flexDirection: 'column', alignItems: 'center', justifyContent: 'center'}}>
+							<View style={{flexDirection: 'column'}}>
 								<View style={{flex: 1}}>
 									<Text>Chúng tôi có dịch vụ xe trung chuyển đón tại nhà MIỄN PHÍ.</Text>
 								</View>
@@ -207,10 +209,19 @@ class LichSu extends Component {
 
 	}
 
+	_onLayout = event => {
+		let heightDevice = Dimensions.get('window').height;
+		let widthDevice = Dimensions.get('window').width;
+		this.setState({
+			height: heightDevice,
+			width: widthDevice
+		});
+	}
+
    render() {
 
       return(
-			<View style={styles.container}>
+			<View style={[styles.container, {height: this.state.height}]} onLayout={this._onLayout}>
 				{this._renderOrder()}
 			</View>
       );
@@ -219,8 +230,7 @@ class LichSu extends Component {
 
 const styles = StyleSheet.create({
 	container: {
-		paddingTop: 59,
-		height: heightDevice
+		paddingTop: 59
 	},
    marginButton: {
       marginTop: 10
