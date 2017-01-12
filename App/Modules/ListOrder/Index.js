@@ -95,8 +95,8 @@ class LichSu extends Component {
 			</CardItem>
 		);
 		return(
-			<Container>
-				<Content keyboardShouldPersistTaps={true}>
+			<View>
+				<ScrollView keyboardShouldPersistTaps={true}>
 					<Card style={{width: this.state.widthDevice}}>
 						<CardItem>
 							<View>
@@ -151,8 +151,8 @@ class LichSu extends Component {
 							</View>
 						</CardItem>
 					</Card>
-				</Content>
-			</Container>
+				</ScrollView>
+			</View>
 		);
 	}
 

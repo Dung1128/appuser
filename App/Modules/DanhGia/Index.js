@@ -206,7 +206,7 @@ class DanhGia extends Component {
    render() {
       return(
          <View style={styles.container}>
-				  <ScrollView>
+				  <ScrollView keyboardShouldPersistTaps={true}>
 					  {this.state.loading &&
 						  <View style={{alignItems: 'center'}}><Spinner /><Text>Đang tải dữ liệu...</Text></View>
 					  }
@@ -221,7 +221,7 @@ class DanhGia extends Component {
 					  	<Icon name="ios-close-circle" />
 				  	</TouchableOpacity>
 					<View style={{paddingBottom: 50}}>
-						<ScrollView>
+						<ScrollView keyboardShouldPersistTaps={true}>
 							<View style={{flexDirection: 'column', width: widthDevice}}>
 								{this.state.ten_bks != '' &&
 									<Text style={{marginBottom: 10}}>Biển kiểm soát: <Text style={{fontWeight: 'bold'}}>{this.state.ten_bks}</Text></Text>

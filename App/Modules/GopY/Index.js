@@ -107,7 +107,7 @@ class GopY extends Component {
 					<View style={{width: this.state.width, justifyContent: 'center', alignItems: 'center', paddingTop: 10}}>
 						<View style={[styles.groupInput, {width: (this.state.width-40)}]}>
 							<Text>Họ và Tên:</Text>
-							<View style={styles.input, styles[this.state.errorFullname]}>
+							<View style={[styles.input, styles[this.state.errorFullname]]}>
 								<Input style={[{height: 50}]} onChangeText={(text) => this.setState({fullname: text})} />
 							</View>
 						</View>
@@ -119,7 +119,7 @@ class GopY extends Component {
 						</View>
 						<View style={[styles.groupInput, {width: (this.state.width-40)}]}>
 							<Text>Số điện thoại:</Text>
-							<View style={styles.input, styles[this.state.errorPhone]}>
+							<View style={[styles.input, styles[this.state.errorPhone]]}>
 								<Input style={{height: 50}} onChangeText={(text) => this.setState({phone: text})} />
 							</View>
 						</View>
@@ -131,7 +131,7 @@ class GopY extends Component {
 						</View>
 						<View style={[styles.groupInput, {width: (this.state.width-40)}]}>
 							<Text>Nội dung góp ý:</Text>
-							<View style={styles.input, styles[this.state.errorContent]}>
+							<View style={[styles.input, styles[this.state.errorContent]]}>
 								<Input multiline={true} numberOfLines={5} style={{height: 80, fontSize: 17}} onChangeText={(text) => this.setState({content: text})} />
 							</View>
 						</View>
