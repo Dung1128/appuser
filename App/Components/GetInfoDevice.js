@@ -11,10 +11,12 @@ const GetInfoDevice = async () => {
 		try {
 			let params = {
 				version: DeviceInfo.getVersion(),
-				type: 'ios'
+				type: 'ios',
+				app: 'appuser'
 			}
 			let data = await fetchData('api_check_version', params, 'GET');
 			if(data.status == 201) {
+				let url = data.urlApp;
 				return Alert.alert(
 	            'Hệ thống thông báo',
 	            'Version của bạn đã cũ. Bạn vui lòng Update lên version mới nhất.',
@@ -39,10 +41,12 @@ const GetInfoDevice = async () => {
 		try {
 			let params = {
 				version: DeviceInfo.getVersion(),
-				type: 'android'
+				type: 'android',
+				app: 'appuser'
 			}
 			let data = await fetchData('api_check_version', params, 'GET');
 			if(data.status == 201) {
+				let url = data.urlApp;
 				return Alert.alert(
 	            'Hệ thống thông báo',
 	            'Version của bạn đã cũ. Bạn vui lòng Update lên version mới nhất.',
