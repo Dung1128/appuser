@@ -30,7 +30,9 @@ class SideBar extends Component {
       super(props);
       this.state = {
          checkLogin: false,
-			dataUser: []
+			dataUser: [],
+			height: height,
+			width: width
       };
    }
 
@@ -79,9 +81,18 @@ class SideBar extends Component {
 
 	}
 
+	_onLayout = event => {
+		let heightDevice = Dimensions.get('window').height;
+		let widthDevice = Dimensions.get('window').width;
+		this.setState({
+			height: heightDevice,
+			width: widthDevice
+		});
+	}
+
    render() {
       return(
-         <View theme={sidebarTheme} style={styles.sidebar}>
+         <View theme={sidebarTheme} style={[styles.sidebar]} onLayout={this._onLayout}>
             <Header style={styles.drawerCover}>
               <Image
                 square
@@ -90,8 +101,8 @@ class SideBar extends Component {
               />
             </Header>
 
-				<View style={{height: (height-71), overflow: 'hidden'}}>
-					<ScrollView style={{marginBottom: 40}}>
+				<View style={{height: (this.state.height-73), overflow: 'hidden'}}>
+					<ScrollView style={{marginBottom: 40, height: (this.state.height-73)}}>
 						{this.state.checkLogin &&
 							<View style={{alignItems: 'center'}}>
 								{/* <TouchableOpacity onPress={() => { this.props.closeDrawer(); Actions.UserInfo({title: 'Thông tin tài khoản'}) } }> */}
@@ -211,7 +222,7 @@ class SideBar extends Component {
 							}
 		           	</List>
 					</ScrollView>
-					<View style={{position: 'absolute', bottom: 0, width: width*.8, left: 0, backgroundColor: '#fff', alignItems: 'center', padding: 10}}>
+					<View style={{position: 'absolute', bottom: 0, width: (this.state.width*.8), left: 0, backgroundColor: '#fff', alignItems: 'center', padding: 10}}>
 				  		<Text style={[styles.text, {color: '#777'}]}>Version: 1.4</Text>
 				  	</View>
 				</View>
