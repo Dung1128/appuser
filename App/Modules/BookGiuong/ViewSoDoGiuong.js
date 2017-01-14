@@ -14,7 +14,7 @@ import {
 } from 'react-native';
 import {domain,cache} from '../../Config/common';
 import fetchData from '../../Components/FetchData';
-import { Container, Content, Header, Title, Text, Icon, Button, Card, CardItem, Spinner, Badge } from 'native-base';
+import { Container, Content, Header, Title, Text, Icon, Button, Card, CardItem, Spinner, Badge, Thumbnail } from 'native-base';
 import {Actions} from 'react-native-router-flux';
 import { Col, Row, Grid } from "react-native-easy-grid";
 import Modal from 'react-native-modalbox';
@@ -28,6 +28,8 @@ class ViewSoDoGiuong extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
+			width: widthDevice,
+			height: heightDevice,
 			token: '',
 			loading: true,
 			results: [],
@@ -334,7 +336,9 @@ class ViewSoDoGiuong extends Component {
 		let twoColumn = (widthDevice >= 600)? 'row' : 'column' ;
 
     	this.setState({
-			twoColumn: twoColumn
+			twoColumn: twoColumn,
+			width: widthDevice,
+			height: heightDevice,
     	});
 	}
 
@@ -354,7 +358,12 @@ class ViewSoDoGiuong extends Component {
 					<Card style={[styles.paddingContent]}>
 						<CardItem header>
 							<View style={{flexDirection: 'column'}}>
-								<View style={{marginBottom: 10}}>
+								<View style={{marginBottom: 10, width: (this.state.width-45)}}>
+									{this.props.data.did_loai_xe == 1 &&
+										<View style={{position: 'absolute', right: 0, top: 30}}>
+											<Thumbnail size={60} source={require('../../Skin/Images/vip.png')} />
+										</View>
+									}
 									<Text>Nơi đi & Nơi đến: <Text style={{fontWeight: 'bold'}}>{this.state.resultsBen[this.props.data.benA]}</Text> - <Text style={{fontWeight: 'bold'}}>{this.state.resultsBen[this.props.data.benB]}</Text></Text>
 									<Text>Giá vé: <Text style={{fontWeight: 'bold'}}>{convertPrice} VNĐ</Text></Text>
 									<Text>Tuyến: <Text style={{fontWeight: 'bold'}}>{this.props.data.tuyen}</Text></Text>

@@ -10,7 +10,7 @@ import {
 	AsyncStorage
 } from 'react-native';
 import fetchData from '../../Components/FetchData';
-import { Text, Input, Button, Card, CardItem, Spinner, Icon} from 'native-base';
+import { Text, Input, Button, Card, CardItem, Spinner, Icon, Thumbnail} from 'native-base';
 import CalendarPicker from 'react-native-calendar-picker';
 import {Actions} from 'react-native-router-flux';
 import Modal from 'react-native-modalbox';
@@ -94,7 +94,7 @@ class HomeIOS extends Component {
 		let data = [],
 			that = this;
 		Object.keys(results).map(function(key) {
-			data.push({laixe1: results[key].laixe1, laixe2: results[key].laixe2, tiepvien: results[key].tiepvien, gio_don: results[key].gio_don, soChoTrong: results[key].tongSoChoConLai, tenSoDo: results[key].ten_so_do,price: results[key].price, tuyen: results[key].tuyen, not_id:results[key].not_id, id_dieu_do: results[key].id_dieu_do, did_gio_xuat_ben_that: results[key].did_gio_xuat_ben_that, not_tuy_id: results[key].not_tuy_id, ben_a: results[key].diem_di, ben_b: results[key].diem_den});
+			data.push({did_loai_xe: results[key].did_loai_xe, laixe1: results[key].laixe1, laixe2: results[key].laixe2, tiepvien: results[key].tiepvien, gio_don: results[key].gio_don, soChoTrong: results[key].tongSoChoConLai, tenSoDo: results[key].ten_so_do,price: results[key].price, tuyen: results[key].tuyen, not_id:results[key].not_id, id_dieu_do: results[key].id_dieu_do, did_gio_xuat_ben_that: results[key].did_gio_xuat_ben_that, not_tuy_id: results[key].not_tuy_id, ben_a: results[key].diem_di, ben_b: results[key].diem_den});
 		});
 
       return data;
@@ -649,7 +649,7 @@ class HomeIOS extends Component {
 			                 renderRow={(dataNot) =>
 
 			                   <CardItem>
-											<TouchableOpacity style={{flexDirection: 'row'}} onPress={() => Actions.ViewSoDoGiuong({title: 'Chọn chỗ', data: {tuyen: dataNot.tuyen, dataBen: this.state.dataBx, id_dieu_do: dataNot.id_dieu_do, totalPriceInt: dataNot.price, adm_id: this.state.infoAdm.adm_id, adm_name: this.props.data.adm_name, last_login: this.props.data.last_login, gio_xuat_ben: dataNot.did_gio_xuat_ben_that, notId:dataNot.not_id, day:this.state.fullDate, notTuyenId: dataNot.not_tuy_id, benA: dataNot.ben_a, benB: dataNot.ben_b, laixe1: dataNot.laixe1, laixe2: dataNot.laixe2, tiepvien: dataNot.tiepvien}})}>
+											<TouchableOpacity style={{flexDirection: 'row'}} onPress={() => Actions.ViewSoDoGiuong({title: 'Chọn chỗ', data: {did_loai_xe: dataNot.did_loai_xe, tuyen: dataNot.tuyen, dataBen: this.state.dataBx, id_dieu_do: dataNot.id_dieu_do, totalPriceInt: dataNot.price, adm_id: this.state.infoAdm.adm_id, adm_name: this.props.data.adm_name, last_login: this.props.data.last_login, gio_xuat_ben: dataNot.did_gio_xuat_ben_that, notId:dataNot.not_id, day:this.state.fullDate, notTuyenId: dataNot.not_tuy_id, benA: dataNot.ben_a, benB: dataNot.ben_b, laixe1: dataNot.laixe1, laixe2: dataNot.laixe2, tiepvien: dataNot.tiepvien}})}>
 												<View style={{flex: 2}}>
 													<Text><Text style={{fontWeight: 'bold'}}>{dataNot.gio_don}</Text> - Thời gian đón</Text>
 													<Text style={{fontWeight: 'bold'}}>{this.state.dataBx[dataNot.ben_a]} -> {this.state.dataBx[dataNot.ben_b]}</Text>
@@ -659,6 +659,11 @@ class HomeIOS extends Component {
 													<Text>Số chỗ trống: {dataNot.soChoTrong}</Text>
 												</View>
 												<View style={{flex: 1, flexDirection: 'column', justifyContent: 'center',alignItems: 'center'}}>
+													{dataNot.did_loai_xe == 1 &&
+														<View>
+															<Thumbnail size={60} source={require('../../Skin/Images/vip.png')} />
+														</View>
+													}
 													<View style={{padding: 5, alignItems: 'center', justifyContent: 'center'}}>
 														{this.convertPrice(dataNot.price)}
 													</View>
