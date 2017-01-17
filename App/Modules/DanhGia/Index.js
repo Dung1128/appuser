@@ -30,6 +30,8 @@ class DanhGia extends Component {
 		super(props);
 		this.state = {
 			token: '',
+			height: heightDevice,
+			width: widthDevice,
 			showDropdown: false,
 			results: [],
 			dataBen: [],
@@ -203,9 +205,18 @@ class DanhGia extends Component {
 		this.closeModal();
 	}
 
+	_onLayout = event => {
+		let heightDevice = Dimensions.get('window').height;
+		let widthDevice = Dimensions.get('window').width;
+		this.setState({
+			height: heightDevice,
+			width: widthDevice
+		});
+	}
+
    render() {
       return(
-         <View style={styles.container}>
+         <View style={[styles.container, {height: this.state.height}]} onLayout={this._onLayout}>
 				  <ScrollView keyboardShouldPersistTaps={true}>
 					  {this.state.loading &&
 						  <View style={{alignItems: 'center'}}><Spinner /><Text>Đang tải dữ liệu...</Text></View>
@@ -215,74 +226,77 @@ class DanhGia extends Component {
 					  }
 				 </ScrollView>
 
-			  <Modal style={[styles.modal, styles.modalPopup, {paddingTop: 50}]} position={"top"} ref={"modal3"} isDisabled={this.state.isDisabled}>
+			  <Modal style={[styles.modal, styles.modalPopup, {paddingTop: 50, height: (this.state.height-20)}]} position={"top"} ref={"modal3"} swipeToClose={false}>
 
 				  	<TouchableOpacity onPress={() => this.closeModal()} style={{width: 50, height: 40, position: 'absolute', right: 0, top: 0, padding: 10}}>
 					  	<Icon name="ios-close-circle" />
 				  	</TouchableOpacity>
 					<View style={{paddingBottom: 50}}>
 						<ScrollView keyboardShouldPersistTaps={true}>
-							<View style={{flexDirection: 'column', width: widthDevice}}>
-								{this.state.ten_bks != '' &&
-									<Text style={{marginBottom: 10}}>Biển kiểm soát: <Text style={{fontWeight: 'bold'}}>{this.state.ten_bks}</Text></Text>
+							<View style={{width: (this.state.width-20), paddingBottom: 50}}>
+
+								<View style={{flexDirection: 'column'}}>
+									{this.state.ten_bks != '' &&
+										<Text style={{marginBottom: 10}}>Biển kiểm soát: <Text style={{fontWeight: 'bold'}}>{this.state.ten_bks}</Text></Text>
+									}
+									{this.state.laixe1 != '' &&
+										<Text style={{marginBottom: 10}}>Lái xe 1: <Text style={{fontWeight: 'bold'}}>{this.state.laixe1}</Text></Text>
+									}
+									{this.state.laixe2 != '' &&
+										<Text style={{marginBottom: 10}}>Lái xe 2: <Text style={{fontWeight: 'bold'}}>{this.state.laixe2}</Text></Text>
+									}
+									{this.state.tiepvien != '' &&
+										<Text style={{marginBottom: 10}}>Tiếp viên: <Text style={{fontWeight: 'bold'}}>{this.state.tiepvien}</Text></Text>
+									}
+									<Text style={{marginBottom: 10}}>Nơi đi & Nơi đến: <Text style={{fontWeight: 'bold'}}>{this.state.benAA} -> {this.state.benBB}</Text></Text>
+									<Text style={{marginBottom: 10}}>Số ghế: <Text style={{fontWeight: 'bold'}}>{this.state.number_ghe}</Text></Text>
+					  				<Text style={{marginBottom: 10}}>Thời gian: <Text style={{fontWeight: 'bold'}}>{this.state.gio_xuat_ben}</Text></Text>
+								</View>
+
+								{this.state.disable &&
+									<View>
+										<View style={{flexDirection: 'row'}}>
+											<Text style={{flex: 1, marginTop: 5}}>Bạn đã đánh giá: </Text>
+											<Rating
+												style={{flex: 2}}
+												rating={this.state.rat_values}
+												max={5}
+												iconWidth={24}
+												iconHeight={24}
+												iconSelected={selectStar}
+												iconUnselected={unSelectStar}
+												editable={false}/>
+										</View>
+										<View style={{marginTop: 10, marginBottom: 20}}>
+											<Text style={{marginBottom: 10}}>Nội dung đánh giá:</Text>
+											<Text style={{fontWeight: 'bold'}}>{this.state.rat_comment}</Text>
+										</View>
+									</View>
 								}
-								{this.state.laixe1 != '' &&
-									<Text style={{marginBottom: 10}}>Lái xe 1: <Text style={{fontWeight: 'bold'}}>{this.state.laixe1}</Text></Text>
+
+								{!this.state.disable &&
+									<View>
+										<View style={{marginTop: 20, marginBottom: 20, borderWidth: 1, borderColor: '#ccc', flexDirection: 'row'}}>
+
+											<Input placeholder="Viết đánh giá" style={{height: 60}} multiline={true} numberOfLines={4} onChange={(event) => this.setState({textRating: event.nativeEvent.text})} />
+
+										</View>
+										<View style={{flexDirection: 'row'}}>
+											<Text style={{flex: 1, marginTop: 5}}>Chọn đánh giá: </Text>
+											<Rating
+												style={{flex: 2}}
+												rating={this.state.rat_values}
+												max={5}
+												iconWidth={24}
+												iconHeight={24}
+												iconSelected={selectStar}
+												iconUnselected={unSelectStar}
+												onRate={(rating) => this.setState({rating: rating})}/>
+										</View>
+										<Button block success style={{marginTop: 20}} onPress={() => this._saveRating()}>Gửi Đánh Giá</Button>
+									</View>
 								}
-								{this.state.laixe2 != '' &&
-									<Text style={{marginBottom: 10}}>Lái xe 2: <Text style={{fontWeight: 'bold'}}>{this.state.laixe2}</Text></Text>
-								}
-								{this.state.tiepvien != '' &&
-									<Text style={{marginBottom: 10}}>Tiếp viên: <Text style={{fontWeight: 'bold'}}>{this.state.tiepvien}</Text></Text>
-								}
-								<Text style={{marginBottom: 10}}>Nơi đi & Nơi đến: <Text style={{fontWeight: 'bold'}}>{this.state.benAA} -> {this.state.benBB}</Text></Text>
-								<Text style={{marginBottom: 10}}>Số ghế: <Text style={{fontWeight: 'bold'}}>{this.state.number_ghe}</Text></Text>
-				  				<Text style={{marginBottom: 10}}>Thời gian: <Text style={{fontWeight: 'bold'}}>{this.state.gio_xuat_ben}</Text></Text>
 							</View>
-
-							{this.state.disable &&
-								<View>
-									<View style={{flexDirection: 'row'}}>
-										<Text style={{flex: 1, marginTop: 5}}>Bạn đã đánh giá: </Text>
-										<Rating
-											style={{flex: 2}}
-											rating={this.state.rat_values}
-											max={5}
-											iconWidth={24}
-											iconHeight={24}
-											iconSelected={selectStar}
-											iconUnselected={unSelectStar}
-											editable={false}/>
-									</View>
-									<View style={{marginTop: 10, marginBottom: 20}}>
-										<Text style={{marginBottom: 10}}>Nội dung đánh giá:</Text>
-										<Text style={{fontWeight: 'bold'}}>{this.state.rat_comment}</Text>
-									</View>
-								</View>
-							}
-
-							{!this.state.disable &&
-								<View>
-									<View style={{marginTop: 20, marginBottom: 20, borderWidth: 1, borderColor: '#ccc', flexDirection: 'row'}}>
-
-										<Input placeholder="Viết đánh giá" style={{height: 60}} multiline={true} numberOfLines={4} onChange={(event) => this.setState({textRating: event.nativeEvent.text})} />
-
-									</View>
-									<View style={{flexDirection: 'row'}}>
-										<Text style={{flex: 1, marginTop: 5}}>Chọn đánh giá: </Text>
-										<Rating
-											style={{flex: 2}}
-											rating={this.state.rat_values}
-											max={5}
-											iconWidth={24}
-											iconHeight={24}
-											iconSelected={selectStar}
-											iconUnselected={unSelectStar}
-											onRate={(rating) => this.setState({rating: rating})}/>
-									</View>
-									<Button block success style={{marginTop: 20}} onPress={() => this._saveRating()}>Gửi Đánh Giá</Button>
-								</View>
-							}
 						</ScrollView>
 					</View>
 			  </Modal>
@@ -293,8 +307,7 @@ class DanhGia extends Component {
 
 const styles = StyleSheet.create({
 	container: {
-		paddingTop: 59,
-		height: heightDevice,
+		paddingTop: 59
 	},
 	modal: {
 		alignItems: 'center',

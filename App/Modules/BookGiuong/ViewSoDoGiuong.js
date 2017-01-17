@@ -413,9 +413,12 @@ class ViewSoDoGiuong extends Component {
 
 					<View style={{flexDirection: this.state.twoColumn}}>
 						{this._renderSoDoGiuong(this.state.results, 1).length > 0 &&
-							<Card style={[styles.paddingContent, {flex: 1}]}>
-								<CardItem header style={{alignItems: 'center', justifyContent: 'center'}}>
-									<Text style={{fontSize: 20}}>Tầng 1</Text>
+							<Card style={[styles.paddingContent]}>
+								<CardItem header>
+									<View style={{position: 'absolute', left: 30, top: 10}}>
+										<Thumbnail size={30} source={require('../../Skin/Images/quay_tay.png')} />
+									</View>
+									<Text style={{fontSize: 20, marginLeft: 70}}>Tầng 1</Text>
 								</CardItem>
 
 								<CardItem>
@@ -428,8 +431,8 @@ class ViewSoDoGiuong extends Component {
 						}
 
 						{this._renderSoDoGiuong(this.state.results, 2).length > 0 &&
-							<Card style={[styles.paddingContent, {flex: 1}]}>
-								<CardItem header style={{alignItems: 'center', justifyContent: 'center'}}>
+							<Card style={[styles.paddingContent]}>
+								<CardItem header>
 									<Text style={{fontSize: 20}}>Tầng 2</Text>
 								</CardItem>
 
