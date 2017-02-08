@@ -70,7 +70,7 @@ class GopY extends Component {
 				}
 				let data = await fetchData('user_gop_y', params, 'GET');
 				if(data.status == 200) {
-					alert('Cảm ơn bạn đã Góp Ý cho hệ thống của chúng tôi.');
+					alert(data.mes);
 					Actions.welcome({title: 'Đăng Nhập'});
 				}
 			} catch (e) {
@@ -103,7 +103,7 @@ class GopY extends Component {
 	render() {
 		return(
 			<View style={[styles.container, {width: this.state.width, height: this.state.height}]} onLayout={this._onLayout}>
-				<ScrollView style={{width: this.state.width}} keyboardShouldPersistTaps={true}>
+				<ScrollView style={{width: this.state.width}} keyboardShouldPersistTaps="always">
 					<View style={{width: this.state.width, justifyContent: 'center', alignItems: 'center', paddingTop: 10}}>
 						<View style={[styles.groupInput, {width: (this.state.width-40)}]}>
 							<Text>Họ và Tên:</Text>

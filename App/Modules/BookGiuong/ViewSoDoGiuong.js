@@ -128,7 +128,7 @@ class ViewSoDoGiuong extends Component {
 				});
 				return data.so_do_giuong;
 			}else if(data.status == 404) {
-				alert('Tài khoản của bạn đã được đăng nhập ở thiết bị khác.');
+				alert(data.mes);
 				Actions.welcome({type: 'reset'});
 			}
 		},1000);
@@ -279,14 +279,14 @@ class ViewSoDoGiuong extends Component {
 						arrNumberGiuong: arrNumberGiuong
 					});
 				}else if(data.status == 201) {
-					alert('Ghế đã có người đặt. Bạn vui lòng chọn ghế khác.');
+					alert(data.mes);
 					setStatus[id].bvv_status = 11;
 					this.setState({
 						arrVeNumber: setStatus
 					});
 				}
 			}else if(data.status == 404) {
-				alert('Tài khoản của bạn đã được đăng nhập ở thiết bị khác.');
+				alert(data.mes);
 				Actions.welcome({type: 'reset'});
 			}
 		} catch (e) {

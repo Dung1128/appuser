@@ -96,7 +96,7 @@ class LichSu extends Component {
 		);
 		return(
 			<View>
-				<ScrollView keyboardShouldPersistTaps={true}>
+				<ScrollView keyboardShouldPersistTaps="always">
 					<Card style={{width: this.state.widthDevice}}>
 						<CardItem>
 							<View>
@@ -194,7 +194,7 @@ class LichSu extends Component {
 					Actions.Payment({title: 'Thanh Toán', data: {adm_name: this.props.data.dataUser.adm_name, last_login: this.props.data.dataUser.last_login, adm_id: this.props.data.dataUser.adm_id, orderId: data.orderId}});
 				}
 			}else if(data.status == 404) {
-				alert('Tài khoản của bạn hiện đang được đăng nhập ở thiết bị khác.');
+				alert(data.mes);
 				Actions.welcome({type: 'reset'});
 			}
 			this.setState({

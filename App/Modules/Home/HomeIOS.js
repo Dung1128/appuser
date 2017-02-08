@@ -182,7 +182,7 @@ class HomeIOS extends Component {
 							editFormSearch: false
 	               });
 					}else if(data.status == 404){
-						alert('Tài khoản của bạn đã được đăng nhập ở thiết bị khác.');
+						alert(data.mes);
 						Actions.welcome({type: 'reset'});
 					}
 				} catch (e) {
@@ -453,7 +453,7 @@ class HomeIOS extends Component {
 						countClickNextDay: true
 					});
 				}else if(data.status == 404) {
-					alert('Tài khoản của bạn đã được đăng nhập ở thiết bị khác.');
+					alert(data.mes);
 					Actions.welcome({type: 'reset'});
 				}
 			} catch (e) {
@@ -501,7 +501,7 @@ class HomeIOS extends Component {
 						countClickNextDay: true
 					});
 				}else if(data.status == 404) {
-					alert('Tài khoản của bạn đã được đăng nhập ở thiết bị khác.');
+					alert(data.mes);
 					Actions.welcome({type: 'reset'});
 				}
 			} catch (e) {
@@ -617,13 +617,13 @@ class HomeIOS extends Component {
       return(
 			<View style={styles[classContainer]} onLayout={this._onLayout}>
 				{!this.state.oneSearch &&
-					<ScrollView keyboardShouldPersistTaps={true}>
+					<ScrollView keyboardShouldPersistTaps="always">
 						{this.renderFormSearch(listItem1, listItem2)}
 					</ScrollView>
 				}
 
 				{this.state.oneSearch &&
-					<ScrollView keyboardShouldPersistTaps={true}>
+					<ScrollView keyboardShouldPersistTaps="always">
 						{this.editFormSearch()}
 
 						{this.state.editFormSearch &&

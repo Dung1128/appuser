@@ -71,7 +71,7 @@ class DanhGia extends Component {
 					loading: false
 				});
 			}else if(data.status == 404) {
-				alert('Tài khoản của bạn đã được đăng nhập ở thiết bị khác.');
+				alert(data.mes);
 				Actions.welcome({type: 'reset'});
 			}
 		}, 500);
@@ -198,7 +198,7 @@ class DanhGia extends Component {
 			}
 			let data = await fetchData('user_rating', params, 'GET');
 			this._getRating(this.state.token, this.state.infoAdm.adm_id);
-			alert('Cảm ơn bạn đã gửi đánh giá cho chúng tôi.');
+			alert(data.mes);
 		} catch (e) {
 			console.log(e);
 		}
@@ -217,7 +217,7 @@ class DanhGia extends Component {
    render() {
       return(
          <View style={[styles.container, {height: this.state.height}]} onLayout={this._onLayout}>
-				  <ScrollView keyboardShouldPersistTaps={true}>
+				  <ScrollView keyboardShouldPersistTaps="always">
 					  {this.state.loading &&
 						  <View style={{alignItems: 'center'}}><Spinner /><Text>Đang tải dữ liệu...</Text></View>
 					  }
@@ -232,7 +232,7 @@ class DanhGia extends Component {
 					  	<Icon name="ios-close-circle" />
 				  	</TouchableOpacity>
 					<View style={{paddingBottom: 50}}>
-						<ScrollView keyboardShouldPersistTaps={true}>
+						<ScrollView keyboardShouldPersistTaps="always">
 							<View style={{width: (this.state.width-20), paddingBottom: 50}}>
 
 								<View style={{flexDirection: 'column'}}>

@@ -29,7 +29,9 @@ class LichSu extends Component {
 			results: [],
 			dataBen: [],
 			showDropdown: false,
-			infoAdm: []
+			infoAdm: [],
+			page: 1,
+			total: 0
 		};
    }
 
@@ -52,10 +54,12 @@ class LichSu extends Component {
 				that.setState({
 					results: data.dataLichSu,
 					dataBen: data.dataBen,
+					page: data.page,
+					total: data.total,
 					loading: false
 				});
 			}else if(data.status == 404) {
-				alert('Tài khoản của bạn đã được đăng nhập ở thiết bị khác.');
+				alert(data.mes);
 				Actions.welcome({type: 'reset'});
 			}
 		}, 500);
@@ -87,35 +91,76 @@ class LichSu extends Component {
 		}
 	}
 
-	_renderHtmlLichSu(data) {
-		let html = [],
-			htmlItem = [];
+	async handlePage(page) {
+		let newPage = page+1;
+		let data = [];
+		try {
+			let params = {
+				token: this.state.token,
+				notId: '0',
+				user_id: this.state.infoAdm.adm_id,
+				page: newPage
+			}
+			data = await fetchData('user_lich_su_order', params, 'GET');
+		} catch (e) {
+			console.log(e);
+		}
 
-		if(data.length > 0) {
-			for(var i = 0; i < data.length; i++) {
-				var item = data[i];
-				var price1 = parseInt(item.datve.price);
-				var price2 = parseInt(item.datve.dav_price);
-				var newPrice1 = price1.toFixed(0).replace(/./g, function(c, i, a) {
-					return i && c !== "." && ((a.length - i) % 3 === 0) ? ',' + c : c;
-				});
-				var newPrice2 = price2.toFixed(0).replace(/./g, function(c, i, a) {
-					return i && c !== "." && ((a.length - i) % 3 === 0) ? ',' + c : c;
-				});
-				htmlItem.push(
-					<CardItem key={item.datve.dav_did_id+i}>
-						<TouchableOpacity>
+		if(data.status != 404) {
+			this.setState({
+				results: data.dataLichSu,
+				dataBen: data.dataBen,
+				page: data.page,
+				total: data.total,
+				loading: false
+			});
+		}else if(data.status == 404) {
+			alert(data.mes);
+			Actions.welcome({type: 'reset'});
+		}
+	}
+
+	_renderHtmlLichSu(data) {
+		let html = [];
+		let htmlItem = [];
+		let totalData = Object.keys(data).length;
+
+		if(totalData > 0) {
+			for(var key in data) {
+				for(var i = 0; i < data[key].length; i++) {
+					var item = data[key][i];
+					var price1 = parseInt(item.datve.price);
+					var price2 = parseInt(item.datve.dav_price);
+					var newPrice1 = price1.toFixed(0).replace(/./g, function(c, i, a) {
+						return i && c !== "." && ((a.length - i) % 3 === 0) ? ',' + c : c;
+					});
+					var newPrice2 = price2.toFixed(0).replace(/./g, function(c, i, a) {
+						return i && c !== "." && ((a.length - i) % 3 === 0) ? ',' + c : c;
+					});
+					htmlItem.push(
+						<CardItem key={item.datve.dav_did_id+i+item.oder.ord_id}>
+							<TouchableOpacity>
 								<View style={{flex: 5}}>
-								<Text>Mã Đơn Hàng: <Text style={styles.fontBold}>{item.oder.ord_ma}</Text></Text>
-								<Text>Thời gian đặt vé: <Text style={styles.fontBold}>{item.oder.ord_time_book}</Text></Text>
-								<Text>Họ tên: <Text style={styles.fontBold}>{item.oder.ord_ten_khach_hang}</Text></Text>
-								<Text>Số điện thoại: {item.oder.ord_phone}</Text>
-								<Text>Tuyến đi: {this.state.dataBen[item.datve.tuy_ben_a]} -> {this.state.dataBen[item.datve.tuy_ben_b]}</Text>
-								<Text>Nơi đi & Nơi đến: {this.state.dataBen[item.datve.dav_diem_a]} -> {this.state.dataBen[item.datve.dav_diem_b]}</Text>
-								<Text>Thời gian xuất bến: <Text style={styles.fontBold}>{item.datve.gio_xuat_ben}</Text></Text>
-								<Text>Số ghế: <Text style={styles.fontBold}>{item.datve.number_ghe}</Text></Text>
-								<Text>Tổng tiền: <Text style={styles.fontBold}>{newPrice1 + ' VNĐ'}</Text></Text>
-							</View>
+									<Text>Mã Đơn Hàng: <Text style={styles.fontBold}>{item.oder.ord_ma}</Text></Text>
+									<Text>Thời gian đặt vé: <Text style={styles.fontBold}>{item.oder.ord_time_book}</Text></Text>
+									<Text>Họ tên: <Text style={styles.fontBold}>{item.oder.ord_ten_khach_hang}</Text></Text>
+									<Text>Số điện thoại: {item.oder.ord_phone}</Text>
+									<Text>Tuyến đi: {this.state.dataBen[item.datve.tuy_ben_a]} -> {this.state.dataBen[item.datve.tuy_ben_b]}</Text>
+									<Text>Nơi đi & Nơi đến: {this.state.dataBen[item.datve.dav_diem_a]} -> {this.state.dataBen[item.datve.dav_diem_b]}</Text>
+									<Text>Thời gian xuất bến: <Text style={styles.fontBold}>{item.datve.gio_xuat_ben}</Text></Text>
+									<Text>Số ghế: <Text style={styles.fontBold}>{item.datve.number_ghe}</Text></Text>
+									<Text>Tổng tiền: <Text style={styles.fontBold}>{newPrice1 + ' VNĐ'}</Text></Text>
+								</View>
+							</TouchableOpacity>
+						</CardItem>
+					);
+				}
+			}
+			if(this.state.total > 0) {
+				htmlItem.push(
+					<CardItem key="xemthem" style={{backgroundColor: '#ccc', padding: 0}}>
+						<TouchableOpacity onPress={() => this.handlePage(this.state.page)} style={{padding: 10, flex: 5, alignItems: 'center', justifyContent: 'center'}}>
+							<Text style={{fontWeight: 'bold'}}>Xem thêm</Text>
 						</TouchableOpacity>
 					</CardItem>
 				);

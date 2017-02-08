@@ -22,7 +22,9 @@ class ListNews extends Component {
       super(props);
 		this.state = {
 			loading: true,
-			results: []
+			results: [],
+			page: 1,
+			total: 0
 		};
    }
 
@@ -41,6 +43,8 @@ class ListNews extends Component {
       setTimeout(() => {
 			that.setState({
 				results: data.dataNews,
+				page: data.page,
+				total: data.total,
 				loading: false
 			});
       }, 500);
@@ -55,29 +59,70 @@ class ListNews extends Component {
 		Actions.DetailNews({title: 'Chi Tiết Tin Tức', data: {idNews: id}});
 	}
 
-	_renderHtmlNews(data) {
-		let html = [],
-			htmlItem = [];
+	async handlePage(page) {
+		let newPage = page+1;
+		let data = [];
+		try {
+			let params = {
+				type: '0',
+				page: newPage
+			}
+			data = await fetchData('user_news', params, 'GET');
+		} catch (e) {
+			console.log(e);
+		}
+		this.setState({
+			results: data.dataNews,
+			page: data.page,
+			total: data.total
+		});
+	}
 
-		for(var i = 0; i < data.length; i++) {
-			var item = data[i];
+	_renderHtmlNews(data) {
+		let html = [];
+		let htmlItem = [];
+		let totalData = Object.keys(data).length;
+
+		if(totalData > 0) {
+			for(var key in data) {
+				for(var i = 0; i < data[key].length; i++) {
+					var item = data[key][i];
+					htmlItem.push(
+						<CardItem key={i+item.new_id}>
+							<TouchableOpacity onPress={this._onPressDetailNews.bind(this,item.new_id)}>
+								<View style={{flexDirection: 'row'}}>
+									<View style={{flex: 1, marginRight: 5}}>
+										<Image
+											square
+											style={{resizeMode: 'contain', flex: 1}}
+											source={{uri: item.new_avatar}}
+										/>
+									</View>
+									<View style={{flex: 4}}>
+										<Text style={{fontWeight: 'bold'}}>{item.new_title}</Text>
+										<Text>{item.new_intro}</Text>
+									</View>
+								</View>
+							</TouchableOpacity>
+						</CardItem>
+					);
+				}
+			}
+			if(this.state.total > 0) {
+				htmlItem.push(
+					<CardItem key="xemthem" style={{backgroundColor: '#ccc', padding: 0}}>
+						<TouchableOpacity onPress={() => this.handlePage(this.state.page)} style={{padding: 10, flex: 5, alignItems: 'center', justifyContent: 'center'}}>
+							<Text style={{fontWeight: 'bold'}}>Xem thêm</Text>
+						</TouchableOpacity>
+					</CardItem>
+				);
+			}
+		}else {
 			htmlItem.push(
-				<CardItem key={i}>
-					<TouchableOpacity onPress={this._onPressDetailNews.bind(this,item.new_id)}>
-						<View style={{flexDirection: 'row'}}>
-							<View style={{flex: 1, marginRight: 5}}>
-								<Image
-									square
-									style={{resizeMode: 'contain', flex: 1}}
-									source={{uri: item.new_avatar}}
-								/>
-							</View>
-							<View style={{flex: 4}}>
-								<Text style={{fontWeight: 'bold'}}>{item.new_title}</Text>
-								<Text>{item.new_intro}</Text>
-							</View>
-						</View>
-					</TouchableOpacity>
+				<CardItem key="null">
+					<View style={{flex: 5, alignItems: 'center'}}>
+						<Text style={{color: 'red'}}>Tin tức đang được cập nhật. Bạn vui lòng quay lại sau!</Text>
+					</View>
 				</CardItem>
 			);
 		}
