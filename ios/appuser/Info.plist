@@ -41,7 +41,7 @@
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string></string>
 
-  <key>NSAppTransportSecurity</key>
+  <!-- <key>NSAppTransportSecurity</key>
   <dict>
       <key>NSExceptionDomains</key>
       <dict>
@@ -51,9 +51,9 @@
               <true/>
           </dict>
       </dict>
-  </dict>
+  </dict> -->
 
-	<!-- <key>NSAppTransportSecurity</key>
+	 <!-- <key>NSAppTransportSecurity</key>
 	<dict>
 		<key>NSExceptionDomains</key>
 		<dict>
@@ -65,7 +65,23 @@
 		</dict>
 		<key>NSAllowsArbitraryLoads</key>
 		<true/>
-	</dict> -->
+	</dict>  -->
+
+	<key>NSAppTransportSecurity</key>
+	<dict>
+		<key>NSAllowsArbitraryLoads</key>
+		<true/>
+		<key>NSExceptionDomains</key>
+		<dict>
+			<key>example.com</key>
+			<dict>
+				<key>NSExceptionAllowsInsecureHTTPLoads</key>
+				<true/>
+				<key>NSIncludesSubdomains</key>
+				<true/>
+			</dict>
+		</dict>
+	</dict>
 
 	<key>UIAppFonts</key>
 	<array>

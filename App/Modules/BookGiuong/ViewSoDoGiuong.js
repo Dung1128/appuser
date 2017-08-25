@@ -110,7 +110,9 @@ class ViewSoDoGiuong extends Component {
 				not_id: this.props.data.notId,
 				day: this.props.data.day,
 			}
+			console.log('Goi api so do giuong');
 			data = await fetchData('adm_so_do_giuong', params, 'GET');
+			console.log(data);
 		} catch (e) {
 			console.log(e);
 			this.setState({
@@ -137,6 +139,7 @@ class ViewSoDoGiuong extends Component {
 	}
 
 	componentWillUpdate(nextProps, nextState) {
+		// what the fuck
 		nextState.arrVeNumber = nextState.arrVeNumber;
 	}
 
