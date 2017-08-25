@@ -40,7 +40,20 @@
 	<false/>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string></string>
-	<key>NSAppTransportSecurity</key>
+
+  <key>NSAppTransportSecurity</key>
+  <dict>
+      <key>NSExceptionDomains</key>
+      <dict>
+          <key>localhost</key>
+          <dict>
+              <key>NSTemporaryExceptionAllowsInsecureHTTPLoads</key>
+              <true/>
+          </dict>
+      </dict>
+  </dict>
+
+	<!-- <key>NSAppTransportSecurity</key>
 	<dict>
 		<key>NSExceptionDomains</key>
 		<dict>
@@ -52,7 +65,8 @@
 		</dict>
 		<key>NSAllowsArbitraryLoads</key>
 		<true/>
-	</dict>
+	</dict> -->
+
 	<key>UIAppFonts</key>
 	<array>
 		<string>Entypo.ttf</string>

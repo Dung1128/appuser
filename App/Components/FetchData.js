@@ -67,14 +67,12 @@ const fetchData = async (type, param={}, method="GET", retry=undefined) => {
         opts.body   = formData
       }
     }
+
     // Trả về dữ liệu json
-    try {
-      
-      let response    = await fetch(url, opts)
-    } catch (error) {
-      console.log(error);
-    }
+    console.log(url);
+    let response    = await fetch(url, opts)
     let responseJson= await response.json()
+    
     return responseJson
   } catch(e) {
     console.error("HttpError", e);

@@ -46,16 +46,15 @@ class HuongDanSuDung extends Component {
 				type: 'huongdanuser'
 			}
 			data = await fetchData('user_get_content', params, 'GET');
+			console.log(data);
 		} catch (e) {
 			console.log(e);
 		}
 		var that = this;
 
 		setTimeout(() => {
-
-			let des = '';
 			that.setState({
-				results: (data.data.length > 0) ? data.data : 'Hiện tại chưa có bài hướng dẫn. Bạn vui lòng quay lại sau!',
+				results: (data.status != 404) ? data.data : 'Hiện tại chưa có bài hướng dẫn. Bạn vui lòng quay lại sau!',
 				loading: false
 			});
 

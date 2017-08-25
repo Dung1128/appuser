@@ -14,9 +14,7 @@ const GetInfoDevice = async () => {
 				type: 'ios',
 				app: 'appuser'
 			}
-
-			console.log('version cũ: ' + DeviceInfo.getVersion());
-
+			
 			let data = await fetchData('api_check_version', params, 'GET');
 			// console.log(data);
 			// let data = {
