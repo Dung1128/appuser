@@ -1,3 +1,4 @@
+import React, { Component, PropTypes } from 'react';
 import { AppRegistry } from 'react-native';
-import App from './App'
-AppRegistry.registerComponent('appuser', () => App);
+import Appuser from './App/index'
+AppRegistry.registerComponent('appuser', () => Appuser);

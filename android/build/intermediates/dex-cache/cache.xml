@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        jar="/Users/mac/Desktop/React/appuser/android/app/build/intermediates/exploded-aar/com.facebook.fresco/drawee/0.11.0/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="1137942adeb03984c1311b662363dd38fc238fd3">
+        <dex dex="/Users/mac/Desktop/React/appuser/android/app/build/intermediates/pre-dexed/debug/classes-f0f9c505d8dfb19a6687035d9bd65bcec2225d22.jar" />
+    </item>
+    <item
+        jar="/Users/mac/Desktop/React/appuser/android/app/build/intermediates/exploded-aar/com.android.support/support-v4/24.0.0/jars/libs/internal_impl-24.0.0.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="fcaf463e10e69c1923ccf1edeba3b4196d239e00">
+        <dex dex="/Users/mac/Desktop/React/appuser/android/app/build/intermediates/pre-dexed/debug/internal_impl-24.0.0-b056970d054b3ad1ce710ac8030cfb125ffd3e0a.jar" />
+    </item>
+    <item
+        jar="/Users/mac/Desktop/React/appuser/android/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.0.1/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="d86429b0f0b3f3cafbeb78dda1b9d89119ccb05d">
+        <dex dex="/Users/mac/Desktop/React/appuser/android/app/build/intermediates/pre-dexed/debug/classes-2e95ebc5a9bf01c72a6c1c84e4fdeebd45470f2c.jar" />
+    </item>
+    <item
+        jar="/Users/mac/Library/Android/sdk/extras/android/m2repository/com/android/support/support-annotations/24.0.0/support-annotations-24.0.0.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="2943c74db6d4346ab8c6531adac91fa05c137c40">
+        <dex dex="/Users/mac/Desktop/React/appuser/android/app/build/intermediates/pre-dexed/debug/support-annotations-24.0.0-abd22333e15a059b10dba550b3cfb76bac4f586e.jar" />
+    </item>
+    <item
+        jar="/Users/mac/Desktop/React/appuser/android/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/10.0.1/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="25438f55fc6d906a0e72f30b21487541430ede43">
+        <dex dex="/Users/mac/Desktop/React/appuser/android/app/build/intermediates/pre-dexed/debug/classes-0e501b81eec1aaca1842fa4e0353ad11d377b25f.jar" />
+    </item>
+    <item
+        jar="/Users/mac/Desktop/React/appuser/android/app/build/intermediates/exploded-aar/com.android.support/support-v4/24.0.0/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="2f7e6e2dad1bccaf68a8820820adc6c0d5b96d37">
+        <dex dex="/Users/mac/Desktop/React/appuser/android/app/build/intermediates/pre-dexed/debug/classes-d7a763637341e7bb49f9a679a933ae30d7b9fe99.jar" />
+    </item>
+    <item
+        jar="/Users/mac/.gradle/caches/modules-2/files-2.1/com.nineoldandroids/library/2.4.0/e9b63380f3a242dbdbf103a2355ad7e43bad17cb/library-2.4.0.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="e9b63380f3a242dbdbf103a2355ad7e43bad17cb">
+        <dex dex="/Users/mac/Desktop/React/appuser/android/app/build/intermediates/pre-dexed/debug/library-2.4.0-fcd7bf57330797c3eaeb05d042207c4ab7ecac63.jar" />
+    </item>
+    <item
+        jar="/Users/mac/Desktop/React/appuser/android/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-tasks/10.0.1/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="6addaba208e21c6da776d0ca75b6b23a6ccd5499">
+        <dex dex="/Users/mac/Desktop/React/appuser/android/app/build/intermediates/pre-dexed/debug/classes-f5b049678a1665f493db8ed60471dc9b4e853edd.jar" />
+    </item>
+    <item
+        jar="/Users/mac/Desktop/React/appuser/android/app/build/intermediates/exploded-aar/com.facebook.fresco/fresco/0.11.0/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="d31aadf33187c37a7cd63dc1b769f8c6e33f78c3">
+        <dex dex="/Users/mac/Desktop/React/appuser/android/app/build/intermediates/pre-dexed/debug/classes-92f5ca7f9fca127061751c8dcecc6d5e143f0d73.jar" />
+    </item>
+    <item
+        jar="/Users/mac/Desktop/React/appuser/android/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-basement/10.0.1/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="756f6297eef79784f5e356dcd4f39865028b2bd0">
+        <dex dex="/Users/mac/Desktop/React/appuser/android/app/build/intermediates/pre-dexed/debug/classes-2d804ce5897783f5f4953038a8ed3ccedd6e95a6.jar" />
+    </item>
+    <item
+        jar="/Users/mac/Desktop/React/appuser/android/app/build/intermediates/exploded-aar/com.facebook.react/react-native/0.38.1/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="7eca7c5f7ce322879fb0b987cae023d90f58f74d">
+        <dex dex="/Users/mac/Desktop/React/appuser/android/app/build/intermediates/pre-dexed/debug/classes-93fb043aec7aee572539003755eec60348a3044a.jar" />
+    </item>
+    <item
+        jar="/Users/mac/Desktop/React/appuser/android/app/build/intermediates/exploded-aar/com.facebook.fresco/imagepipeline-base/0.11.0/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="ca63c521b5745ae9a09629d7ca67ff6bc2a967fe">
+        <dex dex="/Users/mac/Desktop/React/appuser/android/app/build/intermediates/pre-dexed/debug/classes-08718dc6b3af255387a3ab6d8012ab4d1f740513.jar" />
+    </item>
+    <item
+        jar="/Users/mac/Desktop/React/appuser/android/app/build/intermediates/exploded-aar/com.facebook.fresco/imagepipeline/0.11.0/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="3341b66c54367e777a0647e2db96c045329bfeab">
+        <dex dex="/Users/mac/Desktop/React/appuser/android/app/build/intermediates/pre-dexed/debug/classes-892e58f2b1446441d1cf43b4b6b56d9d3b0febd1.jar" />
+    </item>
+    <item
+        jar="/Users/mac/.gradle/caches/modules-2/files-2.1/com.squareup.okhttp3/okhttp-ws/3.4.1/8ace66ef7002d98f633377c9e67daeeb196d8c3b/okhttp-ws-3.4.1.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="8ace66ef7002d98f633377c9e67daeeb196d8c3b">
+        <dex dex="/Users/mac/Desktop/React/appuser/android/app/build/intermediates/pre-dexed/debug/okhttp-ws-3.4.1-6b0c216011bb3c3a197f8d2cb210ad55279674dc.jar" />
+    </item>
+    <item
+        jar="/Users/mac/.gradle/caches/modules-2/files-2.1/com.squareup.okhttp3/okhttp-urlconnection/3.4.1/63994437f62bc861bc20c605d12962f7246116d1/okhttp-urlconnection-3.4.1.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="63994437f62bc861bc20c605d12962f7246116d1">
+        <dex dex="/Users/mac/Desktop/React/appuser/android/app/build/intermediates/pre-dexed/debug/okhttp-urlconnection-3.4.1-df2ade1e8ec71d088e1ec84682b7a5783ef2ab1c.jar" />
+    </item>
+    <item
+        jar="/Users/mac/Desktop/React/appuser/android/app/build/intermediates/exploded-aar/mobileUser/react-native-device-info/unspecified/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="cbf5fe2b0e7ef260f0288b4e91a91342691e96fe">
+        <dex dex="/Users/mac/Desktop/React/appuser/android/app/build/intermediates/pre-dexed/debug/classes-42bd349f8166026e971efceecad53871d3c3613f.jar" />
+    </item>
+    <item
+        jar="/Users/mac/Desktop/React/appuser/android/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-iid/10.0.1/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="6bb5d347ebc0c6ef3c83a905222a688da5d2f7b4">
+        <dex dex="/Users/mac/Desktop/React/appuser/android/app/build/intermediates/pre-dexed/debug/classes-a483df475bd7b0903c6851b376404e48b6ed2de8.jar" />
+    </item>
+    <item
+        jar="/Users/mac/Desktop/React/appuser/android/app/build/intermediates/exploded-aar/com.facebook.fresco/imagepipeline-okhttp3/0.11.0/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="2b8a01ad9da5d26d0067894c22e87597bca2c500">
+        <dex dex="/Users/mac/Desktop/React/appuser/android/app/build/intermediates/pre-dexed/debug/classes-08b3e30b0afe5fbd796908977f7272d2bea90928.jar" />
+    </item>
+    <item
+        jar="/Users/mac/Desktop/React/appuser/android/app/build/intermediates/exploded-aar/com.android.support/recyclerview-v7/23.0.1/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="4356e230a981d1bbf047d848b91bc0d9b7c5bacc">
+        <dex dex="/Users/mac/Desktop/React/appuser/android/app/build/intermediates/pre-dexed/debug/classes-b44a774ca01a214855ef4db8170c57354ff69d9e.jar" />
+    </item>
+    <item
+        jar="/Users/mac/Desktop/React/appuser/android/app/build/intermediates/exploded-aar/com.facebook.fresco/fbcore/0.11.0/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="98786c1770b531b9194fb6448b2a2692c64074b6">
+        <dex dex="/Users/mac/Desktop/React/appuser/android/app/build/intermediates/pre-dexed/debug/classes-f329b43d31265c266d112e82cf4445e778894f16.jar" />
+    </item>
+    <item
+        jar="/Users/mac/Desktop/React/appuser/android/app/build/intermediates/exploded-aar/com.facebook.react/react-native/0.38.1/jars/libs/infer-annotations-1.5.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="31505a7c45916845f6cc8d49149a1f601edb4ee5">
+        <dex dex="/Users/mac/Desktop/React/appuser/android/app/build/intermediates/pre-dexed/debug/infer-annotations-1.5-5aebef09251350ce617a80b88506d32cdbaf909f.jar" />
+    </item>
+    <item
+        jar="/Users/mac/.gradle/caches/modules-2/files-2.1/com.google.code.findbugs/jsr305/3.0.0/5871fb60dc68d67da54a663c3fd636a10a532948/jsr305-3.0.0.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="5871fb60dc68d67da54a663c3fd636a10a532948">
+        <dex dex="/Users/mac/Desktop/React/appuser/android/app/build/intermediates/pre-dexed/debug/jsr305-3.0.0-6237cb659935fe231c8d403264e04eddc286592a.jar" />
+    </item>
+    <item
+        jar="/Users/mac/Desktop/React/appuser/android/app/build/intermediates/exploded-aar/mobileUser/react-native-vector-icons/unspecified/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="ec0159f3837f4bd5418542c2688ea8954f5c60e5">
+        <dex dex="/Users/mac/Desktop/React/appuser/android/app/build/intermediates/pre-dexed/debug/classes-addcdfde3eae7e375aa0e899fc48acc9b8abab92.jar" />
+    </item>
+    <item
+        jar="/Users/mac/.gradle/caches/modules-2/files-2.1/com.parse.bolts/bolts-tasks/1.4.0/d85884acf6810a3bbbecb587f239005cbc846dc4/bolts-tasks-1.4.0.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="d85884acf6810a3bbbecb587f239005cbc846dc4">
+        <dex dex="/Users/mac/Desktop/React/appuser/android/app/build/intermediates/pre-dexed/debug/bolts-tasks-1.4.0-3c50eeb440e9dd58845524e0d8c6f931a3ddc072.jar" />
+    </item>
+    <item
+        jar="/Users/mac/.gradle/caches/modules-2/files-2.1/com.fasterxml.jackson.core/jackson-core/2.2.3/1a0113da2cab5f4c216b4e5e7c1dbfaa67087e14/jackson-core-2.2.3.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="1a0113da2cab5f4c216b4e5e7c1dbfaa67087e14">
+        <dex dex="/Users/mac/Desktop/React/appuser/android/app/build/intermediates/pre-dexed/debug/jackson-core-2.2.3-024db36bb403886961632c8a024959f75dacde3f.jar" />
+    </item>
+    <item
+        jar="/Users/mac/.gradle/caches/modules-2/files-2.1/javax.inject/javax.inject/1/6975da39a7040257bd51d21a231b76c915872d38/javax.inject-1.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="6975da39a7040257bd51d21a231b76c915872d38">
+        <dex dex="/Users/mac/Desktop/React/appuser/android/app/build/intermediates/pre-dexed/debug/javax.inject-1-81f63147293c80992186865712de6648b741fa96.jar" />
+    </item>
+    <item
+        jar="/Users/mac/Desktop/React/appuser/android/app/build/intermediates/exploded-aar/com.facebook.soloader/soloader/0.1.0/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="8f615bca00639150c9eb6175d4b5471193f70794">
+        <dex dex="/Users/mac/Desktop/React/appuser/android/app/build/intermediates/pre-dexed/debug/classes-23c75949179f707071b05e4b99b452cc91dabaaa.jar" />
+    </item>
+    <item
+        jar="/Users/mac/Desktop/React/appuser/android/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-gcm/10.0.1/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="8308ed003522a2ee8958311afcc4cfd0470377cd">
+        <dex dex="/Users/mac/Desktop/React/appuser/android/app/build/intermediates/pre-dexed/debug/classes-f5199251bb811c8a7761be2de240690a89915236.jar" />
+    </item>
+    <item
+        jar="/Users/mac/.gradle/caches/modules-2/files-2.1/com.squareup.okhttp3/okhttp/3.4.1/c7c4f9e35c2fd5900da24f9872e3971801f08ce0/okhttp-3.4.1.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="c7c4f9e35c2fd5900da24f9872e3971801f08ce0">
+        <dex dex="/Users/mac/Desktop/React/appuser/android/app/build/intermediates/pre-dexed/debug/okhttp-3.4.1-7d50c2d5f3659c20afb6cc7170aa3ce641bcd814.jar" />
+    </item>
+    <item
+        jar="/Users/mac/.gradle/caches/modules-2/files-2.1/com.squareup.okio/okio/1.9.0/f824591a0016efbaeddb8300bee54832a1398cfa/okio-1.9.0.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="f824591a0016efbaeddb8300bee54832a1398cfa">
+        <dex dex="/Users/mac/Desktop/React/appuser/android/app/build/intermediates/pre-dexed/debug/okio-1.9.0-58b343d4fe215e00e21491d15e6a5bc7a06d17fc.jar" />
+    </item>
+
+</items>

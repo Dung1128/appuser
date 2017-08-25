@@ -10,11 +10,11 @@ import {
 import { Container, Content, InputGroup, View, Icon, Input,Text, Button, Thumbnail, Spinner } from 'native-base';
 import { Col, Row, Grid } from "react-native-easy-grid";
 import {Actions} from 'react-native-router-flux';
-import {domain,cache} from './Config/common';
+import * as common from './Config/common';
 import StorageHelper from './Components/StorageHelper';
 import fetchData from './Components/FetchData';
-let {width, height} = Dimensions.get('window');
 import Communications from 'react-native-communications';
+let {width, height} = Dimensions.get('window');
 
 class Welcome extends Component {
 
@@ -55,7 +55,7 @@ class Welcome extends Component {
 					this.setState({
 						error: 'true',
 						loading: false,
-						messageError: ['Tài khoản đã được đăng nhập ở thiết bị khác.']
+						messageError: [data.mes]
 					});
 				}
 			} catch (e) {
@@ -67,7 +67,6 @@ class Welcome extends Component {
 				console.log(e);
 			}
 		}
-
 	}
 
    async handleLogin() {
@@ -102,14 +101,14 @@ class Welcome extends Component {
 					this.setState({
 						error: 'true',
 						loading: false,
-						messageError: ['Tài khoản hoặc Mật Khẩu không đúng.']
+						messageError: [data.mes]
 					});
 				}
 	      } catch (e) {
 				this.setState({
 					error: 'true',
 					loading: false,
-					messageError: ['Lỗi hệ thống. Vui lòng liên hệ với bộ phận Kỹ Thuật.']
+					messageError: [common.errorHttp]
 	         });
 				console.log(e);
 	      }

@@ -74,7 +74,7 @@ const drawerStyles = {
     shadowRadius: 0
   }
 }
-export default class appuser extends Component {
+export default class Appuser extends Component {
 
 	render() {
 		return (

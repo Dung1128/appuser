@@ -68,7 +68,12 @@ const fetchData = async (type, param={}, method="GET", retry=undefined) => {
       }
     }
     // Trả về dữ liệu json
-    let response    = await fetch(url, opts)
+    try {
+      
+      let response    = await fetch(url, opts)
+    } catch (error) {
+      console.log(error);
+    }
     let responseJson= await response.json()
     return responseJson
   } catch(e) {
@@ -82,8 +87,8 @@ const fetchData = async (type, param={}, method="GET", retry=undefined) => {
         typeAlert: 'warning',
         titleButton: 'Thử lại',
         callback: retry
-      }
-      Actions.alert(props)
+      };
+      () => Actions.alert(props);
     }
   }
 }

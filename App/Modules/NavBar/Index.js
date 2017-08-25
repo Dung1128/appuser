@@ -1,9 +1,9 @@
 import React, { Component, PropTypes } from 'react';
 import { AppRegistry, StyleSheet, Platform, Animated, Image, Text, View, TouchableOpacity } from 'react-native';
-import {Icon} from 'native-base';
-import {Actions} from 'react-native-router-flux';
+import { Icon } from 'native-base';
+import { Actions } from 'react-native-router-flux';
 import GetInfoDevice from '../../Components/GetInfoDevice';
-import NotificationController from '../../Components/NotificationController';
+// import NotificationController from '../../Components/NotificationController';
 const logo = require('../../Skin/Images/logo.png');
 
 const styles = StyleSheet.create({
@@ -63,21 +63,21 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   rightButton: {
-	 width: 40,
-	 height: 37,
-	 position: 'absolute',
-	 ...Platform.select({
-		ios: {
-		  top: 11,
-		},
-		android: {
-		  top: 10,
-		},
-	 }),
-	 right: 2,
-	 padding: 8,
-	 alignItems: 'center'
- },
+    width: 40,
+    height: 37,
+    position: 'absolute',
+    ...Platform.select({
+      ios: {
+        top: 11,
+      },
+      android: {
+        top: 10,
+      },
+    }),
+    right: 2,
+    padding: 8,
+    alignItems: 'center'
+  },
   leftButton: {
     width: 100,
     height: 37,
@@ -158,158 +158,158 @@ class NavBar extends React.Component {
     this.renderBackButton = this.renderBackButton.bind(this);
     this.renderLeftButton = this.renderLeftButton.bind(this);
     this.renderTitle = this.renderTitle.bind(this);
-	 GetInfoDevice();
+    GetInfoDevice();
   }
 
   _onPressBackButton() {
-	  const state = this.props.navigationState;
-	  const childState = state.children[state.index];
-	  const BackButton = (childState.component && childState.component.backButton) || state.backButton
-		 || childState.backButton;
-	  const textButtonStyle = [
-		 styles.barBackButtonText,
-		 this.props.backButtonTextStyle,
-		 state.backButtonTextStyle,
-		 childState.backButtonTextStyle,
-	  ];
-	  const style = [
-		 styles.backButton,
-		 this.props.leftButtonStyle,
-		 state.leftButtonStyle,
-		 childState.leftButtonStyle,
-	  ];
-	   let onPress = childState.onBack || childState.component.onBack;
+    const state = this.props.navigationState;
+    const childState = state.children[state.index];
+    const BackButton = (childState.component && childState.component.backButton) || state.backButton
+      || childState.backButton;
+    const textButtonStyle = [
+      styles.barBackButtonText,
+      this.props.backButtonTextStyle,
+      state.backButtonTextStyle,
+      childState.backButtonTextStyle,
+    ];
+    const style = [
+      styles.backButton,
+      this.props.leftButtonStyle,
+      state.leftButtonStyle,
+      childState.leftButtonStyle,
+    ];
+    let onPress = childState.onBack || childState.component.onBack;
 
-	   if(this.props.sceneKey == 'ViewSoDoGiuong') {
-			  Actions.home({title: 'Trang Chủ', data: {adm_name: this.props.data.adm_name, last_login: this.props.data.last_login, adm_id: this.props.data.adm_id, notId: this.props.data.notId, day: this.props.data.day}});
-	  	}else {
-		  if (onPress) {
-			 onPress.bind(null, state);
-		  } else {
-			 Actions.pop();
-		  }
-	  }
+    if (this.props.sceneKey == 'ViewSoDoGiuong') {
+      Actions.home({ title: 'Trang Chủ', data: { adm_name: this.props.data.adm_name, last_login: this.props.data.last_login, adm_id: this.props.data.adm_id, notId: this.props.data.notId, day: this.props.data.day } });
+    } else {
+      if (onPress) {
+        onPress.bind(null, state);
+      } else {
+        Actions.pop();
+      }
+    }
   }
 
   renderBackButton() {
 
 
-	  const state = this.props.navigationState;
-	  const childState = state.children[state.index];
-	  const BackButton = (childState.component && childState.component.backButton) || state.backButton
-		 || childState.backButton;
-	  const textButtonStyle = [
-		 styles.barBackButtonText,
-		 this.props.backButtonTextStyle,
-		 state.backButtonTextStyle,
-		 childState.backButtonTextStyle,
-	  ];
-	  const style = [
-		 styles.backButton,
-		 this.props.leftButtonStyle,
-		 state.leftButtonStyle,
-		 childState.leftButtonStyle,
-	  ];
+    const state = this.props.navigationState;
+    const childState = state.children[state.index];
+    const BackButton = (childState.component && childState.component.backButton) || state.backButton
+      || childState.backButton;
+    const textButtonStyle = [
+      styles.barBackButtonText,
+      this.props.backButtonTextStyle,
+      state.backButtonTextStyle,
+      childState.backButtonTextStyle,
+    ];
+    const style = [
+      styles.backButton,
+      this.props.leftButtonStyle,
+      state.leftButtonStyle,
+      childState.leftButtonStyle,
+    ];
 
-	  if (state.index === 0 && (!state.parentIndex || state.parentIndex === 0)) {
-		 return null;
-	  }
+    if (state.index === 0 && (!state.parentIndex || state.parentIndex === 0)) {
+      return null;
+    }
 
-	  if (BackButton) {
-		 return (
-			<BackButton
-			  testID="backNavButton"
-			  textButtonStyle={textButtonStyle}
-			  {...childState}
-			  style={style}
-			/>
-		 );
-	  }
-	  let buttonImage = childState.backButtonImage ||
-		 state.backButtonImage || this.props.backButtonImage;
+    if (BackButton) {
+      return (
+        <BackButton
+          testID="backNavButton"
+          textButtonStyle={textButtonStyle}
+          {...childState}
+          style={style}
+        />
+      );
+    }
+    let buttonImage = childState.backButtonImage ||
+      state.backButtonImage || this.props.backButtonImage;
 
 
 
-	 	if(this.props.sceneKey != 'Checkout') {
-    		return (
-		      <TouchableOpacity
-		        testID="backNavButton"
-		        style={style}
-		        onPress={() => this._onPressBackButton()}
-		      >
-	          	<Icon name="ios-arrow-back" />
-	      	</TouchableOpacity>
-    		);
- 		}
+    if (this.props.sceneKey != 'Checkout') {
+      return (
+        <TouchableOpacity
+          testID="backNavButton"
+          style={style}
+          onPress={() => this._onPressBackButton()}
+        >
+          <Icon name="ios-arrow-back" />
+        </TouchableOpacity>
+      );
+    }
   }
 
   renderRightButton(navProps) {
     const self = this;
-   //  function tryRender(state, wrapBy) {
-   //    if (!state) {
-   //      return null;
-   //    }
-   //    const rightTitle = state.getRightTitle ? state.getRightTitle(navProps) : state.rightTitle;
-	 //
-   //    const textStyle = [styles.barRightButtonText, self.props.rightButtonTextStyle,
-   //      state.rightButtonTextStyle];
-   //    const style = [styles.rightButton, self.props.rightButtonStyle, state.rightButtonStyle];
-   //    if (state.rightButton) {
-   //      let Button = state.rightButton;
-   //      if (wrapBy) {
-   //        Button = wrapBy(Button);
-   //      }
-   //      return (
-   //        <Button
-   //          {...self.props}
-   //          {...state}
-   //          key={'rightNavBarBtn'}
-   //          testID="rightNavButton"
-   //          style={style}
-   //          textButtonStyle={textStyle}
-   //        />
-   //      );
-   //    }
-   //    if (state.onRight && (rightTitle || state.rightButtonImage)) {
-   //      const onPress = state.onRight.bind(null, state);
-   //      return (
-   //        <TouchableOpacity
-   //          key={'rightNavBarBtn'}
-   //          testID="rightNavButton"
-   //          style={style}
-   //          onPress={onPress}
-   //        >
-   //          {rightTitle &&
-   //            <Text style={textStyle}>
-   //              {rightTitle}
-   //            </Text>
-   //          }
-   //          {state.rightButtonImage &&
-   //            <View style={{ flex: 1, justifyContent: 'center', alignItems: 'flex-end' }}>
-   //              <Image
-   //                source={state.rightButtonImage}
-   //                style={state.rightButtonIconStyle}
-   //              />
-   //            </View>
-   //          }
-   //        </TouchableOpacity>
-   //      );
-   //    }
-   //    if ((!!state.onRight ^ !!(typeof(rightTitle) !== 'undefined'
-   //      || typeof(state.rightButtonImage) !== 'undefined'))) {
-   //      console.warn(
-   //        `Both onRight and rightTitle/rightButtonImage
-   //          must be specified for the scene: ${state.name}`
-   //      );
-   //    }
-   //    return null;
-   //  }
-   //  return tryRender(this.props.component, this.props.wrapBy) || tryRender(this.props);
-	return (
-		<TouchableOpacity style={styles.rightButton} onPress={this.context.drawer.open}>
-			<Icon name="md-menu" />
-		</TouchableOpacity>
-	);
+    //  function tryRender(state, wrapBy) {
+    //    if (!state) {
+    //      return null;
+    //    }
+    //    const rightTitle = state.getRightTitle ? state.getRightTitle(navProps) : state.rightTitle;
+    //
+    //    const textStyle = [styles.barRightButtonText, self.props.rightButtonTextStyle,
+    //      state.rightButtonTextStyle];
+    //    const style = [styles.rightButton, self.props.rightButtonStyle, state.rightButtonStyle];
+    //    if (state.rightButton) {
+    //      let Button = state.rightButton;
+    //      if (wrapBy) {
+    //        Button = wrapBy(Button);
+    //      }
+    //      return (
+    //        <Button
+    //          {...self.props}
+    //          {...state}
+    //          key={'rightNavBarBtn'}
+    //          testID="rightNavButton"
+    //          style={style}
+    //          textButtonStyle={textStyle}
+    //        />
+    //      );
+    //    }
+    //    if (state.onRight && (rightTitle || state.rightButtonImage)) {
+    //      const onPress = state.onRight.bind(null, state);
+    //      return (
+    //        <TouchableOpacity
+    //          key={'rightNavBarBtn'}
+    //          testID="rightNavButton"
+    //          style={style}
+    //          onPress={onPress}
+    //        >
+    //          {rightTitle &&
+    //            <Text style={textStyle}>
+    //              {rightTitle}
+    //            </Text>
+    //          }
+    //          {state.rightButtonImage &&
+    //            <View style={{ flex: 1, justifyContent: 'center', alignItems: 'flex-end' }}>
+    //              <Image
+    //                source={state.rightButtonImage}
+    //                style={state.rightButtonIconStyle}
+    //              />
+    //            </View>
+    //          }
+    //        </TouchableOpacity>
+    //      );
+    //    }
+    //    if ((!!state.onRight ^ !!(typeof(rightTitle) !== 'undefined'
+    //      || typeof(state.rightButtonImage) !== 'undefined'))) {
+    //      console.warn(
+    //        `Both onRight and rightTitle/rightButtonImage
+    //          must be specified for the scene: ${state.name}`
+    //      );
+    //    }
+    //    return null;
+    //  }
+    //  return tryRender(this.props.component, this.props.wrapBy) || tryRender(this.props);
+    return (
+      <TouchableOpacity style={styles.rightButton} onPress={this.context.drawer.open}>
+        <Icon name="md-menu" />
+      </TouchableOpacity>
+    );
   }
 
   renderLeftButton(navProps) {
@@ -321,7 +321,7 @@ class NavBar extends React.Component {
       let menuIcon = state.drawerIcon;
       const style = [styles.leftButton, self.props.leftButtonStyle, state.leftButtonStyle];
       const textStyle = [styles.barLeftButtonText, self.props.leftButtonTextStyle,
-        state.leftButtonTextStyle];
+      state.leftButtonTextStyle];
       const leftButtonStyle = [styles.defaultImageStyle, state.leftButtonIconStyle];
       const leftTitle = state.getLeftTitle ? state.getLeftTitle(navProps) : state.leftTitle;
 
@@ -394,12 +394,12 @@ class NavBar extends React.Component {
     return tryRender(this.props.component, this.props.wrapBy) || tryRender(this.props);
   }
 
-  renderTitle(childState, index:number) {
+  renderTitle(childState, index: number) {
     let title = this.props.getTitle ? this.props.getTitle(childState) : childState.title;
     if (title === undefined && childState.component && childState.component.title) {
       title = childState.component.title;
     }
-    if (typeof(title) === 'function') {
+    if (typeof (title) === 'function') {
       title = title(childState);
     }
     return (
@@ -408,23 +408,23 @@ class NavBar extends React.Component {
         style={[
           styles.titleWrapper,
           this.props.titleWrapperStyle,
-			 {alignItems: 'center', justifyContent: 'center'}
+          { alignItems: 'center', justifyContent: 'center' }
         ]}
       >
-			<TouchableOpacity onPress={() => Actions.welcome({title: 'Trang Chủ'})}>
-	        	<Animated.Text
-	          	lineBreakMode="tail"
-	          	numberOfLines={1}
-	          	{...this.props.titleProps}
-	          	style={{alignItems: 'stretch', justifyContent: 'center'}}
-	        	>
-				  <Image
-					 square
-					 style={{resizeMode: 'contain', height: 30, marginTop: -15}}
-					 source={logo}
-				  />
-	        	</Animated.Text>
-		  </TouchableOpacity>
+        <TouchableOpacity onPress={() => Actions.welcome({ title: 'Trang Chủ' })}>
+          <Animated.Text
+            lineBreakMode="tail"
+            numberOfLines={1}
+            {...this.props.titleProps}
+            style={{ alignItems: 'stretch', justifyContent: 'center' }}
+          >
+            <Image
+              square
+              style={{ resizeMode: 'contain', height: 30, marginTop: -15 }}
+              source={logo}
+            />
+          </Animated.Text>
+        </TouchableOpacity>
       </Animated.View>
     );
   }
@@ -480,7 +480,7 @@ class NavBar extends React.Component {
             {contents}
           </Image>
         ) : contents}
-		  <NotificationController onChangeToken={token => this.setState({token: token || ""})} />
+        {/* <NotificationController onChangeToken={token => this.setState({token: token || ""})} /> */}
       </Animated.View>
 
     );
