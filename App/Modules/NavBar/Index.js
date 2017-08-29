@@ -3,7 +3,8 @@ import { AppRegistry, StyleSheet, Platform, Animated, Image, Text, View, Touchab
 import { Icon } from 'native-base';
 import { Actions } from 'react-native-router-flux';
 import GetInfoDevice from '../../Components/GetInfoDevice';
-// import NotificationController from '../../Components/NotificationController';
+import NotificationController from '../../Components/NotificationController';
+
 const logo = require('../../Skin/Images/logo.png');
 
 const styles = StyleSheet.create({
@@ -480,7 +481,7 @@ class NavBar extends React.Component {
             {contents}
           </Image>
         ) : contents}
-        {/* <NotificationController onChangeToken={token => this.setState({token: token || ""})} /> */}
+           <NotificationController onChangeToken={token => this.setState({token: token || ""})} />   
       </Animated.View>
 
     );

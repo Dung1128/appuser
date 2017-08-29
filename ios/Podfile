@@ -6,7 +6,8 @@ target 'appuser' do
   use_frameworks!
 
   # Pods for appuser
-	pod 'Firebase/Messaging'
+  pod 'FirebaseMessaging'
+  pod 'Firebase/Core', '4.0.0'
 
   target 'appuserTests' do
     inherit! :search_paths
