@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # OSX
 #
 .DS_Store
@@ -52,8 +51,4 @@ buck-out/
 fastlane/report.xml
 fastlane/Preview.html
 fastlane/screenshots
-=======
-/node_modules
-/android/app/build
-/android/.gradle
->>>>>>> 52be28044f3a3775790c187cdeebf34bebcbc6ec
+
