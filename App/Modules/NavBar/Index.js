@@ -461,7 +461,14 @@ class NavBar extends React.Component {
       state.navigationBarBackgroundImage;
     const contents = (
       <View>
-        {renderTitle ? renderTitle(navProps) : state.children.map(this.renderTitle, this)}
+         {/* {renderTitle ? renderTitle(navProps) : state.children.map(this.renderTitle, this)}  */}
+        
+         <TouchableOpacity style={{ flexDirection: 'row', height: 50, justifyContent: 'center', paddingTop: 5 }} onPress={() => Actions.welcome({ title: 'Trang Chủ' })}>
+          <Image square style={{ resizeMode: 'contain', width: 300, height: 40 }}
+            source={logo}
+          />
+        </TouchableOpacity> 
+
         {renderBackButton(navProps) || renderLeftButton(navProps)}
         {renderRightButton(navProps)}
       </View>

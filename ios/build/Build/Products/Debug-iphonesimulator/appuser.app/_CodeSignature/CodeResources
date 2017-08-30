@@ -4,6 +4,18 @@
 <dict>
 	<key>files</key>
 	<dict>
+		<key>Andale Mono.ttf</key>
+		<data>
+		LNdqAJjPnsKnT1GghSkYxImlFvQ=
+		</data>
+		<key>Arial Black.ttf</key>
+		<data>
+		XMAR53wfKYCLKFPhOaFSj9cjbak=
+		</data>
+		<key>Arial.ttf</key>
+		<data>
+		7T5ktvvXyDSJtKLhs9ZTloNZpJc=
+		</data>
 		<key>Base.lproj/LaunchScreen.nib</key>
 		<dict>
 			<key>hash</key>
@@ -13,6 +25,14 @@
 			<key>optional</key>
 			<true/>
 		</dict>
+		<key>Comic Sans MS.ttf</key>
+		<data>
+		7E3iKa8HKXylvcnkb6TbSjlU7IY=
+		</data>
+		<key>Courier New.ttf</key>
+		<data>
+		iNIAbKCE8Ery3xlU7XFKjHHoQA8=
+		</data>
 		<key>Entypo.ttf</key>
 		<data>
 		R4cKZ91Qhxdl95nKqX2ochnuR8U=
@@ -29,6 +49,18 @@
 		<data>
 		SyvObHkkk6SlcWtv7C2+/olJLD8=
 		</data>
+		<key>Frameworks/GoogleToolboxForMac.framework/GoogleToolboxForMac</key>
+		<data>
+		O4l72Mv+2sHpJI3eqCZpCsc88Ls=
+		</data>
+		<key>Frameworks/GoogleToolboxForMac.framework/Info.plist</key>
+		<data>
+		cW1o+Xel1JeRc/RYgBShAaNk8cQ=
+		</data>
+		<key>Frameworks/GoogleToolboxForMac.framework/_CodeSignature/CodeResources</key>
+		<data>
+		5Ruo7I79lflIke8QOLA3V6lZBLc=
+		</data>
 		<key>Frameworks/IDEBundleInjection.framework/IDEBundleInjection</key>
 		<data>
 		aUm0c1LLvF5BD7IVSBsGgwX3iyY=
@@ -44,6 +76,18 @@
 		<key>Frameworks/IDEBundleInjection.framework/version.plist</key>
 		<data>
 		oJil3U1d5lvNs+UAiDae04BI/2g=
+		</data>
+		<key>Frameworks/Protobuf.framework/Info.plist</key>
+		<data>
+		Jb1I826lywSVlsatIVLJTbDD42o=
+		</data>
+		<key>Frameworks/Protobuf.framework/Protobuf</key>
+		<data>
+		OlLJx1jthtlVPJtX3gvVBCzjxzY=
+		</data>
+		<key>Frameworks/Protobuf.framework/_CodeSignature/CodeResources</key>
+		<data>
+		VeHXxmIzO4iZIc0w+NhKJ/DFUkM=
 		</data>
 		<key>Frameworks/XCTest.framework/Headers/XCAbstractTest.h</key>
 		<data>
@@ -222,9 +266,17 @@
 		<data>
 		yjBcTcl/az9WjdyHWVRj7ess7M4=
 		</data>
+		<key>Georgia.ttf</key>
+		<data>
+		+FZ4e6cP9G5J3VK6CSvqZ1XIELU=
+		</data>
+		<key>GoogleService-Info.plist</key>
+		<data>
+		wyMaVV3mgszuASypUygSw1HQ7J0=
+		</data>
 		<key>Info.plist</key>
 		<data>
-		lxIUk/y5pz6WRntsstCcIer3uEU=
+		4LdWaJYon5HBEQQ7NjYI7vrHSBM=
 		</data>
 		<key>Ionicons.ttf</key>
 		<data>
@@ -237,6 +289,10 @@
 		<key>MaterialIcons.ttf</key>
 		<data>
 		/AXeMSNOAJD33cKM4bI69AJssdo=
+		</data>
+		<key>Microsoft Sans Serif.ttf</key>
+		<data>
+		EalWqQb6B4Xpm3e5B+a2MnWROEs=
 		</data>
 		<key>Octicons.ttf</key>
 		<data>
@@ -256,11 +312,31 @@
 		</data>
 		<key>PlugIns/appuserTests.xctest/appuserTests</key>
 		<data>
-		czS9hCsMwpUmdhlXqjIIS1yAlCU=
+		jGOTdRz3uJVJfCpaX4Vm7rtn36k=
+		</data>
+		<key>Roboto.ttf</key>
+		<data>
+		HR1B/K3Fcd7LZEQhG3mTuZzpJuI=
+		</data>
+		<key>Roboto_medium.ttf</key>
+		<data>
+		rbw73kJLz328OPFIAFyDGYJYkfI=
+		</data>
+		<key>SF-UI-Text-Regular.otf</key>
+		<data>
+		2onmCfGU11cCoyAYkHixxDTGKhU=
 		</data>
 		<key>SimpleLineIcons.ttf</key>
 		<data>
 		n/uBpaEREuKS8swyPphIa61ZdZk=
+		</data>
+		<key>Skia.ttf</key>
+		<data>
+		pTYRZLb0H1mY9ayGGOz5APPErTc=
+		</data>
+		<key>Times New Roman.ttf</key>
+		<data>
+		WJObqnh5TXQP3k/Br0Jhc9dSzVM=
 		</data>
 		<key>Zocial.ttf</key>
 		<data>
@@ -269,6 +345,39 @@
 	</dict>
 	<key>files2</key>
 	<dict>
+		<key>Andale Mono.ttf</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			LNdqAJjPnsKnT1GghSkYxImlFvQ=
+			</data>
+			<key>hash2</key>
+			<data>
+			ykNqjwf2aZEHVC6+GdzJR48SqmZpJ2men6EBFefS7pU=
+			</data>
+		</dict>
+		<key>Arial Black.ttf</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			XMAR53wfKYCLKFPhOaFSj9cjbak=
+			</data>
+			<key>hash2</key>
+			<data>
+			fX2zrZajE3PBQ3xqsUJm9mBUlVRMjmY1WLBHUhF0xC4=
+			</data>
+		</dict>
+		<key>Arial.ttf</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			7T5ktvvXyDSJtKLhs9ZTloNZpJc=
+			</data>
+			<key>hash2</key>
+			<data>
+			Ull5giWRo0R8/EnZQ9b3aDUI4lVDQHhxwO2P7QX9K9k=
+			</data>
+		</dict>
 		<key>Base.lproj/LaunchScreen.nib</key>
 		<dict>
 			<key>hash</key>
@@ -281,6 +390,28 @@
 			</data>
 			<key>optional</key>
 			<true/>
+		</dict>
+		<key>Comic Sans MS.ttf</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			7E3iKa8HKXylvcnkb6TbSjlU7IY=
+			</data>
+			<key>hash2</key>
+			<data>
+			pvVZvAWf5tDmiCbi2u4NsxGUhE7WFF1cwxphDE4nANI=
+			</data>
+		</dict>
+		<key>Courier New.ttf</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			iNIAbKCE8Ery3xlU7XFKjHHoQA8=
+			</data>
+			<key>hash2</key>
+			<data>
+			yIbKMXLYzpGJl2mS0UXsCQUApP9RbsudTfVrGngzYkc=
+			</data>
 		</dict>
 		<key>Entypo.ttf</key>
 		<dict>
@@ -326,6 +457,39 @@
 			fh3QPdTOkLZYBSVUzXRZ3xZxZxc4mlUvpMbVal+JM+Y=
 			</data>
 		</dict>
+		<key>Frameworks/GoogleToolboxForMac.framework/GoogleToolboxForMac</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			O4l72Mv+2sHpJI3eqCZpCsc88Ls=
+			</data>
+			<key>hash2</key>
+			<data>
+			jkPJYp0xWayprY+OVq5JBKSGVEgj1NE4aGx4DO8K7BQ=
+			</data>
+		</dict>
+		<key>Frameworks/GoogleToolboxForMac.framework/Info.plist</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			cW1o+Xel1JeRc/RYgBShAaNk8cQ=
+			</data>
+			<key>hash2</key>
+			<data>
+			9xlXCSOsNjylnYe0s8EGMbMb7GZvAGKckp6VQ9fvDZE=
+			</data>
+		</dict>
+		<key>Frameworks/GoogleToolboxForMac.framework/_CodeSignature/CodeResources</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			5Ruo7I79lflIke8QOLA3V6lZBLc=
+			</data>
+			<key>hash2</key>
+			<data>
+			bL7/gJYSYYTrYH/1eYq1i6u5UMzFZ+pWLO9idvSlJ68=
+			</data>
+		</dict>
 		<key>Frameworks/IDEBundleInjection.framework/IDEBundleInjection</key>
 		<dict>
 			<key>hash</key>
@@ -368,6 +532,39 @@
 			<key>hash2</key>
 			<data>
 			gYjYT2HBXfrAq8c53hSUU6hYYEsGvu1N0ekCfZGuHVQ=
+			</data>
+		</dict>
+		<key>Frameworks/Protobuf.framework/Info.plist</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			Jb1I826lywSVlsatIVLJTbDD42o=
+			</data>
+			<key>hash2</key>
+			<data>
+			yLwfOvNWNFH5OUplXoWoBzVJVsYQiLLMVr3v+bOgpE8=
+			</data>
+		</dict>
+		<key>Frameworks/Protobuf.framework/Protobuf</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			OlLJx1jthtlVPJtX3gvVBCzjxzY=
+			</data>
+			<key>hash2</key>
+			<data>
+			hh/mpq2Rfn6YPmELgfKP7qFCY2BkCEM6jzmQrad1XGE=
+			</data>
+		</dict>
+		<key>Frameworks/Protobuf.framework/_CodeSignature/CodeResources</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			VeHXxmIzO4iZIc0w+NhKJ/DFUkM=
+			</data>
+			<key>hash2</key>
+			<data>
+			rMVOZi4g8X6D7DfUKBUosFc69K5ibUsbOVU758i3sh4=
 			</data>
 		</dict>
 		<key>Frameworks/XCTest.framework/Headers/XCAbstractTest.h</key>
@@ -850,6 +1047,28 @@
 			pdgABt46mNG+DAW8NzprEAuv+un0qUW4r4xQcIHJA0M=
 			</data>
 		</dict>
+		<key>Georgia.ttf</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			+FZ4e6cP9G5J3VK6CSvqZ1XIELU=
+			</data>
+			<key>hash2</key>
+			<data>
+			T1TrKZ/M6n8QPt6w2SQ3NZv9REGBHVMiK4KzNTafYhg=
+			</data>
+		</dict>
+		<key>GoogleService-Info.plist</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			wyMaVV3mgszuASypUygSw1HQ7J0=
+			</data>
+			<key>hash2</key>
+			<data>
+			xk0ZFRrQHAD31j++5IzoioKjVW7AWD5QS0B79lV/S1Q=
+			</data>
+		</dict>
 		<key>Ionicons.ttf</key>
 		<dict>
 			<key>hash</key>
@@ -881,6 +1100,17 @@
 			<key>hash2</key>
 			<data>
 			t/Sjq1YgSPKN0fppFgG8QzY6YdD4dtFtgxbFLk8y1pY=
+			</data>
+		</dict>
+		<key>Microsoft Sans Serif.ttf</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			EalWqQb6B4Xpm3e5B+a2MnWROEs=
+			</data>
+			<key>hash2</key>
+			<data>
+			aB/SDyAUNe3An6xDLNVAlyLKj9EJcNw9yb4bLeSw70M=
 			</data>
 		</dict>
 		<key>Octicons.ttf</key>
@@ -920,11 +1150,44 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			czS9hCsMwpUmdhlXqjIIS1yAlCU=
+			jGOTdRz3uJVJfCpaX4Vm7rtn36k=
 			</data>
 			<key>hash2</key>
 			<data>
-			h+olU6+BfiljNDjTYhJtG+u3dome9ptdYLY+6B5JaWY=
+			yRSFQ4YA6REKa4YN1B/02p4MWs0k39/eYgkJ5uRac/8=
+			</data>
+		</dict>
+		<key>Roboto.ttf</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			HR1B/K3Fcd7LZEQhG3mTuZzpJuI=
+			</data>
+			<key>hash2</key>
+			<data>
+			su+ryl6kvFbuqClxNwa1zQeIuCrKFTvUrd6bFXOTO08=
+			</data>
+		</dict>
+		<key>Roboto_medium.ttf</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			rbw73kJLz328OPFIAFyDGYJYkfI=
+			</data>
+			<key>hash2</key>
+			<data>
+			0Mj0SndLhJDO7imInNq8cjgfo1+2IWGaeP0oIR2QJBw=
+			</data>
+		</dict>
+		<key>SF-UI-Text-Regular.otf</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			2onmCfGU11cCoyAYkHixxDTGKhU=
+			</data>
+			<key>hash2</key>
+			<data>
+			ERNmxH2yOuuTrnozN1K9NOhOjAdXj2+wthsltqUPtUI=
 			</data>
 		</dict>
 		<key>SimpleLineIcons.ttf</key>
@@ -936,6 +1199,28 @@
 			<key>hash2</key>
 			<data>
 			P1Ad2wXHCCm7tRz+nKn/9X854GBFfCV7PM8l33Z/CHA=
+			</data>
+		</dict>
+		<key>Skia.ttf</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			pTYRZLb0H1mY9ayGGOz5APPErTc=
+			</data>
+			<key>hash2</key>
+			<data>
+			HyFBJXIOp8uVPsGc7cs0TMao0k4iZ16rtcHoJzZ6WSc=
+			</data>
+		</dict>
+		<key>Times New Roman.ttf</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			WJObqnh5TXQP3k/Br0Jhc9dSzVM=
+			</data>
+			<key>hash2</key>
+			<data>
+			OAFCvGYzLQmw8k3fS8t0s1nJO2hjMdSIoPMVTi18Jrs=
 			</data>
 		</dict>
 		<key>Zocial.ttf</key>

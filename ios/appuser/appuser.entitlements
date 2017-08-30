@@ -6,7 +6,7 @@
 	<string>development</string>
 	<key>keychain-access-groups</key>
 	<array>
-		<string>$(AppIdentifierPrefix)com.haivan.appuser</string>
+		<string>$(AppIdentifierPrefix)org.reactjs.native.example.appuser</string>
 	</array>
 </dict>
 </plist>

@@ -5,8 +5,6 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
-    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
-    <uses-permission android:name="android.permission.VIBRATE" />
 
     <uses-sdk
         android:minSdkVersion="16"
@@ -19,31 +17,6 @@
       android:icon="@mipmap/ic_launcher"
       android:theme="@style/AppTheme">
 
-      <receiver android:name="com.evollu.react.fcm.FIRLocalMessagingPublisher"/>
-      <receiver android:enabled="true" android:exported="true"  android:name="com.evollu.react.fcm.FIRSystemBootEventReceiver">
-          <intent-filter>
-              <action android:name="android.intent.action.BOOT_COMPLETED"/>
-              <action android:name="android.intent.action.QUICKBOOT_POWERON"/>
-              <action android:name="com.htc.intent.action.QUICKBOOT_POWERON"/>
-              <category android:name="android.intent.category.DEFAULT" />
-          </intent-filter>
-      </receiver>
-
-      <service
-          android:name=".MyFirebaseMessagingService">
-          <intent-filter>
-              <action android:name="com.google.firebase.MESSAGING_EVENT"/>
-          </intent-filter>
-      </service>
-
-      <service
-          android:name=".MyFirebaseInstanceIDService">
-          <intent-filter>
-              <action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>
-          </intent-filter>
-      </service>
-
-
       <service android:name="com.evollu.react.fcm.MessagingService" android:enabled="true" android:exported="true">
          <intent-filter>
            <action android:name="com.google.firebase.MESSAGING_EVENT"/>
@@ -55,17 +28,6 @@
         <action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>
         </intent-filter>
     </service>
-
-    <!-- Set custom default icon. This is used when no icon is set for incoming notification messages.
-     See README(https://goo.gl/l4GJaQ) for more. -->
-    <meta-data
-        android:name="com.google.firebase.messaging.default_notification_icon"
-        android:resource="@drawable/ic_stat_ic_notification" />
-    <!-- Set color used with incoming notification messages. This is used when no color is set for the incoming
-        notification message. See README(https://goo.gl/6BKBk7) for more. -->
-    <meta-data
-        android:name="com.google.firebase.messaging.default_notification_color"
-        android:resource="@color/colorAccent" />
 
       <activity
         android:name=".MainActivity"
