@@ -12,7 +12,7 @@ import {
 	TouchableHighlight,
 	Alert
 } from 'react-native';
-import {domain,cache} from '../../Config/common';
+import {domain,cache, net} from '../../Config/common';
 import fetchData from '../../Components/FetchData';
 import { Container, Content, Header, Title, Text, Icon, Button, Card, CardItem, Spinner, Badge, Thumbnail } from 'native-base';
 import {Actions} from 'react-native-router-flux';
@@ -20,6 +20,8 @@ import { Col, Row, Grid } from "react-native-easy-grid";
 import Modal from 'react-native-modalbox';
 import ModalPicker from 'react-native-modal-picker';
 import StorageHelper from '../../Components/StorageHelper';
+import isConnected from '../../Components/CheckNet';
+
 const heightDevice = Dimensions.get('window').height;
 const widthDevice = Dimensions.get('window').width;
 
@@ -28,6 +30,7 @@ class ViewSoDoGiuong extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
+			sttInternet: false,
 			width: widthDevice,
 			height: heightDevice,
 			token: '',

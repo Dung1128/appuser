@@ -17,6 +17,7 @@ const API_URL = {
   user_get_content: common.domain+'/api/api_user_get_content.php',
   adm_get_time_sync: common.domain+'/api/api_adm_get_time_sync.php',
   api_check_version: common.domain+'/api/api_check_version.php',
+  api_get_list_discount: common.domain+'/api/user_v1/get_ma_giam_gia.php',
 }
 
 const API_HEADERS  = {
