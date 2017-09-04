@@ -300,7 +300,7 @@ class LichSu extends Component {
 				dataBook: dataBook,
 				address: this.state.address,
 				ghi_chu: this.state.ghi_chu,
-				id_km: this.state.id_km,
+				km_id: this.state.id_km,
 				diem_di: this.props.data.dataBook[0].bvv_bex_id_a,
 				diem_den: this.props.data.dataBook[0].bvv_bex_id_b,
 
