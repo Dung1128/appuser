@@ -99,11 +99,20 @@ class Welcome extends Component {
 					AsyncStorage.setItem("infoUser", result);
 					Actions.home({ title: 'Chọn Chuyến', data: result });
 				} else {
-					this.setState({
-						error: 'true',
-						loading: false,
-						messageError: [data.mes]
-					});
+					if (data.status == 401) {
+						let body = {
+							phone: this.state.username,
+						}
+
+						fetchData('api_get_code_auth', body, 'GET');
+						Actions.Authentication({ title: 'Xác thực tài khoản', data: { phone: this.state.username, password: this.state.password, type: 'login' } });
+					} else {
+						this.setState({
+							error: 'true',
+							loading: false,
+							messageError: [data.mes]
+						});
+					}
 				}
 			} catch (e) {
 				this.setState({
@@ -165,8 +174,9 @@ class Welcome extends Component {
 						onPress={() => Actions.Register({ title: 'Đăng Ký', hideNavBar: false })}
 					>Đăng ký</Button>
 				</View>
-				<TouchableOpacity onPress={() => Communications.phonecall('19006776', true)} style={{ marginTop: 10, marginBottom: 10, alignItems: 'center' }}>
-					<Text style={{ color: 'red' }}>Quên mật khẩu gọi <Text style={{ color: '#365DB5', fontWeight: 'bold' }}>19006776</Text></Text>
+				<TouchableOpacity onPress={() => Actions.ForgetPass({ title: 'Quên mật khẩu' })} style={{ marginTop: 10, marginBottom: 10, alignItems: 'center' }}>
+					{/* <Text style={{ color: 'red' }}>Quên mật khẩu gọi <Text style={{ color: '#365DB5', fontWeight: 'bold' }}>19006776</Text></Text> */}
+					<Text style={{ color: 'red' }}>Quên mật khẩu</Text>
 				</TouchableOpacity>
 
 			</View>

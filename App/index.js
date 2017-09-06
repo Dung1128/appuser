@@ -26,6 +26,9 @@ import DetailNews from './Modules/News/DetailNews';
 import HuongDanSuDung from './Modules/HuongDanSuDung/Index';
 import UserInfo from './Modules/Users/Index';
 import Welcome from './Welcome';
+import Authentication from './Modules/Authentication/Authentication';
+import ResetPass from './Modules/ResetPass/ResetPass';
+import ForgetPass from './Modules/ResetPass/ForgetPass';
 
 const reducerCreate = params => {
  	const defaultReducer = Reducer(params);
@@ -61,6 +64,9 @@ class App extends Component {
 					<Scene key="Payment" component={Payment} title="Thanh Toán" hideNavBar={true} />
 					<Scene key="HuongDanSuDung" component={HuongDanSuDung} title="Hướng đẫn sử dụng" />
 					<Scene key="UserInfo" component={UserInfo} title="Thông tin tài khoản" />
+					<Scene key="Authentication" component={Authentication} title="Xác thực tài khoản" />
+					<Scene key="ResetPass" component={ResetPass} title="Reset mật khẩu" />
+					<Scene key="ForgetPass" component={ForgetPass} title="Quên mật khẩu" />
   	       	</Scene>
        	</Router>
 		);
