@@ -90,6 +90,8 @@ class LichSu extends Component {
 		let key_KM = 0;
 		let diemdi = '';
 		let diemden = '';
+		console.log('ma kM');
+		console.log(this.state.mesKM);
 
 		if (this.state.nameKM != '') {
 			currentKM = this.state.nameKM;
@@ -194,7 +196,7 @@ class LichSu extends Component {
 									</TouchableOpacity>
 								</View>
 							</View>
-							{this.state.mesKM && (this.state.mesKM != '') &&
+							{(this.state.mesKM != null) && (this.state.mesKM != '') &&
 								<Text style={{ textAlign: 'center', textAlignVertical: 'center', color: 'red', margin: 5 }}>
 									{this.state.mesKM}
 								</Text>
@@ -372,7 +374,12 @@ class LichSu extends Component {
 						this.setState({
 							mesKM: data.mes,
 						})
-					} else if (data.status == 200) {
+					} else if (data.status != 200) {
+						this.setState({
+							mesKM: data.mes,
+						})
+					} 
+					else if (data.status == 200) {
 						dataBook[index].bvv_price_discount = data.price_discount;
 						dataBook[index].code_KM = codeKM;
 						// dataBook[this.state.index].key_KM = data.id;
