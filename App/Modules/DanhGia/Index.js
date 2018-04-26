@@ -91,6 +91,7 @@ class DanhGia extends Component {
 			}
 
 			data1 = await fetchData('api_get_list_chuyen_rating', params1, 'GET');
+			console.log(data1);
 
 			let params2 = {
 				token: token,
@@ -173,7 +174,7 @@ class DanhGia extends Component {
 			gio_xuat_ben = '',
 			tuyen = '';
 
-		if (data.length > 0) {
+		if (data && data.length > 0) {
 			for (var i = 0; i < data.length; i++) {
 				var item = data[i];
 				let tieuchi = (item.tong_tieu_chi > 0) ? (item.tieu_chi_tot + '/' + item.tong_tieu_chi) : '';
