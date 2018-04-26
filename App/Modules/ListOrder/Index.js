@@ -56,6 +56,7 @@ class LichSu extends Component {
 			nameKM: '',
 			dBook: [],
 			index: -1,
+			mesKM: '',
 		};
 	}
 
@@ -177,20 +178,27 @@ class LichSu extends Component {
 					} */}
 
 					{(dBook[i].hinh_thuc_KM == 6) &&
-						<View style={{ flexDirection: 'row' }}>
-							<View style={{ flex: 3, borderWidth: 1, borderRadius: 10, marginRight: 5 }} >
-								<Input
-									placeholder="Nhập mã khuyến mại"
-									onChange={(event) => this.setState({ codeKM: event.nativeEvent.text })}
-								/>
+						<View>
+							<View style={{ flexDirection: 'row' }}>
+								<View style={{ flex: 3, borderWidth: 1, borderRadius: 10, marginRight: 5 }} >
+									<Input
+										placeholder="Nhập mã khuyến mại"
+										onChange={(event) => this.setState({ codeKM: event.nativeEvent.text })}
+									/>
+								</View>
+								<View style={{ flex: 1, borderWidth: 1, borderRadius: 10, marginLeft: 5, backgroundColor: '#5cb85c', borderColor: '#5cb85c' }} >
+									<TouchableOpacity key="1" onPress={() => this.checkCodeKM(i)} style={{ flex: 1, justifyContent: 'center' }}>
+										<Text style={{ textAlign: 'center', textAlignVertical: 'center', color: 'white' }}>
+											Sử dụng
+										</Text>
+									</TouchableOpacity>
+								</View>
 							</View>
-							<View style={{ flex: 1, borderWidth: 1, borderRadius: 10, marginLeft: 5 }} >
-								<TouchableOpacity key="1" onPress={() => this.checkCodeKM(i)} style={{ flex: 1, justifyContent: 'center' }}>
-									<Text style={{ textAlign: 'center', textAlignVertical: 'center', }}>
-										Sử dụng
-									</Text>
-								</TouchableOpacity>
-							</View>
+							{this.state.mesKM && (this.state.mesKM != '') &&
+								<Text style={{ textAlign: 'center', textAlignVertical: 'center', color: 'red', margin: 5 }}>
+									{this.state.mesKM}
+								</Text>
+							}
 						</View>
 					}
 				</CardItem>
@@ -360,15 +368,24 @@ class LichSu extends Component {
 					let data = await fetchData('api_get_discount_code', params, 'GET');
 
 					if (data.status == 404) {
-						alert(data.mes);
+						// alert(data.mes);
+						this.setState({
+							mesKM: data.mes,
+						})
 					} else if (data.status == 200) {
 						dataBook[index].bvv_price_discount = data.price_discount;
 						dataBook[index].code_KM = codeKM;
 						// dataBook[this.state.index].key_KM = data.id;
 						discount = data.price_discount;
+						this.setState({
+							mesKM: '',
+						})
 					}
 				} else {
-					alert('Mã khuyến mãi đã dùng');
+					// alert('Mã khuyến mãi đã dùng');
+					this.setState({
+						mesKM: 'Mã khuyến mãi đã dùng',
+					})
 				}
 			}
 
