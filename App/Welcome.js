@@ -1,4 +1,4 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
 import {
 	AppRegistry,
 	StyleSheet,
@@ -14,6 +14,7 @@ import * as common from './Config/common';
 import StorageHelper from './Components/StorageHelper';
 import fetchData from './Components/FetchData';
 import Communications from 'react-native-communications';
+import GetInfoDevice from './Components/GetInfoDevice';
 let { width, height } = Dimensions.get('window');
 
 class Welcome extends Component {
@@ -30,6 +31,8 @@ class Welcome extends Component {
 			token: '',
 			infoUser: []
 		};
+
+		GetInfoDevice();
 	}
 
 	async componentWillMount() {
@@ -104,8 +107,17 @@ class Welcome extends Component {
 							phone: this.state.username,
 						}
 
-						fetchData('api_get_code_auth', body, 'GET');
-						Actions.Authentication({ title: 'Xác thực tài khoản', data: { phone: this.state.username, password: this.state.password, type: 'login' } });
+						let authData = await fetchData('api_get_code_auth', body, 'GET');
+						if (authData.status == 200) {
+							Actions.Authentication({ title: 'Xác thực tài khoản', data: { phone: this.state.username, password: this.state.password, type: 'login' } });
+						} else {
+							this.setState({
+								error: 'true',
+								loading: false,
+								messageError: [authData.mes]
+							});
+						}
+						
 					} else {
 						this.setState({
 							error: 'true',
@@ -176,7 +188,7 @@ class Welcome extends Component {
 				</View>
 				<TouchableOpacity onPress={() => Actions.ForgetPass({ title: 'Quên mật khẩu' })} style={{ marginTop: 10, marginBottom: 10, alignItems: 'center' }}>
 					{/* <Text style={{ color: 'red' }}>Quên mật khẩu gọi <Text style={{ color: '#365DB5', fontWeight: 'bold' }}>19006776</Text></Text> */}
-					<Text style={{ color: 'red' }}>Quên mật khẩu</Text>
+					<Text style={{ color: '#365DB5' }}>Quên mật khẩu?</Text>
 				</TouchableOpacity>
 
 			</View>

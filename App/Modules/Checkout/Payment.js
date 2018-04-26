@@ -1,4 +1,4 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
 import {
   AppRegistry,
   StyleSheet,
@@ -11,6 +11,7 @@ import {
 } from 'react-native';
 import {Button, Icon, Spinner} from 'native-base';
 import {Actions} from 'react-native-router-flux';
+import * as common from '../../Config/common';
 const {height, width} = Dimensions.get('window');
 class Checkout extends Component {
 
@@ -22,7 +23,7 @@ class Checkout extends Component {
 			width: width
 		};
    }
-
+   
 	_backPayment() {
 		let that = this;
 		AsyncStorage.getItem('infoUser').then((data) => {
@@ -56,7 +57,7 @@ class Checkout extends Component {
 				</View>
 
 					<WebView
-						source={{uri: 'http://hasonhaivan.com/thanh-toan.html?order='+this.props.data.orderId}}
+						source={{uri: common.domainPayment + '/thanh-toan.html?order='+this.props.data.orderId}}
 						startInLoadingState={this.state.loading}
 						automaticallyAdjustContentInsets={false}
 						javaScriptEnabled={true}

@@ -1,4 +1,5 @@
 
+import { colorLogo } from '../../Config/common';
 const React = require('react-native');
 
 const { StyleSheet, Platform, Dimensions } = React;
@@ -9,7 +10,8 @@ const deviceWidth = Dimensions.get('window').width;
 module.exports = StyleSheet.create({
   sidebar: {
     flex: 1,
-    backgroundColor: '#0A0A1B',
+    // backgroundColor: '#0A0A1B'
+    backgroundColor: '#f7f7f7',
   },
   drawerCover: {
     alignSelf: 'stretch',
@@ -18,7 +20,7 @@ module.exports = StyleSheet.create({
     width: null,
     position: 'relative',
     marginBottom: 10,
-    backgroundColor: 'rgba(255, 220, 66, 1)',
+    backgroundColor: colorLogo,
   },
   drawerImage: {
     position: 'absolute',
@@ -45,13 +47,13 @@ module.exports = StyleSheet.create({
   },
   sidebarIcon: {
     fontSize: 21,
-    color: '#fff',
+    color: '#365DB5',
     lineHeight: 25,
     backgroundColor: 'transparent',
   },
   text: {
     fontWeight: '500',
     fontSize: 16,
-    color: '#fff'
+    color: '#0A0A1B'
   }
 });

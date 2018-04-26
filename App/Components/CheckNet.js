@@ -6,7 +6,6 @@ import {
 
 export default isConnected = () => {
     return NetInfo.isConnected.fetch().then(isConnected => {
-        console.log('First, is ' + (isConnected ? 'online' : 'offline'));
         return isConnected;
     });
 }

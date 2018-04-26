@@ -1,4 +1,4 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
 import {
 	AppRegistry,
 	StyleSheet,
@@ -12,15 +12,16 @@ import {
 	TouchableHighlight,
 	Alert
 } from 'react-native';
-import {domain,cache, net} from '../../Config/common';
+import { domain, cache, net } from '../../Config/common';
 import fetchData from '../../Components/FetchData';
 import { Container, Content, Header, Title, Text, Icon, Button, Card, CardItem, Spinner, Badge, Thumbnail } from 'native-base';
-import {Actions} from 'react-native-router-flux';
+import { Actions } from 'react-native-router-flux';
 import { Col, Row, Grid } from "react-native-easy-grid";
-import Modal from 'react-native-modalbox';
+// import Modal from 'react-native-modalbox';
 import ModalPicker from 'react-native-modal-picker';
 import StorageHelper from '../../Components/StorageHelper';
 import isConnected from '../../Components/CheckNet';
+import Common from '../../Components/Common';
 
 const heightDevice = Dimensions.get('window').height;
 const widthDevice = Dimensions.get('window').width;
@@ -57,34 +58,36 @@ class ViewSoDoGiuong extends Component {
 			themVe: [],
 			arrThemve: [],
 			twoColumn: 'column',
-			timeSync: (1000*60),
+			timeSync: (1000 * 60),
 			clearTimeout: '',
-			clearSync: ''
+			clearSync: '',
+			listHangGhe: [],
+			priceMin: '',
 		};
 	}
 
 	getSyncArrVeNumber() {
 		let that = this;
 		this.state.clearSync = setInterval(() => {
-			fetch(domain+'/api/api_sync_so_do_giuong.php?type=user&token='+that.state.token+'&adm_id='+that.state.infoAdm.adm_id+'&notId='+that.props.data.notId+'&day='+that.props.data.day, {
+			fetch(domain + '/api/api_sync_so_do_giuong.php?type=user&token=' + that.state.token + '&adm_id=' + that.state.infoAdm.adm_id + '&notId=' + that.props.data.notId + '&day=' + that.props.data.day, {
 				headers: {
-			    	'Cache-Control': cache
-			  	}
-			})
-			.then((response) => response.json())
-			.then((responseJson) => {
-				let dataVeNumber = responseJson.arrVeNumber;
-				let dataBookGiuong = that.state.arrBookGiuong;
-				for(var i = 0; i < dataBookGiuong.length; i++) {
-					dataVeNumber[dataBookGiuong[i].numberGiuong].bvv_status = -2;
+					'Cache-Control': cache
 				}
-				that.setState({
-					arrVeNumber: dataVeNumber
-				});
 			})
-			.catch((error) => {
-				console.error(error);
-			});
+				.then((response) => response.json())
+				.then((responseJson) => {
+					let dataVeNumber = responseJson.arrVeNumber;
+					let dataBookGiuong = that.state.arrBookGiuong;
+					for (var i = 0; i < dataBookGiuong.length; i++) {
+						dataVeNumber[dataBookGiuong[i].numberGiuong].bvv_status = -2;
+					}
+					that.setState({
+						arrVeNumber: dataVeNumber
+					});
+				})
+				.catch((error) => {
+					console.error(error);
+				});
 		}, this.state.timeSync);
 	}
 
@@ -94,49 +97,91 @@ class ViewSoDoGiuong extends Component {
 		let admId = results.adm_id;
 		let token = results.token;
 		let time_sync = 60;
-		let objTimeSync = await fetchData('adm_get_time_sync', {type: 'user'}, 'GET');
-		if(objTimeSync.time_sync >= 60) {
+		let objTimeSync = await fetchData('adm_get_time_sync', { type: 'user' }, 'GET');
+		if (objTimeSync.time_sync >= 60) {
 			time_sync = objTimeSync.time_sync;
 		}
-		this.state.timeSync = (1000*time_sync);
+		this.state.timeSync = (1000 * time_sync);
 		let data = [];
-		this.setState({
-			infoAdm: results,
-			token: token,
-			loading: true
-		});
+		// this.setState({
+		// 	infoAdm: results,
+		// 	token: token,
+		// 	loading: true
+		// });
+		this.state.infoAdm = results;
+		this.state.token = token;
+		this.state.loading = true;
 
 		try {
 			let params = {
 				token: token,
-				adm_id: this.state.infoAdm.adm_id,
+				adm_id: admId,
 				not_id: this.props.data.notId,
 				day: this.props.data.day,
+				diem_a: this.props.data.benA,
+				diem_b: this.props.data.benB,
 			}
-			console.log('Goi api so do giuong');
+
 			data = await fetchData('adm_so_do_giuong', params, 'GET');
-			console.log(data);
 		} catch (e) {
 			console.log(e);
 			this.setState({
 				loading: true
 			});
 		}
+
+		let listHangGhe = [];
+
+		if (data) {
+			try {
+				let params = {
+					token: token,
+					user_id: admId,
+					did_id: this.props.data.did_id,
+					diem_a: this.props.data.benA,
+					diem_b: this.props.data.benB,
+					sdg_id: data.so_do_giuong.arrChoTang_1[1][0].sdgct_sdg_id,
+				}
+
+				let data1 = await fetchData('api_get_list_hang_ghe', params, 'GET');
+				// let data1 = {status: 200, arrColor: {}}
+
+				if (data1.status == 200) {
+					// this.setState({
+					// 	listHangGhe: data1.arrColor,
+					// });
+
+					listHangGhe = data1.arrColor;
+				}
+				else {
+					alert('Server hạng ghế lỗi!');
+				}
+			} catch (error) {
+				console.log(error)
+			}
+		}
+
 		let that = this;
 		this.state.clearTimeout = setTimeout(() => {
-			if(data.status != 404) {
+			if (data.status != 404) {
 				that.setState({
-					results:data.so_do_giuong,
+					results: data.so_do_giuong,
 					arrVeNumber: data.so_do_giuong.arrVeNumber,
 					resultsBen: that.props.data.dataBen,
-					loading: false
+					priceMin: data.tuy_gia_nho_nhat,
+					loading: false,
+
+					listHangGhe: listHangGhe,
+					infoAdm: results,
+					token: token,
 				});
+
 				return data.so_do_giuong;
-			}else if(data.status == 404) {
+			} else if (data.status == 404) {
 				alert(data.mes);
-				Actions.welcome({type: 'reset'});
+				Actions.welcome({ type: 'reset' });
 			}
-		},1000);
+		}, 1000);
 
 		this.getSyncArrVeNumber();
 	}
@@ -153,34 +198,38 @@ class ViewSoDoGiuong extends Component {
 
 	_renderSoDoGiuong(data, tang) {
 		let html = [],
-		dataTang = [];
+			dataTang = [];
+		let colorBorder = '';
+		let currentPrice = parseInt(this.props.data.totalPriceInt);
+
 		switch (tang) {
 			case 1:
-			dataTang = data.arrChoTang_1;
-			break;
+				dataTang = data.arrChoTang_1;
+				break;
 			case 2:
-			dataTang = data.arrChoTang_2;
-			break;
+				dataTang = data.arrChoTang_2;
+				break;
 			case 3:
-			dataTang = data.arrChoTang_3;
-			break;
+				dataTang = data.arrChoTang_3;
+				break;
 			case 4:
-			dataTang = data.arrChoTang_4;
-			break;
+				dataTang = data.arrChoTang_4;
+				break;
 			case 5:
-			dataTang = data.arrChoTang_5;
-			break;
+				dataTang = data.arrChoTang_5;
+				break;
 			default:
 		}
-		if(dataTang != undefined) {
-			for(var i in dataTang) {
+
+		if (dataTang != undefined) {
+			for (var i in dataTang) {
 				var item = dataTang[i];
 				var htmlChild = [];
-				for(var j in item) {
-					if(Object.keys(item).length <= 2) {
-						if(j == 1) {
+				for (var j in item) {
+					if (Object.keys(item).length <= 2) {
+						if (j == 1) {
 							htmlChild.push(
-								<Col key={i+(j+999)}>
+								<Col key={i + (j + 999)}>
 									<TouchableOpacity style={styles.opacityBg}>
 										<Text style={styles.textCenter}></Text>
 									</TouchableOpacity>
@@ -192,53 +241,81 @@ class ViewSoDoGiuong extends Component {
 					var dataGiuong = this.state.arrVeNumber[idGiuong];
 					let arrNumberGiuong = this.state.arrNumberGiuong;
 
-					if(dataGiuong.lock > 0) {
+					if (item[j].border_color) {
+						colorBorder = item[j].border_color;
+					}
+					else {
+						colorBorder = '#131722';
+					}
+
+					let newRootPrice = currentPrice;
+
+					if (item[j].bvop_hinh_thuc == 0) {
+						newRootPrice = currentPrice - Number(item[j].bvop_tien_mat);
+					}
+					else {
+						if (item[j].bvop_hinh_thuc == 1) {
+							newRootPrice = currentPrice * (100 - Number(item[j].bvop_phan_tram)) / 100;
+						}
+					}
+
+					newRootPrice = newRootPrice > Number(this.state.priceMin) ? newRootPrice : Number(this.state.priceMin);
+					newRootPrice = Math.floor(newRootPrice / 5000) * 5000;
+
+					var priceGiuongUnActive = (newRootPrice / 1000).toFixed(0).replace(/./g, function (c, i, a) {
+						return i && c !== "." && ((a.length - i) % 3 === 0) ? ',' + c : c;
+					});
+
+					// priceGiuongUnActive += 'K';
+
+					if (dataGiuong.lock > 0) {
 						htmlChild.push(
-							<Col key={i+j} style={styles.borderCol}>
+							<Col key={i + j} style={[styles.borderCol, { borderColor: colorBorder }]}>
 								<TouchableOpacity style={[styles.activeGiuong, styles.opacityBg]}>
 									<Text style={[styles.textCenter, styles.textActiveGiuong]}>{item[j].sdgct_label_full}</Text>
 								</TouchableOpacity>
 							</Col>
 						);
-					}else {
-						if(dataGiuong.bvv_status == -2) {
+					} else {
+						if (dataGiuong.bvv_status == -2) {
 							htmlChild.push(
-								<Col key={i+j} style={styles.borderCol}>
+								<Col key={i + j} style={[styles.borderCol, { borderColor: colorBorder }]}>
 									<TouchableOpacity onPress={this._unsetActiveGiuong.bind(this, idGiuong, item[j].sdgct_label_full)} style={[styles.selectGiuongUser, styles.opacityBg]}>
 										<Text style={[styles.textCenter, styles.textActiveGiuong]}>{item[j].sdgct_label_full}</Text>
 									</TouchableOpacity>
 								</Col>
 							);
-						}else {
-							if(dataGiuong.bvv_status == -2) {
+						} else {
+							if (dataGiuong.bvv_status == -2) {
 
 								htmlChild.push(
-									<Col key={i+j} style={styles.borderCol}>
-										<TouchableOpacity onPress={this._setActiveGiuong.bind(this, idGiuong,item[j].sdgct_label_full)} style={styles.opacityBg}>
+									<Col key={i + j} style={[styles.borderCol, { borderColor: colorBorder }]}>
+										<TouchableOpacity onPress={this._setActiveGiuong.bind(this, idGiuong, item[j].sdgct_label_full)} style={styles.opacityBg}>
 											<Text style={styles.textCenter}>{item[j].sdgct_label_full}</Text>
 										</TouchableOpacity>
 									</Col>
 								);
-							}else {
+							} else {
 
-									if(dataGiuong.bvv_status == 0) {
-										htmlChild.push(
-											<Col key={i+j} style={styles.borderCol}>
-												<TouchableOpacity onPress={this._setActiveGiuong.bind(this, idGiuong, item[j].sdgct_label_full)} style={styles.opacityBg}>
-													<Text style={styles.textCenter}>{item[j].sdgct_label_full}</Text>
-												</TouchableOpacity>
-											</Col>
-										);
-									}else {
+								if (dataGiuong.bvv_status == 0) {
+									htmlChild.push(
+										<Col key={i + j} style={[styles.borderCol, { borderColor: colorBorder }]}>
+											<TouchableOpacity onPress={this._setActiveGiuong.bind(this, idGiuong, item[j].sdgct_label_full, newRootPrice)} style={styles.opacityBg}>
+												<Text style={styles.textCenter}>{item[j].sdgct_label_full}</Text>
+												<Text style={[styles.textCenter, { fontSize: 15 }]}>{priceGiuongUnActive}</Text>
+											</TouchableOpacity>
+										</Col>
+									);
+								} else {
 
-										htmlChild.push(
-											<Col key={i+j} style={styles.borderCol}>
-												<TouchableOpacity style={[styles.activeGiuong, styles.opacityBg]}>
-													<Text style={[styles.textCenter, styles.textActiveGiuong]}>{item[j].sdgct_label_full}</Text>
-												</TouchableOpacity>
-											</Col>
-										);
-									}
+									htmlChild.push(
+										<Col key={i + j} style={[styles.borderCol, { borderColor: colorBorder }]}>
+											<TouchableOpacity style={[styles.activeGiuong, styles.opacityBg]}>
+												<Text style={[styles.textCenter, styles.textActiveGiuong]}>{item[j].sdgct_label_full}</Text>
+											</TouchableOpacity>
+										</Col>
+									);
+								}
 
 							}
 						}
@@ -251,7 +328,7 @@ class ViewSoDoGiuong extends Component {
 		return html;
 	}
 
-	async _setActiveGiuong(id, fullLabel) {
+	async _setActiveGiuong(id, fullLabel, newRootPrice) {
 		let dataVe = this.state.arrVeNumber;
 
 		try {
@@ -262,20 +339,21 @@ class ViewSoDoGiuong extends Component {
 				bvv_id: dataVe[id].bvv_id,
 			}
 			let data = await fetchData('api_check_ve', params, 'GET');
-			if(data.status != 404) {
+			if (data.status != 404) {
 				let setStatus = this.state.arrVeNumber;
 				let dataBook = this.state.dataBook;
 				let arrBookGiuong = this.state.arrBookGiuong;
 				let arrNumberGiuong = this.state.arrNumberGiuong;
 
-				if(data.status == 200) {
+				if (data.status == 200) {
 					setStatus[id].bvv_status = -2;
 					setStatus[id].bvv_bex_id_a = this.props.data.benA;
 					setStatus[id].bvv_bex_id_b = this.props.data.benB;
-					setStatus[id].bvv_price = this.props.data.totalPriceInt;
+					// setStatus[id].bvv_price = this.props.data.totalPriceInt;
+					setStatus[id].bvv_price = newRootPrice
 
-					dataBook.push({labelFull: fullLabel, 'numberGiuong': parseInt(id), 'bvv_bex_id_a': this.props.data.benA, 'bvv_bex_id_b': this.props.data.benB, 'bvv_price': parseInt(this.props.data.totalPriceInt)});
-					arrBookGiuong.push({'numberGiuong': parseInt(id)});
+					dataBook.push({ labelFull: fullLabel, 'numberGiuong': parseInt(id), 'bvv_bex_id_a': this.props.data.benA, 'bvv_bex_id_b': this.props.data.benB, 'bvv_price_ly_thuyet': parseInt(newRootPrice), 'bvv_price_discount':  0, 'hinh_thuc_KM':  0, 'code_KM':  '', 'key_KM':  '', 'name_KM': '', 'bvv_id': dataVe[id].bvv_id});
+					arrBookGiuong.push({ 'numberGiuong': parseInt(id) });
 					arrNumberGiuong[parseInt(id)] = true;
 					this.setState({
 						arrVeNumber: setStatus,
@@ -284,16 +362,16 @@ class ViewSoDoGiuong extends Component {
 						arrBookGiuong: arrBookGiuong,
 						arrNumberGiuong: arrNumberGiuong
 					});
-				}else if(data.status == 201) {
+				} else if (data.status == 201) {
 					alert(data.mes);
 					setStatus[id].bvv_status = 11;
 					this.setState({
 						arrVeNumber: setStatus
 					});
 				}
-			}else if(data.status == 404) {
+			} else if (data.status == 404) {
 				alert(data.mes);
-				Actions.welcome({type: 'reset'});
+				Actions.welcome({ type: 'reset' });
 			}
 		} catch (e) {
 			console.log(e);
@@ -304,13 +382,13 @@ class ViewSoDoGiuong extends Component {
 
 	}
 
-	_unsetActiveGiuong(id, fullLabel){
+	_unsetActiveGiuong(id, fullLabel) {
 		let checkGiuongCurrent = false;
 		let that = this;
-		if(this.state.checkout) {
+		if (this.state.checkout) {
 			let arrBookGiuong = this.state.arrBookGiuong;
-			for(var i in arrBookGiuong) {
-				if(arrBookGiuong[i].numberGiuong == parseInt(id)) {
+			for (var i in arrBookGiuong) {
+				if (arrBookGiuong[i].numberGiuong == parseInt(id)) {
 					checkGiuongCurrent = true;
 					let dataBook = this.state.dataBook;
 					let setStatus = this.state.arrVeNumber;
@@ -328,8 +406,8 @@ class ViewSoDoGiuong extends Component {
 						arrNumberGiuong: arrNumberGiuong
 					});
 
-					if(dataBook.length == 0 && arrBookGiuong.length == 0) {
-						that.setState({checkout: false});
+					if (dataBook.length == 0 && arrBookGiuong.length == 0) {
+						that.setState({ checkout: false });
 					}
 				}
 			}
@@ -339,92 +417,137 @@ class ViewSoDoGiuong extends Component {
 	_onLayout = event => {
 		let widthDevice = Dimensions.get('window').width;
 		let heightDevice = Dimensions.get('window').height;
-		let twoColumn = (widthDevice >= 600)? 'row' : 'column' ;
+		let twoColumn = (widthDevice >= 600) ? 'row' : 'column';
 
-    	this.setState({
+		this.setState({
 			twoColumn: twoColumn,
 			width: widthDevice,
 			height: heightDevice,
-    	});
+		});
 	}
 
 	render() {
+		let html = [];
+		let dataHangGhe = this.state.listHangGhe || {};
 		let classContainer = 'container';
-		if(this.state.checkout) {
+		if (this.state.checkout) {
 			classContainer = 'containerMarginBottom';
 		}
 		let currentPrice = parseInt(this.props.data.totalPriceInt);
-		let convertPrice = currentPrice.toFixed(0).replace(/./g, function(c, i, a) {
+		let convertPrice = currentPrice.toFixed(0).replace(/./g, function (c, i, a) {
 			return i && c !== "." && ((a.length - i) % 3 === 0) ? ',' + c : c;
 		});
-		return(
+
+		for (let i = 0; i < dataHangGhe.length; i++) {
+			let borderCl = dataHangGhe[i].color;
+			let price = '';
+
+			if (this.props.data.did_loai_xe == 1) {
+				if (dataHangGhe[i].bvop_hinh_thuc == '0') {
+					price = currentPrice - Number(dataHangGhe[i].bvop_tien_mat_vip);
+				}
+				else {
+					if (dataHangGhe[i].bvop_hinh_thuc == '1') {
+						price = (currentPrice * (100 - Number(dataHangGhe[i].bvop_phan_tram_vip)) / 100);
+					}
+				}
+			} else {
+				if (dataHangGhe[i].bvop_hinh_thuc == '0') {
+					price = currentPrice - Number(dataHangGhe[i].bvop_tien_mat);
+				}
+				else {
+					if (dataHangGhe[i].bvop_hinh_thuc == '1') {
+						price = (currentPrice * (100 - Number(dataHangGhe[i].bvop_phan_tram)) / 100);
+					}
+				}
+			}
+
+			let roundPrice = price > Number(this.state.priceMin) ? price : Number(this.state.priceMin);
+			roundPrice = Math.floor(roundPrice / 5000) * 5;
+
+			html.push(
+				<View key={i}>
+					<View style={{ flexDirection: 'row' }}>
+						<View height={35} style={{ marginRight: 10, borderColor: borderCl, borderWidth: 2 }}>
+							<Text style={{ padding: 2 }}>{Common.formatPrice(roundPrice) + 'K'}</Text>
+						</View>
+					</View>
+				</View>
+			);
+		}
+
+		return (
 			<View onLayout={this._onLayout}>
 				<ScrollView style={[styles[classContainer]]}>
 
 					<Card style={[styles.paddingContent]}>
 						<CardItem header>
-							<View style={{flexDirection: 'column'}}>
-								<View style={{marginBottom: 10, width: (this.state.width-45)}}>
+							<View style={{ flexDirection: 'column' }}>
+								<View style={{ marginBottom: 10, width: (this.state.width - 45) }}>
 									{this.props.data.did_loai_xe == 1 &&
-										<View style={{position: 'absolute', right: 0, top: 30}}>
+										<View style={{ position: 'absolute', right: 0, top: 30 }}>
 											<Thumbnail size={60} source={require('../../Skin/Images/vip.png')} />
 										</View>
 									}
-									<Text>Nơi đi & Nơi đến: <Text style={{fontWeight: 'bold'}}>{this.state.resultsBen[this.props.data.benA]}</Text> - <Text style={{fontWeight: 'bold'}}>{this.state.resultsBen[this.props.data.benB]}</Text></Text>
-									<Text>Giá vé: <Text style={{fontWeight: 'bold'}}>{convertPrice} VNĐ</Text></Text>
-									<Text>Tuyến: <Text style={{fontWeight: 'bold'}}>{this.props.data.tuyen}</Text></Text>
-									<Text>Giờ xuất bến: <Text style={{fontWeight: 'bold'}}>{this.props.data.gio_xuat_ben + ' ' + this.props.data.day}</Text></Text>
+									<Text>Nơi đi & Nơi đến: <Text style={{ fontWeight: 'bold' }}>{this.state.resultsBen[this.props.data.benA]}</Text> - <Text style={{ fontWeight: 'bold' }}>{this.state.resultsBen[this.props.data.benB]}</Text></Text>
+									<Text>Giá vé: <Text style={{ fontWeight: 'bold' }}>{convertPrice} VNĐ</Text></Text>
+									<Text>Tuyến: <Text style={{ fontWeight: 'bold' }}>{this.props.data.tuyen}</Text></Text>
+									<Text>Giờ xuất bến: <Text style={{ fontWeight: 'bold' }}>{this.props.data.gio_xuat_ben + ' ' + this.props.data.day}</Text></Text>
 									{this.props.data.laixe1 != '' && this.props.data.laixe1 != null &&
-										<Text>Lái xe 1: <Text style={{fontWeight: 'bold'}}>{this.props.data.laixe1}</Text></Text>
+										<Text>Lái xe 1: <Text style={{ fontWeight: 'bold' }}>{this.props.data.laixe1}</Text></Text>
 									}
 									{this.props.data.laixe2 != '' && this.props.data.laixe2 != null &&
-										<Text>Lái xe 2: <Text style={{fontWeight: 'bold'}}>{this.props.data.laixe2}</Text></Text>
+										<Text>Lái xe 2: <Text style={{ fontWeight: 'bold' }}>{this.props.data.laixe2}</Text></Text>
 									}
 									{this.props.data.tiepvien != '' &&
-										<Text>Tiếp viên: <Text style={{fontWeight: 'bold'}}>{this.props.data.tiepvien}</Text></Text>
+										<Text>Tiếp viên: <Text style={{ fontWeight: 'bold' }}>{this.props.data.tiepvien}</Text></Text>
 									}
 								</View>
 								<View>
-									<View style={{flexDirection: 'row', flex: 1}}>
-										<View style={{marginRight: 20}}>
-											<View style={{flex: 1}}>
-												<View style={{flexDirection: 'row'}}>
-													<View width={25} height={25} backgroundColor={'#d6d7da'} style={{marginRight: 10,marginTop: -2}}></View>
+									<View style={{ flexDirection: 'row', flex: 1 }}>
+										<View style={{ marginRight: 20 }}>
+											<View style={{ flex: 1 }}>
+												<View style={{ flexDirection: 'row' }}>
+													<View width={25} height={25} backgroundColor={'#d6d7da'} style={{ marginRight: 10, marginTop: -2 }}></View>
 													<View><Text>Đã có người</Text></View>
 												</View>
 											</View>
 										</View>
 										<View>
-											<View style={{flex: 1}}>
-												<View style={{flexDirection: 'row'}}>
-													<View width={25} height={25} backgroundColor={'#ff8c00'} style={{marginRight: 10,marginTop: -2}}></View>
+											<View style={{ flex: 1 }}>
+												<View style={{ flexDirection: 'row' }}>
+													<View width={25} height={25} backgroundColor={'#ff8c00'} style={{ marginRight: 10, marginTop: -2 }}></View>
 													<View><Text>Đang chọn</Text></View>
 												</View>
 											</View>
 										</View>
+
 										<View>
-											<View style={{flex: 1}}>
-												<View style={{flexDirection: 'row'}}>
-													<View style={{marginLeft: 5}}></View>
+											<View style={{ flex: 1 }}>
+												<View style={{ flexDirection: 'row' }}>
+													<View style={{ marginLeft: 5 }}></View>
 												</View>
 											</View>
 										</View>
 									</View>
 								</View>
+								<View style={{ marginTop: 10, flexDirection: 'row' }}>
+									{html}
+								</View>
 							</View>
 						</CardItem>
 					</Card>
 
-					{this.state.loading && <View style={{alignItems: 'center'}}><Spinner /><Text>Đang tải dữ liệu...</Text></View> }
+					{this.state.loading && <View style={{ alignItems: 'center' }}><Spinner /><Text>Đang tải dữ liệu...</Text></View>}
 
-					<View style={{flexDirection: this.state.twoColumn}}>
+					<View style={{ flexDirection: this.state.twoColumn }}>
 						{this._renderSoDoGiuong(this.state.results, 1).length > 0 &&
 							<Card style={[styles.paddingContent]}>
 								<CardItem header>
-									<View style={{position: 'absolute', left: 30, top: 10}}>
+									<View style={{ position: 'absolute', left: 30, top: 10 }}>
 										<Thumbnail size={30} source={require('../../Skin/Images/quay_tay.png')} />
 									</View>
-									<Text style={{fontSize: 20, marginLeft: 70}}>Tầng 1</Text>
+									<Text style={{ fontSize: 20, marginLeft: 70 }}>Tầng 1</Text>
 								</CardItem>
 
 								<CardItem>
@@ -439,7 +562,7 @@ class ViewSoDoGiuong extends Component {
 						{this._renderSoDoGiuong(this.state.results, 2).length > 0 &&
 							<Card style={[styles.paddingContent]}>
 								<CardItem header>
-									<Text style={{fontSize: 20}}>Tầng 2</Text>
+									<Text style={{ fontSize: 20 }}>Tầng 2</Text>
 								</CardItem>
 
 								<CardItem>
@@ -454,8 +577,8 @@ class ViewSoDoGiuong extends Component {
 
 					{this._renderSoDoGiuong(this.state.results, 5).length > 0 &&
 						<Card style={styles.paddingContent}>
-							<CardItem header style={{alignItems: 'center', justifyContent: 'center'}}>
-								<Text style={{fontSize: 20}}>Ghế Sàn</Text>
+							<CardItem header style={{ alignItems: 'center', justifyContent: 'center' }}>
+								<Text style={{ fontSize: 20 }}>Ghế Sàn</Text>
 							</CardItem>
 
 							<CardItem>
@@ -465,20 +588,31 @@ class ViewSoDoGiuong extends Component {
 					}
 				</ScrollView>
 
-				<View style={{flexDirection: 'row', position: 'absolute', bottom: 0, left: 0}}>
-					  {this.state.checkout &&
-						  <TouchableOpacity style={[styles.styleTabbars, {flex: 1, backgroundColor: '#ffdc42'}]} onPress={() => Actions.ListOrder({title: 'Danh sách đặt vé', data: {id_dieu_do: this.props.data.id_dieu_do, gio_xuat_ben: this.props.data.day+ ' ' + this.props.data.gio_xuat_ben, dataUser: this.state.infoAdm, dataBook: this.state.dataBook, dataBen: this.props.data.dataBen}})}>
-						  		<View style={{flexDirection: 'row', flex: 1}}>
-									<View style={{flex: 1, alignItems: 'flex-end', justifyContent: 'center', backgroundColor: 'transparent', paddingRight: 10, marginLeft: 50}}>
-			 					  		<Text style={{color: '#000'}}>Tiếp tục</Text>
-									</View>
-									<View style={{flex: 1, alignItems: 'flex-start',justifyContent: 'center', backgroundColor: 'transparent', paddingTop: 5}}>
-										<Icon name="md-arrow-round-forward" color={'#fff'} />
-									</View>
-							  	</View>
-		 				  </TouchableOpacity>
-					  }
- 			  	</View>
+				<View style={{ flexDirection: 'row', position: 'absolute', bottom: 0, left: 0 }}>
+					{this.state.checkout &&
+						<TouchableOpacity style={[styles.styleTabbars, { flex: 1, backgroundColor: '#ffdc42' }]} onPress={() => Actions.ListOrder({
+							title: 'Danh sách đặt vé',
+							data: {
+								id_dieu_do: this.props.data.id_dieu_do,
+								gio_xuat_ben: this.props.data.day + ' ' + this.props.data.gio_xuat_ben,
+								dataUser: this.state.infoAdm,
+								dataBook: this.state.dataBook,
+								dataBen: this.props.data.dataBen,
+								rootPrice: this.props.data.totalPriceInt,
+								priceMin: this.state.priceMin,
+							}
+						})}>
+							<View style={{ flexDirection: 'row', flex: 1 }}>
+								<View style={{ flex: 1, alignItems: 'flex-end', justifyContent: 'center', backgroundColor: 'transparent', paddingRight: 10, marginLeft: 50 }}>
+									<Text style={{ color: '#000' }}>Tiếp tục</Text>
+								</View>
+								<View style={{ flex: 1, alignItems: 'flex-start', justifyContent: 'center', backgroundColor: 'transparent', paddingTop: 5 }}>
+									<Icon name="md-arrow-round-forward" color={'#fff'} />
+								</View>
+							</View>
+						</TouchableOpacity>
+					}
+				</View>
 			</View>
 		);
 	}
@@ -503,7 +637,6 @@ const styles = StyleSheet.create({
 	borderCol: {
 		height: 50,
 		borderWidth: 1,
-		borderColor: '#d6d7da',
 		marginRight: 5,
 		marginBottom: 5
 	},

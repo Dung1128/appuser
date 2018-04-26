@@ -31,6 +31,11 @@ class Register extends Component {
 		};
 	}
 
+	validateEmail(email) {
+		let re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+		return re.test(email);
+	}
+
 	async handleRegister() {
 		let mesValid = [];
 		this.state.cssError = [];
@@ -43,13 +48,38 @@ class Register extends Component {
 			);
 		}
 
+		if (this.state.email == '') {
+			checkValid = false;
+			this.state.cssError.cssErrorEmail = 'cssError';
+			mesValid.push(
+				<Text key="email" style={styles.textErrors}>Bạn vui lòng nhập Email.</Text>
+			);
+		} else {
+			if (!this.validateEmail(this.state.email)) {
+				checkValid = false;
+				this.state.cssError.cssErrorEmail = 'cssError';
+				mesValid.push(
+					<Text key="email" style={styles.textErrors}>Mail bạn nhập không đúng.</Text>
+				);
+			}
+		}
+
 		if (this.state.phone == '') {
 			checkValid = false;
 			this.state.cssError.cssErrorPhone = 'cssError';
 			mesValid.push(
 				<Text key="phone" style={styles.textErrors}>Bạn vui lòng nhập Số Điện Thoại.</Text>
 			);
+		} else {
+			if (this.state.phone.length < 10 || !Number.isInteger(Number(this.state.phone))) {
+				checkValid = false;
+				this.state.cssError.cssErrorPhone = 'cssError';
+				mesValid.push(
+					<Text key="phone" style={styles.textErrors}>Số điện thoại bạn nhập không đúng.</Text>
+				);
+			}
 		}
+
 
 		if (this.state.password == '') {
 			checkValid = false;
@@ -58,12 +88,20 @@ class Register extends Component {
 				<Text key="password" style={styles.textErrors}>Bạn vui lòng nhập Mật Khẩu.</Text>
 			);
 		} else {
-			if (this.state.rePassword != this.state.password) {
+			if (this.state.password.length < 6) {
 				checkValid = false;
-				this.state.cssError.cssErrorRepassword = 'cssError';
+				this.state.cssError.cssErrorPassword = 'cssError';
 				mesValid.push(
-					<Text key="password" style={styles.textErrors}>Mật khẩu không giống nhau.</Text>
+					<Text key="password" style={styles.textErrors}>Mật khẩu phải có ít nhất 6 ký tự.</Text>
 				);
+			} else {
+				if (this.state.rePassword != this.state.password) {
+					checkValid = false;
+					this.state.cssError.cssErrorRepassword = 'cssError';
+					mesValid.push(
+						<Text key="password" style={styles.textErrors}>Mật khẩu nhập lại phải giống mật khẩu ở trên.</Text>
+					);
+				}
 			}
 		}
 
@@ -90,17 +128,40 @@ class Register extends Component {
 						phone: this.state.phone,
 					}
 
-					fetchData('api_get_code_auth', body, 'GET');
-					Actions.Authentication({ title: 'Xác thực tài khoản', data: {phone: this.state.phone, type: 'register'} });
+					let auth = await fetchData('api_get_code_auth', body, 'GET');
+					if (auth.status == 200) {
+						Actions.Authentication({ title: 'Xác thực tài khoản', data: { phone: this.state.phone, type: 'register' } });
 
-					this.setState({
-						loading: false,
-						fullName: '',
-						email: '',
-						phone: '',
-						password: '',
-						rePassword: ''
-					});
+						this.setState({
+							loading: true,
+							fullName: '',
+							email: '',
+							phone: '',
+							password: '',
+							rePassword: ''
+						});
+					}
+					else {
+						mesValid.push(
+							<Text key="error_api" style={styles.textErrors}>{auth.mes}</Text>
+						);
+						this.setState({
+							messageError: mesValid,
+							loading: false,
+							cssError: {
+								cssErrorPhone: 'cssError'
+							}
+						});
+					}
+
+					// this.setState({
+					// 	loading: true,
+					// 	fullName: '',
+					// 	email: '',
+					// 	phone: '',
+					// 	password: '',
+					// 	rePassword: ''
+					// });
 				} else if (data.status == 201) {
 					mesValid.push(
 						<Text key="error_api" style={styles.textErrors}>Số điện thoại đã tồn tại trên hệ thống.</Text>
@@ -114,7 +175,7 @@ class Register extends Component {
 					});
 				} else {
 					mesValid.push(
-						<Text key="error_api" style={styles.textErrors}>Số điện thoại đã tồn tại trên hệ thống.</Text>
+						<Text key="error_api" style={styles.textErrors}>{data.mes}</Text>
 					);
 					this.setState({
 						loading: false,
@@ -158,7 +219,7 @@ class Register extends Component {
 
 						<InputGroup key="group_phone">
 							<Icon name='ios-call' style={styles[this.state.cssError.cssErrorPhone]} />
-							<Input placeholder="Số điện thoại" keyboardType="numeric" onChange={(event) => this.setState({ phone: event.nativeEvent.text })} />
+							<Input placeholder="Số điện thoại" keyboardType="numeric" maxLength={11} onChange={(event) => this.setState({ phone: event.nativeEvent.text })} />
 						</InputGroup>
 
 						<InputGroup key="group_password">
@@ -179,7 +240,6 @@ class Register extends Component {
 							style={styles.buttonRegister}
 							onPress={() => this.handleRegister()}
 						>Đăng ký</Button>
-
 
 						{this.state.messageError}
 					</View>

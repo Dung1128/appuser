@@ -126,7 +126,6 @@ class DetailNews extends Component {
 							<Text style={{ fontWeight: 'bold' }}>Tin liên quan</Text>
 						</View>
 					}
-					
 					{!this.state.loading && this.state.resultsLq.length > 0 &&
 						this._renderHtmlNews(this.state.resultsLq)
 					}

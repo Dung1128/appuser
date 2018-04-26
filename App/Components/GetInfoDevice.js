@@ -24,7 +24,6 @@ const GetInfoDevice = async () => {
 
 			if (data.status == 201) {
 				let url = data.urlApp;
-				console.log('Co version moi');
 				return Alert.alert(
 					'Hệ thống thông báo',
 					'Version của bạn đã cũ. Bạn vui lòng Update lên version mới nhất.',

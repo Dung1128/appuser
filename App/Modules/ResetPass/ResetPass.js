@@ -1,4 +1,4 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
 import {
     AppRegistry,
     StyleSheet,
@@ -114,7 +114,6 @@ class ResetPass extends Component {
     }
 
     async handleGetCodeAuth() {
-        console.log('so phone: ' + this.props.data);
         let body = {
             phone: this.props.data,
         }

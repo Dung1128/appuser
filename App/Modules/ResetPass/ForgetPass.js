@@ -1,4 +1,4 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
 import {
     AppRegistry,
     StyleSheet,
@@ -34,6 +34,11 @@ class ForgetPass extends Component {
         if (this.state.numberPhone.length == 0) {
             checkNullForm = true;
             mesValid.push('Vui lòng nhập số điện thoại.');
+        } else {
+            if (this.state.numberPhone.length < 10 || !Number.isInteger(Number(this.state.numberPhone))) {
+				checkNullForm = true;
+                mesValid.push('Số điện thoại bạn nhập không đúng.');
+			}
         }
 
         if (!checkNullForm) {
@@ -90,7 +95,7 @@ class ForgetPass extends Component {
             <View key="content_mobile" style={styles.paddingContent}>
                 <InputGroup key="group_mobile">
                     <Icon name='ios-call' style={styles[this.state.cssError]} />
-                    <Input placeholder="Số điện thoại" style={{ height: 50 }} onChange={(event) => this.setState({ numberPhone: event.nativeEvent.text })} />
+                    <Input placeholder="Số điện thoại" keyboardType="numeric" maxLength={11} style={{ height: 50 }} onChange={(event) => this.setState({ numberPhone: event.nativeEvent.text })} />
                 </InputGroup>
 
                 {arrValid}

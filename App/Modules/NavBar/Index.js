@@ -1,9 +1,11 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { AppRegistry, StyleSheet, Platform, Animated, Image, Text, View, TouchableOpacity } from 'react-native';
 import { Icon } from 'native-base';
 import { Actions } from 'react-native-router-flux';
-import GetInfoDevice from '../../Components/GetInfoDevice';
+// import GetInfoDevice from '../../Components/GetInfoDevice';
 import NotificationController from '../../Components/NotificationController';
+import { colorLogo } from '../../Config/common';
 
 const logo = require('../../Skin/Images/logo.png');
 
@@ -30,7 +32,7 @@ const styles = StyleSheet.create({
     right: 0,
   },
   header: {
-    backgroundColor: 'rgba(255, 220, 66, 1)',
+    backgroundColor: colorLogo,
     paddingTop: 0,
     top: 0,
     ...Platform.select({
@@ -159,7 +161,7 @@ class NavBar extends React.Component {
     this.renderBackButton = this.renderBackButton.bind(this);
     this.renderLeftButton = this.renderLeftButton.bind(this);
     this.renderTitle = this.renderTitle.bind(this);
-    GetInfoDevice();
+    // GetInfoDevice();
   }
 
   _onPressBackButton() {
@@ -395,7 +397,7 @@ class NavBar extends React.Component {
     return tryRender(this.props.component, this.props.wrapBy) || tryRender(this.props);
   }
 
-  renderTitle(childState, index: number) {
+  renderTitle(childState, index) {
     let title = this.props.getTitle ? this.props.getTitle(childState) : childState.title;
     if (title === undefined && childState.component && childState.component.title) {
       title = childState.component.title;

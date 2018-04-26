@@ -1,4 +1,4 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
 import {
     AppRegistry,
     StyleSheet,
@@ -80,6 +80,7 @@ class Authentication extends Component {
                     if (data.status == 201) {
 
                     }
+                    
                     this.setState({
                         error: 'true',
                         loading: false,

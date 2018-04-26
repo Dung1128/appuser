@@ -1,4 +1,4 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
 import {
   AppRegistry,
   StyleSheet,
@@ -46,7 +46,6 @@ class HuongDanSuDung extends Component {
 				type: 'huongdanuser'
 			}
 			data = await fetchData('user_get_content', params, 'GET');
-			console.log(data);
 		} catch (e) {
 			console.log(e);
 		}

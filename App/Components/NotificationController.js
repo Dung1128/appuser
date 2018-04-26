@@ -11,12 +11,12 @@ export default class NotificationController extends Component {
 	componentDidMount() {
 		FCM.requestPermissions(); // for iOS
     	FCM.getFCMToken().then(token => {
-     		console.log("getFCMToken", token);
+     		// console.log("getFCMToken", token);
 			this.props.onChangeToken(token);
     	});
 
 	  	this.notificationListner = FCM.on(FCMEvent.Notification, notif => {
-		  	console.log("Notification", notif);
+		  	// console.log("Notification", notif);
 
 		  	if(notif.local_notification){return;}
 		  	if(notif.opened_from_tray){return;}
@@ -27,15 +27,15 @@ export default class NotificationController extends Component {
 				  //notif._notificationType is available for iOS platfrom
 			  	switch(notif._notificationType){
 				  	case NotificationType.Remote:
-					  	console.log('Error 3.1');
+					  	// console.log('Error 3.1');
 					  	notif.finish(RemoteNotificationResult.NewData) //other types available: RemoteNotificationResult.NewData, RemoteNotificationResult.ResultFailed
 					  	break;
 				  	case NotificationType.NotificationResponse:
-					  	console.log('Error 3.2');
+					  	// console.log('Error 3.2');
 					  	notif.finish();
 					  	break;
 				  	case NotificationType.WillPresent:
-					  	console.log('Error 3.3');
+					  	// console.log('Error 3.3');
 					  	notif.finish(WillPresentNotificationResult.All) //other types available: WillPresentNotificationResult.None
 					  	break;
 			  	}
@@ -55,7 +55,7 @@ export default class NotificationController extends Component {
 	  	});
 
 	  	this.refreshTokenListener = FCM.on(FCMEvent.RefreshToken, token => {
-		  	console.log("TOKEN (refreshUnsubscribe)", token);
+		  	// console.log("TOKEN (refreshUnsubscribe)", token);
 		  	this.props.onChangeToken(token);
 	  	});
 	}

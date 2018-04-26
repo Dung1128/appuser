@@ -21,6 +21,18 @@ const API_URL = {
   api_get_code_auth: common.domain+'/api/user_v1/api_get_ma_xac_thuc.php',
   api_reset_pass: common.domain+'/api/user_v1/api_quen_mat_khau.php',
   api_auth_acc: common.domain+'/api/user_v1/api_xac_thuc_tai_khoan.php',
+  api_get_list_hang_ghe: common.domain+'/api/user_v1/get_list_color_hang_ghe.php',
+  api_get_discount_children: common.domain+'/api/user_v1/get_giam_gia_tre_em.php',
+  api_get_discount_code: common.domain+'/api/user_v1/get_ma_giam_gia_detail.php',
+  api_get_list_chuyen_pho_bien: common.domain+'/api/user_v1/api_get_list_chuyen.php',
+  api_get_list_chuyen_rating: common.domain+'/api/user_v1/api_user_rating_chuyen_di.php',
+  api_get_list_tieu_chi: common.domain+'/api/user_v1/api_tieu_chi_danh_gia.php',
+  api_save_rating: common.domain+'/api/user_v1/api_user_save_rating.php',
+  api_view_rating: common.domain+'/api/user_v1/api_user_view_rating.php',
+  api_get_user_info: common.domain+'/api/api_user_get_user_info.php',
+  api_buy_pro_by_point: common.domain+'/api/user_v1/api_buy_promotion_by_point.php',
+  api_history_point: common.domain+'/api/user_v1/api_money_point_history.php',
+  api_get_list_promotion: common.domain+'/api/user_v1/api_get_list_promotion.php',
 }
 
 const API_HEADERS  = {
@@ -73,7 +85,7 @@ const fetchData = async (type, param={}, method="GET", retry=undefined) => {
     }
 
     // Trả về dữ liệu json
-    console.log(url);
+    // console.log(url);
     let response    = await fetch(url, opts)
     let responseJson= await response.json()
     

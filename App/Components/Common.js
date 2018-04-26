@@ -12,7 +12,6 @@ export default class Common {
 
 	static async checkServerAlive() {
 		if (common.net == 0) {
-			console.log('check trang thai net: ' + common.net);
 			try {
 				let response = await fetch(common.domain + '/api/ping.php');
 				let responseJson = await response.json();
