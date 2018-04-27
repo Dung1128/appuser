@@ -147,7 +147,7 @@ class SideBar extends Component {
 								</View>
 							</ListItem>
 
-							{this.state.checkLogin &&
+							{/* {this.state.checkLogin &&
 								<ListItem button iconLeft onPress={() => { this.props.closeDrawer(); Actions.PointToPromotion({ title: 'Đổi điểm lấy mã KM' }) }}>
 									<View style={styles.listItemContainer}>
 										<View style={[styles.iconContainer]}>
@@ -156,7 +156,7 @@ class SideBar extends Component {
 										<Text style={styles.text}>Đổi điểm lấy mã KM</Text>
 									</View>
 								</ListItem>
-							}
+							} */}
 
 							{this.state.checkLogin &&
 								<ListItem button iconLeft onPress={() => { this.props.closeDrawer(); Actions.ListPromotion({ title: 'Danh sách mã KM' }) }}>

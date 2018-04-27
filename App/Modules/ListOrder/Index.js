@@ -82,7 +82,7 @@ class LichSu extends Component {
 		let totalHtml = [];
 		let total = 0;
 		let totaldisPrice = 0;
-		let codeKM = this.state.codeKM;
+		// let codeKM = this.state.codeKM;
 		let showPriceDiscount = false;
 		let newPrice = 0;
 		let newDiscount = 0;
@@ -90,8 +90,6 @@ class LichSu extends Component {
 		let key_KM = 0;
 		let diemdi = '';
 		let diemden = '';
-		console.log('ma kM');
-		console.log(this.state.mesKM);
 
 		if (this.state.nameKM != '') {
 			currentKM = this.state.nameKM;
@@ -123,8 +121,16 @@ class LichSu extends Component {
 		// else {
 		// 	showPriceDiscount = false;
 		// }
+		let bg = '';
 
 		for (let i = 0; i < dBook.length; i++) {
+			if (i % 2 == 0) {
+				bg = '#e5e2e2';
+			} else {
+				bg = '#dee3e3';
+			}
+			
+			let codeKM = '';
 
 			// let newPrice = dBook[i].bvv_price_ly_thuyet.toFixed(0).replace(/./g, function (c, i, a) {
 			// 	return i && c !== "." && ((a.length - i) % 3 === 0) ? ',' + c : c;
@@ -142,25 +148,25 @@ class LichSu extends Component {
 			}
 
 			html.push(
-				<CardItem key={i}>
-					<View style={{ flexDirection: 'row' }}>
-						<View style={{ flex: 4, alignItems: 'flex-start' }}>
-							{/* <Text>{this.props.data.dataBen[dBook[i].bvv_bex_id_a]} -> {this.props.data.dataBen[dBook[i].bvv_bex_id_b]}</Text> */}
+				<CardItem key={i} style={{ backgroundColor: bg }}>
+					<View style={{ flexDirection: 'row', }}>
+						{/* <View style={{ flex: 4, alignItems: 'flex-start' }}>
 							<Text style={{ color: '#3561BF' }}>{dBook[i].labelFull}</Text>
-							{/* <Text>Số Lượng: 1</Text> */}
+						</View> */}
+						{/* <View style={{ flexDirection: 'row', flex: 3, alignItems: 'flex-end' }}> */}
+						<View style={{ flex: 4, alignItems: 'flex-start' }}>
+							<Text style={{ fontWeight: 'bold' }}>{'Số ghế'}</Text>
+							<Text style={{ fontWeight: 'bold' }}>{'Giá'}</Text>
+							<Text style={{ fontWeight: 'bold' }}>{'Giảm '}</Text>
+							<Text style={{ fontWeight: 'bold' }}>{'Còn '}</Text>
 						</View>
-						<View style={{ flexDirection: 'row', flex: 3, alignItems: 'flex-end' }}>
-							<View style={{ flex: 4, alignItems: 'flex-start' }}>
-								<Text style={{ fontWeight: 'bold' }}>{' '}</Text>
-								<Text style={{ fontWeight: 'bold' }}>{'Giảm '}</Text>
-								<Text style={{ fontWeight: 'bold' }}>{'Còn '}</Text>
-							</View>
-							<View style={{ flex: 9, alignItems: 'flex-end' }}>
-								<Text style={{ fontWeight: 'bold' }}>{Common.formatPrice(newPrice)} VNĐ</Text>
-								<Text style={{ fontWeight: 'bold' }}>{Common.formatPrice(newDiscount)} VNĐ</Text>
-								<Text style={{ fontWeight: 'bold' }}>{Common.formatPrice(rPrive)} VNĐ</Text>
-							</View>
+						<View style={{ flex: 9, alignItems: 'flex-end' }}>
+							<Text style={{ fontWeight: 'bold' }}>{dBook[i].labelFull}</Text>
+							<Text style={{ fontWeight: 'bold' }}>{Common.formatPrice(newPrice)} Đ</Text>
+							<Text style={{ fontWeight: 'bold' }}>{Common.formatPrice(newDiscount)} Đ</Text>
+							<Text style={{ fontWeight: 'bold' }}>{Common.formatPrice(rPrive)} Đ</Text>
 						</View>
+						{/* </View> */}
 					</View>
 
 					<TouchableOpacity onPress={() => this._showKM(i)} >
@@ -185,20 +191,23 @@ class LichSu extends Component {
 								<View style={{ flex: 3, borderWidth: 1, borderRadius: 10, marginRight: 5 }} >
 									<Input
 										placeholder="Nhập mã khuyến mại"
-										onChange={(event) => this.setState({ codeKM: event.nativeEvent.text })}
+										onChange={(event) => {
+											// this.setState({ codeKM: event.nativeEvent.text }); 
+											codeKM = event.nativeEvent.text;
+										}}
 									/>
 								</View>
 								<View style={{ flex: 1, borderWidth: 1, borderRadius: 10, marginLeft: 5, backgroundColor: '#5cb85c', borderColor: '#5cb85c' }} >
-									<TouchableOpacity key="1" onPress={() => this.checkCodeKM(i)} style={{ flex: 1, justifyContent: 'center' }}>
+									<TouchableOpacity key="1" onPress={() => this.checkCodeKM(i, codeKM)} style={{ flex: 1, justifyContent: 'center' }}>
 										<Text style={{ textAlign: 'center', textAlignVertical: 'center', color: 'white' }}>
 											Sử dụng
 										</Text>
 									</TouchableOpacity>
 								</View>
 							</View>
-							{(this.state.mesKM != null) && (this.state.mesKM != '') &&
+							{(dBook[i].mesKM != null) && (dBook[i].mesKM != '') &&
 								<Text style={{ textAlign: 'center', textAlignVertical: 'center', color: 'red', margin: 5 }}>
-									{this.state.mesKM}
+									{dBook[i].mesKM}
 								</Text>
 							}
 						</View>
@@ -216,17 +225,17 @@ class LichSu extends Component {
 		totalHtml.push(
 			<CardItem key="totalprice">
 				<View style={{ flexDirection: 'row' }}>
-					<View style={{ flex: 1 }}>
+					{/* <View style={{ flex: 1 }}>
 						<Text></Text>
 					</View>
 					<View style={{ flex: 1 }}>
 						<Text></Text>
-					</View>
+					</View> */}
 					<View style={{ flex: 2 }}>
 						<Text>Tổng Tiền</Text>
 					</View>
 					<View style={{ flex: 4, alignItems: 'flex-end' }}>
-						<Text style={{ fontWeight: 'bold', color: 'red' }}>{newTotalPrice} VNĐ</Text>
+						<Text style={{ fontWeight: 'bold', color: 'red' }}>{newTotalPrice} Đ</Text>
 					</View>
 				</View>
 			</CardItem>
@@ -236,17 +245,17 @@ class LichSu extends Component {
 			htmlpriceDiscount.push(
 				<CardItem key="totalprice">
 					<View style={{ flexDirection: 'row' }}>
-						<View style={{ flex: 1 }}>
+						{/* <View style={{ flex: 1 }}>
 							<Text></Text>
 						</View>
 						<View style={{ flex: 1 }}>
 							<Text></Text>
-						</View>
+						</View> */}
 						<View style={{ flex: 2 }}>
 							<Text>Số tiền giảm</Text>
 						</View>
 						<View style={{ flex: 4, alignItems: 'flex-end' }}>
-							<Text style={{ fontWeight: 'bold', color: 'red' }}>{Common.formatPrice(totaldisPrice)} VNĐ</Text>
+							<Text style={{ fontWeight: 'bold', color: 'red' }}>{Common.formatPrice(totaldisPrice)} Đ</Text>
 						</View>
 					</View>
 				</CardItem>
@@ -275,7 +284,7 @@ class LichSu extends Component {
 							</View>
 						</CardItem>
 
-						<CardItem>
+						{/* <CardItem>
 							<View style={{ flexDirection: 'row' }}>
 								<View style={{ flex: 4 }}>
 									<Text>Số ghế</Text>
@@ -284,7 +293,7 @@ class LichSu extends Component {
 									<Text>Giá</Text>
 								</View>
 							</View>
-						</CardItem>
+						</CardItem> */}
 
 						{html}
 
@@ -339,60 +348,74 @@ class LichSu extends Component {
 		this.refs.modalKM.close();
 	}
 
-	async checkCodeKM(index) {
+	async checkCodeKM(index, codeKM) {
 		// gửi mã km lên và lấy id, price_dis về
-		let codeKM = this.state.codeKM,
-			discount = 0;
+		// let codeKM = this.state.codeKM,
+		let	discount = 0;
+		console.log('code KM');
+		console.log(codeKM);
 
 		try {
 			let dataBook = this.state.dBook;
 			// let index = this.state.index;
 
 			if (index >= 0) {
-				let flag = true;
+				if (codeKM && (codeKM.trim() != '')) {
+					let flag = true;
 
-				for (let i = 0; i < dataBook.length; i++) {
-					if (dataBook[i].code_KM == codeKM && (i != index))
-						flag = false
+					for (let i = 0; i < dataBook.length; i++) {
+						if (dataBook[i].code_KM == codeKM && (i != index))
+							flag = false
+					}
+
+					if (flag) {
+						let params = {
+							token: this.state.infoAdm.token,
+							user_id: this.state.infoAdm.adm_id,
+							did_id: this.props.data.id_dieu_do,
+							diem_di: dataBook[index].bvv_bex_id_a,
+							diem_den: dataBook[index].bvv_bex_id_b,
+							bvv_id: dataBook[index].bvv_id,
+							giam_gia_text: codeKM,
+						}
+
+						let data = await fetchData('api_get_discount_code', params, 'GET');
+
+						if (data.status == 404) {
+							// alert(data.mes);
+							// this.setState({
+							// 	mesKM: data.mes,
+							// })
+							dataBook[index].mesKM = data.mes;
+						} else if (data.status != 200) {
+							// this.setState({
+							// 	mesKM: data.mes,
+							// })
+							dataBook[index].mesKM = data.mes;
+						}
+						else if (data.status == 200) {
+							dataBook[index].bvv_price_discount = data.price_discount;
+							dataBook[index].code_KM = codeKM;
+							// dataBook[this.state.index].key_KM = data.id;
+							discount = data.price_discount;
+							// this.setState({
+							// 	mesKM: '',
+							// })
+							dataBook[index].mesKM = '';
+						}
+					} else {
+						// alert('Mã khuyến mãi đã dùng');
+						// this.setState({
+						// 	mesKM: 'Mã khuyến mãi đã dùng',
+						// })
+						dataBook[index].mesKM = 'Mã khuyến mãi đã dùng';
+					}
 				}
-
-				if (flag) {
-					let params = {
-						token: this.state.infoAdm.token,
-						user_id: this.state.infoAdm.adm_id,
-						did_id: this.props.data.id_dieu_do,
-						diem_di: dataBook[index].bvv_bex_id_a,
-						diem_den: dataBook[index].bvv_bex_id_b,
-						bvv_id: dataBook[index].bvv_id,
-						giam_gia_text: codeKM,
-					}
-
-					let data = await fetchData('api_get_discount_code', params, 'GET');
-
-					if (data.status == 404) {
-						// alert(data.mes);
-						this.setState({
-							mesKM: data.mes,
-						})
-					} else if (data.status != 200) {
-						this.setState({
-							mesKM: data.mes,
-						})
-					} 
-					else if (data.status == 200) {
-						dataBook[index].bvv_price_discount = data.price_discount;
-						dataBook[index].code_KM = codeKM;
-						// dataBook[this.state.index].key_KM = data.id;
-						discount = data.price_discount;
-						this.setState({
-							mesKM: '',
-						})
-					}
-				} else {
-					// alert('Mã khuyến mãi đã dùng');
-					this.setState({
-						mesKM: 'Mã khuyến mãi đã dùng',
-					})
+				else {
+					// this.setState({
+					// 	mesKM: 'Bạn chưa nhập mã khuyến mãi',
+					// })
+					dataBook[index].mesKM = 'Bạn chưa nhập mã khuyến mãi';
 				}
 			}
 
