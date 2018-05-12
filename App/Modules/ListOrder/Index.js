@@ -191,14 +191,18 @@ class LichSu extends Component {
 								<View style={{ flex: 3, borderWidth: 1, borderRadius: 10, marginRight: 5 }} >
 									<Input
 										placeholder="Nhập mã khuyến mại"
+										value={this.state.dBook[i].code_KM}
 										onChange={(event) => {
 											// this.setState({ codeKM: event.nativeEvent.text }); 
-											codeKM = event.nativeEvent.text;
+											// this.setState({ dBook[i].code_KM: event.nativeEvent.text }); 
+											// codeKM = event.nativeEvent.text;
+											dBook[i].code_KM = event.nativeEvent.text;
+											this.setState({ dBook: dBook }); 
 										}}
 									/>
 								</View>
 								<View style={{ flex: 1, borderWidth: 1, borderRadius: 10, marginLeft: 5, backgroundColor: '#5cb85c', borderColor: '#5cb85c' }} >
-									<TouchableOpacity key="1" onPress={() => this.checkCodeKM(i, codeKM)} style={{ flex: 1, justifyContent: 'center' }}>
+									<TouchableOpacity key="1" onPress={() => this.checkCodeKM(i, dBook[i].code_KM)} style={{ flex: 1, justifyContent: 'center' }}>
 										<Text style={{ textAlign: 'center', textAlignVertical: 'center', color: 'white' }}>
 											Sử dụng
 										</Text>
@@ -363,10 +367,10 @@ class LichSu extends Component {
 				if (codeKM && (codeKM.trim() != '')) {
 					let flag = true;
 
-					for (let i = 0; i < dataBook.length; i++) {
-						if (dataBook[i].code_KM == codeKM && (i != index))
-							flag = false
-					}
+					// for (let i = 0; i < dataBook.length; i++) {
+					// 	if (dataBook[i].code_KM == codeKM && (i != index))
+					// 		flag = false
+					// }
 
 					if (flag) {
 						let params = {
@@ -387,11 +391,17 @@ class LichSu extends Component {
 							// 	mesKM: data.mes,
 							// })
 							dataBook[index].mesKM = data.mes;
+							dataBook[index].bvv_price_discount = 0;
+							dataBook[index].code_KM = codeKM;
+							discount = 0;
 						} else if (data.status != 200) {
 							// this.setState({
 							// 	mesKM: data.mes,
 							// })
 							dataBook[index].mesKM = data.mes;
+							dataBook[index].bvv_price_discount = 0;
+							dataBook[index].code_KM = codeKM;
+							discount = 0;
 						}
 						else if (data.status == 200) {
 							dataBook[index].bvv_price_discount = data.price_discount;
@@ -409,6 +419,9 @@ class LichSu extends Component {
 						// 	mesKM: 'Mã khuyến mãi đã dùng',
 						// })
 						dataBook[index].mesKM = 'Mã khuyến mãi đã dùng';
+						dataBook[index].bvv_price_discount = 0;
+						dataBook[index].code_KM = codeKM;
+						discount = 0;
 					}
 				}
 				else {
@@ -416,6 +429,9 @@ class LichSu extends Component {
 					// 	mesKM: 'Bạn chưa nhập mã khuyến mãi',
 					// })
 					dataBook[index].mesKM = 'Bạn chưa nhập mã khuyến mãi';
+					dataBook[index].bvv_price_discount = 0;
+					dataBook[index].code_KM = '';
+					discount = 0;
 				}
 			}
 

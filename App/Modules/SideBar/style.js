@@ -19,7 +19,7 @@ module.exports = StyleSheet.create({
     height: 64,
     width: null,
     position: 'relative',
-    marginBottom: 10,
+    // marginBottom: 10,
     backgroundColor: colorLogo,
   },
   drawerImage: {

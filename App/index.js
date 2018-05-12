@@ -100,11 +100,12 @@ export default class Appuser extends Component {
 				content={<SideBar closeDrawer={() => { this.drawer.close(); }} />}
 				styles={drawerStyles}
 				tapToClose
-				openDrawerOffset={0.2}
+				openDrawerOffset={0.25}
 				panCloseMask={0.2}
 				tweenHandler={(ratio) => ({
 					main: { opacity: (2 - ratio) / 2 }
 				})}
+				
 			>
 				<StatusBar hidden={true} />
 				<App />

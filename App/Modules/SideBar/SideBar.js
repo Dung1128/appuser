@@ -12,16 +12,19 @@ import {
 	View,
 	Icon,
 	List,
-	ListItem
+	ListItem,
+	Thumbnail,
 } from 'native-base';
-import { domain, cache } from '../../Config/common';
+import { domain, cache, colorLogo } from '../../Config/common';
 import { Actions } from 'react-native-router-flux';
 import Communications from 'react-native-communications';
 import sidebarTheme from './theme-sidebar';
 import styles from './style';
 import DeviceInfo from 'react-native-device-info';
+import StorageHelper from '../../Components/StorageHelper';
 
 const logo = require('../../Skin/Images/logo.png');
+const avatar = require('../../Skin/Images/avatar.jpg');
 const { width, height } = Dimensions.get('window');
 
 const tempInterval = '';
@@ -33,7 +36,8 @@ class SideBar extends Component {
 			checkLogin: false,
 			dataUser: [],
 			height: height,
-			width: width
+			width: width,
+			results: '',
 		};
 	}
 
@@ -80,6 +84,41 @@ class SideBar extends Component {
 		}, 500);
 	}
 
+	async componentWillMount() {
+
+		let results = await StorageHelper.getStore('infoUser');
+		results = JSON.parse(results);
+		let admId = results.adm_id;
+		let token = results.token;
+		this.setState({
+			infoAdm: results,
+			token: token
+		});
+
+		var that = this;
+
+		fetch(domain+'/api/api_user_get_user_info.php?token='+token+'&user_id='+admId, {
+			headers: {
+				'Cache-Control': cache
+			}
+		})
+		.then((response) => response.json())
+		.then((responseJson) => {
+			if(responseJson.status == 200) {
+				that.setState({
+					results: responseJson.dataUser,
+					loading: false
+				});
+			}else {
+				alert(responseJson.mes);
+				Actions.welcome({type: 'reset'});
+			}
+		})
+		.catch((error) => {
+		   console.error(error);
+		});
+	}
+
 	_userInfo() {
 
 	}
@@ -107,28 +146,39 @@ class SideBar extends Component {
 				<View style={{ height: (this.state.height - 73), overflow: 'hidden' }}>
 					<ScrollView style={{ marginBottom: 40, height: (this.state.height - 73) }}>
 						{this.state.checkLogin &&
-							<View style={{ alignItems: 'flex-start', paddingLeft: 30, paddingVertical: 20 }}>
-								<TouchableOpacity onPress={() => { this.props.closeDrawer(); Actions.UserInfo({ title: 'Thông tin tài khoản' }) }}>
+							<TouchableOpacity style={{ backgroundColor: colorLogo, paddingTop: 10, alignItems: 'center' }} onPress={() => { this.props.closeDrawer(); Actions.UserInfo({ title: 'Thông tin tài khoản' }) }}>
+								<Thumbnail size={50} circular source={{uri: this.state.results.avatar_txt}} />
+								<View style={{ alignItems: 'flex-start', paddingVertical: 20 }}>
 									{this.state.dataUser.adm_fullname != '' &&
 										<Text style={{ color: '#0A0A1B' }}>Xin Chào: <Text style={{ color: '#4B1414' }}>{this.state.dataUser.adm_fullname}</Text></Text>
 									}
 									<Text style={{ color: '#0A0A1B' }}>SĐT: <Text style={{ color: '#4B1414' }}>{this.state.dataUser.use_phone}</Text></Text>
-								</TouchableOpacity>
-							</View>
+								</View>
+							</TouchableOpacity>
 						}
+
+						{!this.state.checkLogin &&
+							// <ListItem button iconLeft style={{ backgroundColor: colorLogo }} onPress={() => { this.props.closeDrawer(); }}>
+							// 	<View style={{ flexDirection: 'column', alignItems: 'center' }}>
+							// 		<Thumbnail size={50} circular source={avatar} />
+							// 		{/* <View style={[styles.iconContainer]}>
+							// 			<Icon name="ios-contact" style={styles.sidebarIcon} />
+							// 		</View> */}
+							// 		<Text style={[styles.text, { marginTop: 5 }]}>Đăng Nhập</Text>
+							// 	</View>
+							// </ListItem>
+							<TouchableOpacity onPress={() => { this.props.closeDrawer() }}>
+								<View style={{ flexDirection: 'column', alignItems: 'center', backgroundColor: colorLogo, paddingVertical: 10 }}>
+									<Thumbnail size={50} circular source={avatar} />
+									{/* <View style={[styles.iconContainer]}>
+										<Icon name="ios-contact" style={styles.sidebarIcon} />
+									</View> */}
+									<Text style={[styles.text, { marginTop: 5 }]}>Đăng Nhập</Text>
+								</View>
+							</TouchableOpacity>
+						}
+
 						<List>
-
-							{!this.state.checkLogin &&
-								<ListItem button iconLeft onPress={() => { this.props.closeDrawer(); }}>
-									<View style={styles.listItemContainer}>
-										<View style={[styles.iconContainer]}>
-											<Icon name="ios-contact" style={styles.sidebarIcon} />
-										</View>
-										<Text style={styles.text}>Đăng Nhập</Text>
-									</View>
-								</ListItem>
-							}
-
 							<ListItem button iconLeft onPress={() => { Communications.phonecall('19006776', true); this.props.closeDrawer(); }}>
 								<View style={styles.listItemContainer}>
 									<View style={[styles.iconContainer]}>

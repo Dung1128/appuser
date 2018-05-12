@@ -21,6 +21,7 @@ import { colorLogo } from '../../Config/common';
 import GetInfoDevice from '../../Components/GetInfoDevice';
 import Common from '../../Components/Common';
 import Communications from 'react-native-communications';
+import Accordion from 'react-native-collapsible/Accordion';
 // import DetailNews from '../DetailNews'; 
 
 const heightDevice = Dimensions.get('window').height;
@@ -47,6 +48,8 @@ class HomeIOS extends Component {
 		this.state = {
 			width: widthDevice,
 			height: heightDevice,
+			widthView: 0,
+			heightView: 0,
 			date: date,
 			day: date.getDate(),
 			month: (date.getMonth() + 1),
@@ -449,6 +452,57 @@ class HomeIOS extends Component {
 		}
 	}
 
+	_renderSectionTitle(section) {
+		return (
+			<View style={styles.content}>
+				<Text>{section.content}</Text>
+			</View>
+		);
+	}
+
+	_renderHeader1(section) {
+		return (
+			// <View style={styles.header}>
+			// 	<Text style={styles.headerText}>{section.title}</Text>
+			// </View>
+			<View style={{ alignItems: 'center', flexDirection: 'row', borderWidth: 1, borderColor: '#ccc', borderRadius: 10, padding: 10, margin: 5 }}>
+				<Icon name="md-subway" style={{ width: 30 }} />
+				<Text style={{
+					fontWeight: 'bold',
+					// paddingTop: 5, 
+					paddingLeft: 5
+				}}
+				>
+					{section.title}
+				</Text>
+			</View>
+		);
+	}
+
+	_renderContent1(section) {
+		let html = [];
+
+		for (let i = 0; i < section.content.length; i++) {
+			html.push(
+				// <Text key={i}>{section.content[i].label}</Text>
+				<View key={'park_' + i} style={{ borderWidth: 1, borderColor: '#ccc', borderRadius: 10, padding: 10, paddingLeft: 45, margin: 5 }}>
+					<TouchableOpacity onPress={() => {
+						this.closeModalDiemDi();
+						this.setState({ keyDiemDi: section.content[i].value, nameDiemDi: section.content[i].label, search1: false });
+					}}>
+						<Text>{section.content[i].label}</Text>
+					</TouchableOpacity>
+				</View>
+			);
+		}
+		return (
+			<View style={styles.content}>
+				{/* <Text>{section.content}</Text> */}
+				{html}
+			</View>
+		);
+	}
+
 	_handleSearchAutocomplate1(nameDiemDi) {
 		// let listItem1 = this.state.listItem1;
 		// let listItem1_1 = this._str_slug(this.state.listItem1);
@@ -457,6 +511,8 @@ class HomeIOS extends Component {
 		let arrProvince = this.state.arrProvince;
 		let arrProvince_1 = this._str_slugArray(this.state.arrProvince);
 		let arrPark = this.state.arrPark;
+
+		let SECTIONS = [];
 
 		// for (var i = 0; i < listItem1.length; i++) {
 		// 	let label = listItem1[i].label.toLowerCase();
@@ -497,27 +553,32 @@ class HomeIOS extends Component {
 			}
 
 			if (check) {
-				childHtml.push(
-					<View key={'province_' + i} style={{ borderBottomWidth: 1, borderBottomColor: '#ccc', padding: 10 }}>
-						<Text style={{ fontWeight: 'bold' }}>{arrProvince[i]}</Text>
-					</View>
-				);
+				// childHtml.push(
+				// 	<View key={'province_' + i} style={{ borderBottomWidth: 1, borderBottomColor: '#ccc', padding: 10 }}>
+				// 		<Text style={{ fontWeight: 'bold' }}>{arrProvince[i]}</Text>
+				// 	</View>
+				// );
 
-				for (let j = 0; j < arrPark[i].length; j++) {
-					let value = arrPark[i][j].value;
-					let label = arrPark[i][j].label;
+				// for (let j = 0; j < arrPark[i].length; j++) {
+				// 	let value = arrPark[i][j].value;
+				// 	let label = arrPark[i][j].label;
 
-					childHtml.push(
-						<View key={'park_' + i + j} style={{ borderBottomWidth: 1, borderBottomColor: '#ccc', padding: 10 }}>
-							<TouchableOpacity onPress={() => {
-								this.closeModalDiemDi();
-								this.setState({ keyDiemDi: value, nameDiemDi: label, search1: false });
-							}}>
-								<Text>{label}</Text>
-							</TouchableOpacity>
-						</View>
-					);
-				}
+				// 	childHtml.push(
+				// 		<View key={'park_' + i + j} style={{ borderBottomWidth: 1, borderBottomColor: '#ccc', padding: 10 }}>
+				// 			<TouchableOpacity onPress={() => {
+				// 				this.closeModalDiemDi();
+				// 				this.setState({ keyDiemDi: value, nameDiemDi: label, search1: false });
+				// 			}}>
+				// 				<Text>{label}</Text>
+				// 			</TouchableOpacity>
+				// 		</View>
+				// 	);
+				// }
+
+				SECTIONS.push({
+					title: arrProvince[i],
+					content: arrPark[i]
+				});
 			}
 			else {
 				let arrSlugPark = this._str_slug(arrPark[i]);
@@ -536,35 +597,46 @@ class HomeIOS extends Component {
 				}
 
 				if (arrSearch.length > 0) {
-					childHtml.push(
-						<View key={'province_' + i} style={{ borderBottomWidth: 1, borderBottomColor: '#ccc', padding: 10 }}>
-							<Text style={{ fontWeight: 'bold' }}>{arrProvince[i]}</Text>
-						</View>
-					);
+					SECTIONS.push({
+						title: arrProvince[i],
+						content: arrSearch
+					});
 
-					for (let j = 0; j < arrSearch.length; j++) {
-						let value = arrSearch[j].value;
-						let label = arrSearch[j].label;
+					// childHtml.push(
+					// 	<View key={'province_' + i} style={{ borderBottomWidth: 1, borderBottomColor: '#ccc', padding: 10 }}>
+					// 		<Text style={{ fontWeight: 'bold' }}>{arrProvince[i]}</Text>
+					// 	</View>
+					// );
 
-						childHtml.push(
-							<View key={'park_' + i + j} style={{ borderBottomWidth: 1, borderBottomColor: '#ccc', padding: 10 }}>
-								<TouchableOpacity onPress={() => {
-									this.closeModalDiemDi();
-									this.setState({ keyDiemDi: value, nameDiemDi: label, search1: false })
-								}}>
-									<Text>{label}</Text>
-								</TouchableOpacity>
-							</View>
-						);
-					}
+					// for (let j = 0; j < arrSearch.length; j++) {
+					// 	let value = arrSearch[j].value;
+					// 	let label = arrSearch[j].label;
+
+					// 	childHtml.push(
+					// 		<View key={'park_' + i + j} style={{ borderBottomWidth: 1, borderBottomColor: '#ccc', padding: 10 }}>
+					// 			<TouchableOpacity onPress={() => {
+					// 				this.closeModalDiemDi();
+					// 				this.setState({ keyDiemDi: value, nameDiemDi: label, search1: false })
+					// 			}}>
+					// 				<Text>{label}</Text>
+					// 			</TouchableOpacity>
+					// 		</View>
+					// 	);
+					// }
 				}
 			}
 		}
 
 		html.push(
-			<View key="scroll_autocomplate1" style={{ overflow: 'hidden', borderTopWidth: 1, borderTopColor: '#ccc' }}>
+			<View key="scroll_autocomplate1" style={{ overflow: 'hidden' }}>
 				<ScrollView>
-					{childHtml}
+					{/* {childHtml} */}
+					<Accordion
+						sections={SECTIONS}
+						// renderSectionTitle={this._renderSectionTitle}
+						renderHeader={this._renderHeader1.bind(this)}
+						renderContent={this._renderContent1.bind(this)}
+					/>
 				</ScrollView>
 			</View>
 		);
@@ -645,6 +717,50 @@ class HomeIOS extends Component {
 		return newDataStr;
 	}
 
+	_renderHeader2(section) {
+		return (
+			// <View style={styles.header}>
+			// 	<Text style={styles.headerText}>{section.title}</Text>
+			// </View>
+			<View style={{ flexDirection: 'row', borderWidth: 1, borderColor: '#ccc', borderRadius: 10, padding: 10, margin: 5 }}>
+				<Icon name="md-subway" style={{ width: 30 }} />
+				<Text style={{ fontWeight: 'bold', paddingTop: 5, paddingLeft: 5 }}>{section.title}</Text>
+			</View>
+		);
+	}
+
+	_renderContent2(section) {
+		let html = [];
+
+		for (let i = 0; i < section.content.length; i++) {
+			html.push(
+				// <Text key={i}>{section.content[i].label}</Text>
+				// <View key={'park_' + i} style={{ borderBottomWidth: 1, borderBottomColor: '#ccc', padding: 10 }}>
+				// 	<TouchableOpacity onPress={() => {
+				// 		this.closeModalDiemDi();
+				// 		this.setState({ keyDiemDi: section.content[i].value, nameDiemDi: section.content[i].label, search1: false });
+				// 	}}>
+				// 		<Text>{section.content[i].label}</Text>
+				// 	</TouchableOpacity>
+				// </View>
+				<View key={'park_' + i} style={{ borderWidth: 1, borderColor: '#ccc', borderRadius: 10, padding: 10, paddingLeft: 45, margin: 5 }}>
+					<TouchableOpacity onPress={() => {
+						this.closeModalDiemDen();
+						this.setState({ keyDiemDen: section.content[i].value, nameDiemDen: section.content[i].label, search2: false });
+					}}>
+						<Text>{section.content[i].label}</Text>
+					</TouchableOpacity>
+				</View>
+			);
+		}
+		return (
+			<View style={styles.content}>
+				{/* <Text>{section.content}</Text> */}
+				{html}
+			</View>
+		);
+	}
+
 	_handleSearchAutocomplate2(nameDiemDen) {
 		// let listItem2 = this.state.listItem2;
 		// let listItem2_1 = this._str_slug(this.state.listItem2);
@@ -653,6 +769,7 @@ class HomeIOS extends Component {
 		let arrPark = this.state.arrPark;
 		let html = [],
 			childHtml = [];
+		let SECTIONS = [];
 
 		// for (var i = 0; i < listItem2.length; i++) {
 
@@ -695,27 +812,32 @@ class HomeIOS extends Component {
 			}
 
 			if (check) {
-				childHtml.push(
-					<View key={'province_' + i} style={{ borderBottomWidth: 1, borderBottomColor: '#ccc', padding: 10 }}>
-						<Text style={{ fontWeight: 'bold' }}>{arrProvince[i]}</Text>
-					</View>
-				);
+				// childHtml.push(
+				// 	<View key={'province_' + i} style={{ borderBottomWidth: 1, borderBottomColor: '#ccc', padding: 10 }}>
+				// 		<Text style={{ fontWeight: 'bold' }}>{arrProvince[i]}</Text>
+				// 	</View>
+				// );
 
-				for (let j = 0; j < arrPark[i].length; j++) {
-					let value = arrPark[i][j].value;
-					let label = arrPark[i][j].label;
+				// for (let j = 0; j < arrPark[i].length; j++) {
+				// 	let value = arrPark[i][j].value;
+				// 	let label = arrPark[i][j].label;
 
-					childHtml.push(
-						<View key={'park_' + i + j} style={{ borderBottomWidth: 1, borderBottomColor: '#ccc', padding: 10 }}>
-							<TouchableOpacity onPress={() => {
-								this.closeModalDiemDen();
-								this.setState({ keyDiemDen: value, nameDiemDen: label, search2: false });
-							}}>
-								<Text>{label}</Text>
-							</TouchableOpacity>
-						</View>
-					);
-				}
+				// 	childHtml.push(
+				// 		<View key={'park_' + i + j} style={{ borderBottomWidth: 1, borderBottomColor: '#ccc', padding: 10 }}>
+				// 			<TouchableOpacity onPress={() => {
+				// 				this.closeModalDiemDen();
+				// 				this.setState({ keyDiemDen: value, nameDiemDen: label, search2: false });
+				// 			}}>
+				// 				<Text>{label}</Text>
+				// 			</TouchableOpacity>
+				// 		</View>
+				// 	);
+				// }
+
+				SECTIONS.push({
+					title: arrProvince[i],
+					content: arrPark[i]
+				});
 			}
 			else {
 				let arrSlugPark = this._str_slug(arrPark[i]);
@@ -734,36 +856,47 @@ class HomeIOS extends Component {
 				}
 
 				if (arrSearch.length > 0) {
-					childHtml.push(
-						<View key={'province_' + i} style={{ borderBottomWidth: 1, borderBottomColor: '#ccc', padding: 10 }}>
-							<Text style={{ fontWeight: 'bold' }}>{arrProvince[i]}</Text>
-						</View>
-					);
+					SECTIONS.push({
+						title: arrProvince[i],
+						content: arrPark[i]
+					});
 
-					for (let j = 0; j < arrSearch.length; j++) {
-						let value = arrSearch[j].value;
-						let label = arrSearch[j].label;
+					// childHtml.push(
+					// 	<View key={'province_' + i} style={{ borderBottomWidth: 1, borderBottomColor: '#ccc', padding: 10 }}>
+					// 		<Text style={{ fontWeight: 'bold' }}>{arrProvince[i]}</Text>
+					// 	</View>
+					// );
 
-						childHtml.push(
-							<View key={'park_' + i + j} style={{ borderBottomWidth: 1, borderBottomColor: '#ccc', padding: 10 }}>
-								<TouchableOpacity onPress={() => {
-									this.closeModalDiemDen();
-									this.setState({ keyDiemDen: value, nameDiemDen: label, search2: false })
-								}
-								}>
-									<Text>{label}</Text>
-								</TouchableOpacity>
-							</View>
-						);
-					}
+					// for (let j = 0; j < arrSearch.length; j++) {
+					// 	let value = arrSearch[j].value;
+					// 	let label = arrSearch[j].label;
+
+					// 	childHtml.push(
+					// 		<View key={'park_' + i + j} style={{ borderBottomWidth: 1, borderBottomColor: '#ccc', padding: 10 }}>
+					// 			<TouchableOpacity onPress={() => {
+					// 				this.closeModalDiemDen();
+					// 				this.setState({ keyDiemDen: value, nameDiemDen: label, search2: false })
+					// 			}
+					// 			}>
+					// 				<Text>{label}</Text>
+					// 			</TouchableOpacity>
+					// 		</View>
+					// 	);
+					// }
 				}
 			}
 		}
 
 		html.push(
-			<View key="scroll_autocomplate2" style={{ overflow: 'hidden', borderTopWidth: 1, borderTopColor: '#ccc' }}>
+			<View key="scroll_autocomplate2" style={{ overflow: 'hidden' }}>
 				<ScrollView>
-					{childHtml}
+					{/* {childHtml} */}
+					<Accordion
+						sections={SECTIONS}
+						// renderSectionTitle={this._renderSectionTitle}
+						renderHeader={this._renderHeader2.bind(this)}
+						renderContent={this._renderContent2.bind(this)}
+					/>
 				</ScrollView>
 			</View>
 		);
@@ -1373,20 +1506,85 @@ class HomeIOS extends Component {
 
 	_renderModalDiemDi() {
 		return (
-			<View key="1" style={{ width: widthDevice, height: heightDevice, paddingTop: 10, position: 'relative', paddingBottom: 120 }}>
+			<View key="1" style={{ width: widthDevice, height: heightDevice, position: 'relative', paddingBottom: 60, backgroundColor: '#ecebeb' }}>
 
-				<View style={styles.close_popup}>
+				{/* <View style={[styles.close_popup, { borderColor: '#ccc', borderWidth: 1 }]}>
 					<TouchableOpacity onPress={() => this.closeModalDiemDi()} style={{ alignItems: 'flex-end', justifyContent: 'center' }}>
 						<Icon name="md-close" style={{ fontSize: 30 }} />
+						<Text>Đóng</Text>
 					</TouchableOpacity>
-				</View>
+				</View> */}
 
 				<View style={{ flexDirection: 'column', justifyContent: 'center' }}>
-					<View style={{ flexDirection: 'row', borderBottomColor: '#ccc', borderBottomWidth: 1, marginLeft: 10, marginTop: 30 }}>
-						<Icon name="md-bus" style={{ width: 30 }} />
-						<Input placeholder="Nhập nơi đi" value={this.state.nameDiemDi} onChangeText={(nameDiemDi) => this._handleSetDiemDi(nameDiemDi)} style={{ height: 40, alignItems: 'center', justifyContent: 'center', paddingTop: 10, marginTop: -10, paddingLeft: 15 }} />
+					<View style={{ flexDirection: 'row', position: 'absolute', top: 0, right: 0, left: 0, zIndex: 99 }}>
+						<View
+							onLayout={this.onLayoutView}
+							style={{
+								alignItems: 'center',
+								justifyContent: 'space-between',
+								flexDirection: 'row',
+								flex: 3,
+								borderColor: '#ccc',
+								borderWidth: 1,
+								borderRadius: 10,
+								marginLeft: 10,
+								marginTop: 30,
+								// marginBottom: 10, 
+								backgroundColor: '#FFFFFF',
+								padding: 5,
+								height: 60,
+							}}
+						>
+							<Icon name="md-bus" style={{ paddingLeft: 10 }} />
+
+							<View style={{
+								// flexDirection: 'row',
+								position: 'absolute',
+								zIndex: 99,
+								// top: 10,
+								left: 40,
+								// borderWidth: 1,
+								width: this.state.widthView - 70,
+								height: 50,
+								// justifyContent: 'center', 
+								// alignItems: 'center',
+							}}>
+								<Input
+									autoFocus={true}
+									placeholder="Nhập nơi đi"
+									value={this.state.nameDiemDi}
+									onChangeText={(nameDiemDi) => this._handleSetDiemDi(nameDiemDi)}
+									style={{
+										position: 'relative',
+										paddingLeft: 10,
+										paddingRight: 10,
+										// borderWidth: 1,
+										marginTop: 5
+									}}
+								/>
+							</View>
+							<TouchableOpacity onPress={() => { this.setState({ keyDiemDi: '', nameDiemDi: '' }); }}
+								style={{
+									alignItems: 'flex-end',
+									justifyContent: 'center',
+									paddingRight: 5
+								}}>
+								<Icon name="md-close" />
+							</TouchableOpacity>
+						</View>
+
+						<TouchableOpacity
+							onPress={() => this.closeModalDiemDi()}
+							style={{
+								alignItems: 'center', justifyContent: 'center', borderColor: colorLogo, borderWidth: 1, flex: 1, borderRadius: 10, marginHorizontal: 10, marginTop: 30,
+								// marginBottom: 10, 
+								backgroundColor: colorLogo, padding: 5
+							}}
+						>
+							<Text>Đóng</Text>
+						</TouchableOpacity>
 					</View>
-					<View style={{ marginLeft: 30, backgroundColor: '#f6fbff' }}>
+					<View style={{ marginHorizontal: 10, backgroundColor: '#f6fbff', marginTop: 100 }}>
 						{this._handleSearchAutocomplate1(this.state.nameDiemDi)}
 					</View>
 				</View>
@@ -1394,30 +1592,110 @@ class HomeIOS extends Component {
 		)
 	}
 
+	onLayoutView = event => {
+		let { width, height } = event.nativeEvent.layout;
+		this.setState({
+			widthView: width,
+			heightView: height,
+		});
+	}
+
 	openModalDiemDi(id) {
 		this.refs.modalDiemDi.open();
 	}
 
 	closeModalDiemDi(id) {
+		// this.setState({ keyDiemDi: '', nameDiemDi: '' });
 		this.refs.modalDiemDi.close();
 	}
 
 	_renderModalDiemDen() {
 		return (
-			<View key="1" style={{ width: widthDevice, height: heightDevice, paddingTop: 10, position: 'relative', paddingBottom: 120 }}>
+			<View key="1" style={{ width: widthDevice, height: heightDevice, position: 'relative', paddingBottom: 60, backgroundColor: '#ecebeb' }}>
 
-				<View style={styles.close_popup}>
+				{/* <View style={styles.close_popup}>
 					<TouchableOpacity onPress={() => this.closeModalDiemDen()} style={{ alignItems: 'flex-end', justifyContent: 'center' }}>
 						<Icon name="md-close" style={{ fontSize: 30 }} />
 					</TouchableOpacity>
-				</View>
+				</View> */}
 
 				<View style={{ flexDirection: 'column', justifyContent: 'center' }}>
-					<View style={{ flexDirection: 'row', borderBottomColor: '#ccc', borderBottomWidth: 1, marginLeft: 10, marginTop: 30 }}>
+					{/* <View style={{ flexDirection: 'row', borderColor: '#ccc', borderWidth: 1, borderRadius: 10, marginHorizontal: 10, marginTop: 30, marginBottom: 10, backgroundColor: '#FFFFFF', padding: 5 }}>
 						<Icon name="md-bus" style={{ width: 30 }} />
-						<Input placeholder="Nhập nơi đến" value={this.state.nameDiemDen} onChangeText={(nameDiemDen) => this._handleSetDiemDen(nameDiemDen)} style={{ height: 40, alignItems: 'center', justifyContent: 'center', paddingTop: 10, marginTop: -10, paddingLeft: 15 }} />
+						<Input autoFocus={true} placeholder="Nhập nơi đến" value={this.state.nameDiemDen} onChangeText={(nameDiemDen) => this._handleSetDiemDen(nameDiemDen)} style={{ height: 40, alignItems: 'center', justifyContent: 'center', paddingTop: 10, marginTop: -10, paddingLeft: 15 }} />
+					</View> */}
+					<View style={{ flexDirection: 'row', position: 'absolute', top: 0, right: 0, left: 0, zIndex: 99 }}>
+						<View
+							onLayout={this.onLayoutView}
+							style={{
+								flexDirection: 'row',
+								flex: 3,
+								borderColor: '#ccc',
+								borderWidth: 1,
+								borderRadius: 10,
+								marginLeft: 10,
+								marginTop: 30,
+								// marginBottom: 10, 
+								backgroundColor: '#FFFFFF',
+								padding: 5,
+								height: 60,
+								alignItems: 'center',
+								justifyContent: 'space-between',
+							}}
+						>
+							<Icon name="md-bus" style={{ paddingLeft: 10 }} />
+
+							<View style={{
+								position: 'absolute',
+								zIndex: 99,
+								// top: 10,
+								left: 40,
+								// borderWidth: 1,
+								width: this.state.widthView - 70,
+								height: 50,
+							}}>
+								<Input
+									autoFocus={true}
+									placeholder="Nhập nơi đến"
+									value={this.state.nameDiemDen}
+									onChangeText={(nameDiemDen) => this._handleSetDiemDen(nameDiemDen)}
+									style={{
+										position: 'relative',
+										paddingLeft: 10,
+										paddingRight: 10,
+										// borderWidth: 1,
+										marginTop: 5
+									}}
+								/>
+							</View>
+
+							{/* <View style={styles.close_popup}> */}
+							<TouchableOpacity
+								onPress={() => { this.setState({ keyDiemDen: '', nameDiemDen: '' }); }}
+								style={{ 
+									alignItems: 'flex-end', 
+									justifyContent: 'center',
+									paddingRight: 5,
+								}}>
+									<Icon name="md-close" style={{ fontSize: 30 }}
+								/>
+							</TouchableOpacity>
+							{/* </View> */}
+						</View>
+
+						<TouchableOpacity
+							onPress={() => this.closeModalDiemDen()}
+							style={{
+								alignItems: 'center', justifyContent: 'center', borderColor: colorLogo, borderWidth: 1, flex: 1, borderRadius: 10, marginHorizontal: 10, marginTop: 30,
+								// marginBottom: 10, 
+								backgroundColor: colorLogo, padding: 5
+							}}
+						>
+							<Text>Đóng</Text>
+						</TouchableOpacity>
 					</View>
-					<View style={{ marginLeft: 30, backgroundColor: '#f6fbff' }}>
+
+					<View style={{ marginHorizontal: 10, backgroundColor: '#f6fbff', marginTop: 100 }}>
 						{this._handleSearchAutocomplate2(this.state.nameDiemDen)}
 					</View>
 				</View>
@@ -1465,7 +1743,12 @@ const styles = StyleSheet.create({
 	modalPopup: {
 	},
 	close_popup: {
-		position: 'absolute', zIndex: 9, top: 10, right: 10, width: 50, height: 50
+		position: 'absolute',
+		zIndex: 99,
+		top: 5,
+		right: 10,
+		// width: 50,
+		// height: 50
 	},
 });
 
