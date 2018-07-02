@@ -3,39 +3,21 @@
 
     <item
         is-multidex="false"
+        jar="/Users/mac/Desktop/React/appuser/android/app/build/intermediates/exploded-aar/com.google.firebase/firebase-measurement-connector-impl/16.0.0/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="23.0.1"
+        sha1="6bd97fd543ffb061a7d3f2f9d6247f4b5e0017f5">
+        <dex dex="/Users/mac/Desktop/React/appuser/android/app/build/intermediates/pre-dexed/release/com.google.firebase-firebase-measurement-connector-impl-16.0.0_14cec7929663a5952306c547ca40d1de2e3cf244.jar" />
+    </item>
+    <item
+        is-multidex="false"
         jar="/Users/mac/Desktop/React/appuser/android/app/build/intermediates/exploded-aar/appuser/react-native-device-info/unspecified/jars/classes.jar"
         jumboMode="false"
         optimize="true"
         revision="23.0.1"
         sha1="2e4336ffc2b7653868134d7f6f8b28523ef54645">
-        <dex dex="/Users/mac/Desktop/React/appuser/android/app/build/intermediates/pre-dexed/debug/appuser-react-native-device-info-unspecified_a77e2533695e3aa6b93aa52de42c5e534add2e8b.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/Users/mac/Desktop/React/appuser/android/app/build/intermediates/exploded-aar/com.android.support/support-v4/24.0.0/jars/libs/internal_impl-24.0.0.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="23.0.1"
-        sha1="fcaf463e10e69c1923ccf1edeba3b4196d239e00">
-        <dex dex="/Users/mac/Desktop/React/appuser/android/app/build/intermediates/pre-dexed/debug/internal_impl-24.0.0_b056970d054b3ad1ce710ac8030cfb125ffd3e0a.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/Users/mac/Desktop/React/testUser/fb35c2a8027601a758c9e8ba9b8aa1a944c51547/android/app/build/intermediates/exploded-aar/com.facebook.fresco/drawee/0.11.0/jars/classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="23.0.1"
-        sha1="1137942adeb03984c1311b662363dd38fc238fd3">
-        <dex dex="/Users/mac/Desktop/React/testUser/fb35c2a8027601a758c9e8ba9b8aa1a944c51547/android/app/build/intermediates/pre-dexed/debug/com.facebook.fresco-drawee-0.11.0_b2713abc4f347ea5803d368f7317b4f04c2a298a.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/Users/mac/Desktop/React/testUser/fb35c2a8027601a758c9e8ba9b8aa1a944c51547/android/app/build/intermediates/exploded-aar/com.facebook.fresco/imagepipeline-base/0.11.0/jars/classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="23.0.1"
-        sha1="ca63c521b5745ae9a09629d7ca67ff6bc2a967fe">
-        <dex dex="/Users/mac/Desktop/React/testUser/fb35c2a8027601a758c9e8ba9b8aa1a944c51547/android/app/build/intermediates/pre-dexed/debug/com.facebook.fresco-imagepipeline-base-0.11.0_1f40f3afbd8bced4d4057c40906a42ac725ad484.jar" />
+        <dex dex="/Users/mac/Desktop/React/appuser/android/app/build/intermediates/pre-dexed/release/appuser-react-native-device-info-unspecified_a77e2533695e3aa6b93aa52de42c5e534add2e8b.jar" />
     </item>
     <item
         is-multidex="false"
@@ -54,15 +36,6 @@
         revision="23.0.1"
         sha1="248218f163235e6d2a81188eaa1db0ec61193055">
         <dex dex="/Users/mac/Desktop/React/testUser/fb35c2a8027601a758c9e8ba9b8aa1a944c51547/android/app/build/intermediates/pre-dexed/debug/me.leolin-ShortcutBadger-1.1.17_8412e1bc24809c2858896dfa43bf5b80407f4eb5.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/Users/mac/Desktop/React/appuser/android/app/build/intermediates/exploded-aar/com.android.support/recyclerview-v7/23.4.0/jars/classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="23.0.1"
-        sha1="ec75036c3c52e451d0cde50a5aedaf5fd32354a0">
-        <dex dex="/Users/mac/Desktop/React/appuser/android/app/build/intermediates/pre-dexed/debug/com.android.support-recyclerview-v7-23.4.0_abc7c89e4e00d23df196604bb1f29bc225ba2f49.jar" />
     </item>
     <item
         is-multidex="false"
@@ -93,12 +66,12 @@
     </item>
     <item
         is-multidex="false"
-        jar="/Users/mac/Desktop/React/testUser/fb35c2a8027601a758c9e8ba9b8aa1a944c51547/android/app/build/intermediates/exploded-aar/com.facebook.react/react-native/0.42.3/jars/classes.jar"
+        jar="/Users/mac/Desktop/React/appuser/android/app/build/intermediates/exploded-aar/com.android.support/support-core-utils/26.1.0/jars/classes.jar"
         jumboMode="false"
         optimize="true"
         revision="23.0.1"
-        sha1="962b06c207e808c0557ffd6163ac584025a96021">
-        <dex dex="/Users/mac/Desktop/React/testUser/fb35c2a8027601a758c9e8ba9b8aa1a944c51547/android/app/build/intermediates/pre-dexed/debug/com.facebook.react-react-native-0.42.3_d23ac429b332885cc02238915cc2761f4f8cc095.jar" />
+        sha1="233f60a165ae622c8b36731502ebbda0f65e1930">
+        <dex dex="/Users/mac/Desktop/React/appuser/android/app/build/intermediates/pre-dexed/release/com.android.support-support-core-utils-26.1.0_16ab016c38f0affcb7da5bfc1ce343eadb8044e9.jar" />
     </item>
     <item
         is-multidex="false"
@@ -120,48 +93,21 @@
     </item>
     <item
         is-multidex="false"
-        jar="/Users/mac/Desktop/React/appuser/android/app/build/intermediates/exploded-aar/com.facebook.fresco/imagepipeline-base/0.11.0/jars/classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="23.0.1"
-        sha1="ca63c521b5745ae9a09629d7ca67ff6bc2a967fe">
-        <dex dex="/Users/mac/Desktop/React/appuser/android/app/build/intermediates/pre-dexed/debug/com.facebook.fresco-imagepipeline-base-0.11.0_08718dc6b3af255387a3ab6d8012ab4d1f740513.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/Users/mac/.gradle/caches/modules-2/files-2.1/com.nineoldandroids/library/2.4.0/e9b63380f3a242dbdbf103a2355ad7e43bad17cb/library-2.4.0.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="23.0.1"
-        sha1="e9b63380f3a242dbdbf103a2355ad7e43bad17cb">
-        <dex dex="/Users/mac/Desktop/React/testUser/fb35c2a8027601a758c9e8ba9b8aa1a944c51547/android/app/build/intermediates/pre-dexed/debug/library-2.4.0_fcd7bf57330797c3eaeb05d042207c4ab7ecac63.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/Users/mac/Desktop/React/appuser/android/app/build/intermediates/exploded-aar/com.facebook.fresco/drawee/0.11.0/jars/classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="23.0.1"
-        sha1="1137942adeb03984c1311b662363dd38fc238fd3">
-        <dex dex="/Users/mac/Desktop/React/appuser/android/app/build/intermediates/pre-dexed/debug/com.facebook.fresco-drawee-0.11.0_f0f9c505d8dfb19a6687035d9bd65bcec2225d22.jar" />
-    </item>
-    <item
-        is-multidex="false"
         jar="/Users/mac/Desktop/React/appuser/android/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.0.1/jars/classes.jar"
         jumboMode="false"
         optimize="true"
         revision="23.0.1"
         sha1="d86429b0f0b3f3cafbeb78dda1b9d89119ccb05d">
-        <dex dex="/Users/mac/Desktop/React/appuser/android/app/build/intermediates/pre-dexed/debug/com.android.support-appcompat-v7-23.0.1_2e95ebc5a9bf01c72a6c1c84e4fdeebd45470f2c.jar" />
+        <dex dex="/Users/mac/Desktop/React/appuser/android/app/build/intermediates/pre-dexed/release/com.android.support-appcompat-v7-23.0.1_2e95ebc5a9bf01c72a6c1c84e4fdeebd45470f2c.jar" />
     </item>
     <item
         is-multidex="false"
-        jar="/Users/mac/Desktop/React/appuser/android/app/build/intermediates/exploded-aar/com.google.firebase/firebase-iid/10.0.1/jars/classes.jar"
+        jar="/Users/mac/Desktop/React/appuser/android/app/build/intermediates/exploded-aar/com.google.firebase/firebase-iid-interop/16.0.0/jars/classes.jar"
         jumboMode="false"
         optimize="true"
         revision="23.0.1"
-        sha1="486371f97baad8e607f332f20fee1d3dd00a731a">
-        <dex dex="/Users/mac/Desktop/React/appuser/android/app/build/intermediates/pre-dexed/debug/com.google.firebase-firebase-iid-10.0.1_836e95ae6031b28d7a3410e75764707c07967e60.jar" />
+        sha1="2a69972573cb7e5cc6b8652bacf981e82b68ff71">
+        <dex dex="/Users/mac/Desktop/React/appuser/android/app/build/intermediates/pre-dexed/release/com.google.firebase-firebase-iid-interop-16.0.0_138fe0b7a79015520c593ff2c3eaab6e39d68098.jar" />
     </item>
     <item
         is-multidex="false"
@@ -170,7 +116,16 @@
         optimize="true"
         revision="23.0.1"
         sha1="8f615bca00639150c9eb6175d4b5471193f70794">
-        <dex dex="/Users/mac/Desktop/React/appuser/android/app/build/intermediates/pre-dexed/debug/com.facebook.soloader-soloader-0.1.0_23c75949179f707071b05e4b99b452cc91dabaaa.jar" />
+        <dex dex="/Users/mac/Desktop/React/appuser/android/app/build/intermediates/pre-dexed/release/com.facebook.soloader-soloader-0.1.0_23c75949179f707071b05e4b99b452cc91dabaaa.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/mac/Desktop/React/appuser/android/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-gcm/15.0.1/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="23.0.1"
+        sha1="32ac362d6f6a636ab4f737a90cda4a35c9402025">
+        <dex dex="/Users/mac/Desktop/React/appuser/android/app/build/intermediates/pre-dexed/release/com.google.android.gms-play-services-gcm-15.0.1_6973d64ea1c26bf8b3532dc3f0d054a67e214d42.jar" />
     </item>
     <item
         is-multidex="false"
@@ -201,12 +156,12 @@
     </item>
     <item
         is-multidex="false"
-        jar="/Users/mac/Desktop/React/appuser/android/app/build/intermediates/exploded-aar/com.google.firebase/firebase-analytics-impl/10.0.1/jars/classes.jar"
+        jar="/Users/mac/Desktop/React/appuser/android/app/build/intermediates/exploded-aar/com.google.firebase/firebase-common/16.0.0/jars/classes.jar"
         jumboMode="false"
         optimize="true"
         revision="23.0.1"
-        sha1="6116e0e7069de7fc259aac8e08b84f32c2038231">
-        <dex dex="/Users/mac/Desktop/React/appuser/android/app/build/intermediates/pre-dexed/debug/com.google.firebase-firebase-analytics-impl-10.0.1_2c0127117a52dd20b8cf2554be92cf1a4b4bed78.jar" />
+        sha1="0fbef528093d3d19b229116b683bd2a66d4aeae1">
+        <dex dex="/Users/mac/Desktop/React/appuser/android/app/build/intermediates/pre-dexed/release/com.google.firebase-firebase-common-16.0.0_6a29d0203ed0e3584ebddd76e1421a59bc74d8f3.jar" />
     </item>
     <item
         is-multidex="false"
@@ -219,15 +174,6 @@
     </item>
     <item
         is-multidex="false"
-        jar="/Users/mac/Desktop/React/appuser/android/app/build/intermediates/exploded-aar/com.facebook.fresco/fbcore/0.11.0/jars/classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="23.0.1"
-        sha1="98786c1770b531b9194fb6448b2a2692c64074b6">
-        <dex dex="/Users/mac/Desktop/React/appuser/android/app/build/intermediates/pre-dexed/debug/com.facebook.fresco-fbcore-0.11.0_f329b43d31265c266d112e82cf4445e778894f16.jar" />
-    </item>
-    <item
-        is-multidex="false"
         jar="/Users/mac/Desktop/React/testUser/fb35c2a8027601a758c9e8ba9b8aa1a944c51547/android/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-basement/10.0.1/jars/classes.jar"
         jumboMode="false"
         optimize="true"
@@ -237,21 +183,12 @@
     </item>
     <item
         is-multidex="false"
-        jar="/Users/mac/.gradle/caches/modules-2/files-2.1/javax.inject/javax.inject/1/6975da39a7040257bd51d21a231b76c915872d38/javax.inject-1.jar"
+        jar="/Users/mac/Desktop/React/appuser/android/app/build/intermediates/exploded-aar/com.facebook.fresco/imagepipeline/1.0.1/jars/classes.jar"
         jumboMode="false"
         optimize="true"
         revision="23.0.1"
-        sha1="6975da39a7040257bd51d21a231b76c915872d38">
-        <dex dex="/Users/mac/Desktop/React/testUser/fb35c2a8027601a758c9e8ba9b8aa1a944c51547/android/app/build/intermediates/pre-dexed/debug/javax.inject-1_81f63147293c80992186865712de6648b741fa96.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/Users/mac/Desktop/React/testUser/fb35c2a8027601a758c9e8ba9b8aa1a944c51547/android/app/build/intermediates/exploded-aar/com.google.firebase/firebase-messaging/10.0.1/jars/classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="23.0.1"
-        sha1="4b17463c814bdc562fb0392fa3494063623a0904">
-        <dex dex="/Users/mac/Desktop/React/testUser/fb35c2a8027601a758c9e8ba9b8aa1a944c51547/android/app/build/intermediates/pre-dexed/debug/com.google.firebase-firebase-messaging-10.0.1_cc0b75896b62fd651b704c30c837dbf0eeeb1108.jar" />
+        sha1="d9c4402c3057225d80cbbbec52154e7a25b0ebdf">
+        <dex dex="/Users/mac/Desktop/React/appuser/android/app/build/intermediates/pre-dexed/release/com.facebook.fresco-imagepipeline-1.0.1_3abacf1e6cb6e62f1863386564949ade90ec386c.jar" />
     </item>
     <item
         is-multidex="false"
@@ -264,30 +201,12 @@
     </item>
     <item
         is-multidex="false"
-        jar="/Users/mac/Desktop/React/testUser/fb35c2a8027601a758c9e8ba9b8aa1a944c51547/android/app/build/intermediates/exploded-aar/com.facebook.fresco/imagepipeline/0.11.0/jars/classes.jar"
+        jar="/Users/mac/Desktop/React/appuser/android/app/build/intermediates/exploded-aar/com.android.support/support-fragment/26.1.0/jars/classes.jar"
         jumboMode="false"
         optimize="true"
         revision="23.0.1"
-        sha1="3341b66c54367e777a0647e2db96c045329bfeab">
-        <dex dex="/Users/mac/Desktop/React/testUser/fb35c2a8027601a758c9e8ba9b8aa1a944c51547/android/app/build/intermediates/pre-dexed/debug/com.facebook.fresco-imagepipeline-0.11.0_9b2b9a434fbee4a227cf00ff07cf3d096fcdd9ca.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/Users/mac/Desktop/React/appuser/android/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-gcm/10.0.1/jars/classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="23.0.1"
-        sha1="8308ed003522a2ee8958311afcc4cfd0470377cd">
-        <dex dex="/Users/mac/Desktop/React/appuser/android/app/build/intermediates/pre-dexed/debug/com.google.android.gms-play-services-gcm-10.0.1_f5199251bb811c8a7761be2de240690a89915236.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/Users/mac/Desktop/React/appuser/android/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-basement/10.0.1/jars/classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="23.0.1"
-        sha1="756f6297eef79784f5e356dcd4f39865028b2bd0">
-        <dex dex="/Users/mac/Desktop/React/appuser/android/app/build/intermediates/pre-dexed/debug/com.google.android.gms-play-services-basement-10.0.1_2d804ce5897783f5f4953038a8ed3ccedd6e95a6.jar" />
+        sha1="7efef32744ca4a436492d5cf28c08698cc2af256">
+        <dex dex="/Users/mac/Desktop/React/appuser/android/app/build/intermediates/pre-dexed/release/com.android.support-support-fragment-26.1.0_adcc2309814ce72aa8a1ec36fa7e7380416094d1.jar" />
     </item>
     <item
         is-multidex="false"
@@ -300,30 +219,12 @@
     </item>
     <item
         is-multidex="false"
-        jar="/Users/mac/Desktop/React/appuser/android/app/build/intermediates/exploded-aar/com.facebook.fresco/fresco/0.11.0/jars/classes.jar"
+        jar="/Users/mac/.gradle/caches/modules-2/files-2.1/com.android.support/support-annotations/26.1.0/814258103cf26a15fcc26ecce35f5b7d24b73f8/support-annotations-26.1.0.jar"
         jumboMode="false"
         optimize="true"
         revision="23.0.1"
-        sha1="d31aadf33187c37a7cd63dc1b769f8c6e33f78c3">
-        <dex dex="/Users/mac/Desktop/React/appuser/android/app/build/intermediates/pre-dexed/debug/com.facebook.fresco-fresco-0.11.0_92f5ca7f9fca127061751c8dcecc6d5e143f0d73.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/Users/mac/.gradle/caches/modules-2/files-2.1/com.squareup.okhttp3/okhttp-ws/3.4.1/8ace66ef7002d98f633377c9e67daeeb196d8c3b/okhttp-ws-3.4.1.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="23.0.1"
-        sha1="8ace66ef7002d98f633377c9e67daeeb196d8c3b">
-        <dex dex="/Users/mac/Desktop/React/testUser/fb35c2a8027601a758c9e8ba9b8aa1a944c51547/android/app/build/intermediates/pre-dexed/debug/okhttp-ws-3.4.1_6b0c216011bb3c3a197f8d2cb210ad55279674dc.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/Users/mac/Desktop/React/testUser/fb35c2a8027601a758c9e8ba9b8aa1a944c51547/android/app/build/intermediates/exploded-aar/com.facebook.fbui.textlayoutbuilder/textlayoutbuilder/1.0.0/jars/classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="23.0.1"
-        sha1="f90b593491e4044903f0bbf68dc3fa2790b151b9">
-        <dex dex="/Users/mac/Desktop/React/testUser/fb35c2a8027601a758c9e8ba9b8aa1a944c51547/android/app/build/intermediates/pre-dexed/debug/com.facebook.fbui.textlayoutbuilder-textlayoutbuilder-1.0.0_16a82f2b7a01499e7864e2d1882966fb15c5702a.jar" />
+        sha1="0814258103cf26a15fcc26ecce35f5b7d24b73f8">
+        <dex dex="/Users/mac/Desktop/React/appuser/android/app/build/intermediates/pre-dexed/release/support-annotations-26.1.0_5be75ef1ac6d77254d85619bf4cdd0e82c006901.jar" />
     </item>
     <item
         is-multidex="false"
@@ -345,33 +246,6 @@
     </item>
     <item
         is-multidex="false"
-        jar="/Users/mac/Desktop/React/appuser/android/app/build/intermediates/exploded-aar/com.facebook.react/react-native/0.42.3/jars/libs/infer-annotations-1.5.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="23.0.1"
-        sha1="dcac634e137395f79693ec760f081a86eb2bd84e">
-        <dex dex="/Users/mac/Desktop/React/appuser/android/app/build/intermediates/pre-dexed/debug/infer-annotations-1.5_4e26879e8d6e682c77e4254f35dbaf86b397b5a8.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/Users/mac/Desktop/React/appuser/android/app/build/intermediates/exploded-aar/com.facebook.fresco/imagepipeline-okhttp3/0.11.0/jars/classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="23.0.1"
-        sha1="2b8a01ad9da5d26d0067894c22e87597bca2c500">
-        <dex dex="/Users/mac/Desktop/React/appuser/android/app/build/intermediates/pre-dexed/debug/com.facebook.fresco-imagepipeline-okhttp3-0.11.0_08b3e30b0afe5fbd796908977f7272d2bea90928.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/Users/mac/Desktop/React/appuser/android/app/build/intermediates/exploded-aar/com.facebook.react/react-native/0.42.3/jars/classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="23.0.1"
-        sha1="962b06c207e808c0557ffd6163ac584025a96021">
-        <dex dex="/Users/mac/Desktop/React/appuser/android/app/build/intermediates/pre-dexed/debug/com.facebook.react-react-native-0.42.3_adfac6cd3f650fa93a9ca4c5548f7e12b4e71c56.jar" />
-    </item>
-    <item
-        is-multidex="false"
         jar="/Users/mac/.gradle/caches/modules-2/files-2.1/com.squareup.okio/okio/1.9.0/f824591a0016efbaeddb8300bee54832a1398cfa/okio-1.9.0.jar"
         jumboMode="false"
         optimize="true"
@@ -381,12 +255,30 @@
     </item>
     <item
         is-multidex="false"
-        jar="/Users/mac/Desktop/React/appuser/android/app/build/intermediates/exploded-aar/com.google.firebase/firebase-analytics/10.0.1/jars/classes.jar"
+        jar="/Users/mac/Desktop/React/appuser/android/app/build/intermediates/exploded-aar/com.android.support/support-media-compat/26.1.0/jars/classes.jar"
         jumboMode="false"
         optimize="true"
         revision="23.0.1"
-        sha1="433f4d6aa5f21f19552afe0e6c5eff0fedba73ad">
-        <dex dex="/Users/mac/Desktop/React/appuser/android/app/build/intermediates/pre-dexed/debug/com.google.firebase-firebase-analytics-10.0.1_5afed4fe7c334da828a41c93dbf16720349d3a27.jar" />
+        sha1="f97cf85b0fe70d37a705111dafa6b1b418ea1650">
+        <dex dex="/Users/mac/Desktop/React/appuser/android/app/build/intermediates/pre-dexed/release/com.android.support-support-media-compat-26.1.0_7ad15c4cfb9389d000720cae0c9efe55966088fc.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/mac/Desktop/React/appuser/android/app/build/intermediates/exploded-aar/com.android.support/support-compat/26.1.0/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="23.0.1"
+        sha1="2442771a5590dd4eb4bce00c2e9dca9e22e4c963">
+        <dex dex="/Users/mac/Desktop/React/appuser/android/app/build/intermediates/pre-dexed/release/com.android.support-support-compat-26.1.0_460719726f810cbe1e10916d7a5609a434165d70.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/mac/Desktop/React/appuser/android/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/15.0.1/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="23.0.1"
+        sha1="8d813c05361147f6f515f749df19223cd6256314">
+        <dex dex="/Users/mac/Desktop/React/appuser/android/app/build/intermediates/pre-dexed/release/com.google.android.gms-play-services-base-15.0.1_19746f06a3accc564e9f44da4d44eebdb04f7449.jar" />
     </item>
     <item
         is-multidex="false"
@@ -399,12 +291,30 @@
     </item>
     <item
         is-multidex="false"
-        jar="/Users/mac/Desktop/React/testUser/fb35c2a8027601a758c9e8ba9b8aa1a944c51547/android/app/build/intermediates/exploded-aar/appuser/react-native-vector-icons/unspecified/jars/classes.jar"
+        jar="/Users/mac/Desktop/React/appuser/android/app/build/intermediates/exploded-aar/com.google.firebase/firebase-messaging/17.0.0/jars/classes.jar"
         jumboMode="false"
         optimize="true"
         revision="23.0.1"
-        sha1="b319ff9834bbeb9be394687614eb86892699ea14">
-        <dex dex="/Users/mac/Desktop/React/testUser/fb35c2a8027601a758c9e8ba9b8aa1a944c51547/android/app/build/intermediates/pre-dexed/debug/appuser-react-native-vector-icons-unspecified_6bf377fa98cb6861d0cf4081863f54d6eb5e6d83.jar" />
+        sha1="edf90ca69bdc99111f6f23031067431e684cc2bb">
+        <dex dex="/Users/mac/Desktop/React/appuser/android/app/build/intermediates/pre-dexed/release/com.google.firebase-firebase-messaging-17.0.0_2752ce00a66ce98ced62d71a03208d7956a573d7.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/mac/Desktop/React/appuser/android/app/build/intermediates/exploded-aar/com.google.firebase/firebase-iid/16.0.0/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="23.0.1"
+        sha1="1e224748cbf54c34eac0bca6376922468b786775">
+        <dex dex="/Users/mac/Desktop/React/appuser/android/app/build/intermediates/pre-dexed/release/com.google.firebase-firebase-iid-16.0.0_2492deadd5131c95d3167df1bfb2c296780d7804.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/mac/Desktop/React/appuser/android/app/build/intermediates/exploded-aar/com.android.support/support-core-ui/26.1.0/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="23.0.1"
+        sha1="508f50705b4fde51a16259f29c854201a3044516">
+        <dex dex="/Users/mac/Desktop/React/appuser/android/app/build/intermediates/pre-dexed/release/com.android.support-support-core-ui-26.1.0_c25f5cea63a3c056c7cb2523a898db86de1546fd.jar" />
     </item>
     <item
         is-multidex="false"
@@ -417,15 +327,6 @@
     </item>
     <item
         is-multidex="false"
-        jar="/Users/mac/Desktop/React/appuser/android/app/build/intermediates/exploded-aar/com.facebook.fresco/imagepipeline/0.11.0/jars/classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="23.0.1"
-        sha1="3341b66c54367e777a0647e2db96c045329bfeab">
-        <dex dex="/Users/mac/Desktop/React/appuser/android/app/build/intermediates/pre-dexed/debug/com.facebook.fresco-imagepipeline-0.11.0_892e58f2b1446441d1cf43b4b6b56d9d3b0febd1.jar" />
-    </item>
-    <item
-        is-multidex="false"
         jar="/Users/mac/.gradle/caches/modules-2/files-2.1/com.google.code.findbugs/jsr305/3.0.0/5871fb60dc68d67da54a663c3fd636a10a532948/jsr305-3.0.0.jar"
         jumboMode="false"
         optimize="true"
@@ -435,21 +336,21 @@
     </item>
     <item
         is-multidex="false"
-        jar="/Users/mac/Desktop/React/appuser/android/app/build/intermediates/exploded-aar/com.google.firebase/firebase-common/10.0.1/jars/classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="23.0.1"
-        sha1="eb0d830e3eabb9deb9ec44869cf7ac7ea1ad794c">
-        <dex dex="/Users/mac/Desktop/React/appuser/android/app/build/intermediates/pre-dexed/debug/com.google.firebase-firebase-common-10.0.1_47b1962b85baebd737aa13ecbed5e537925951b4.jar" />
-    </item>
-    <item
-        is-multidex="false"
         jar="/Users/mac/Desktop/React/appuser/android/app/build/intermediates/exploded-aar/me.leolin/ShortcutBadger/1.1.17/jars/classes.jar"
         jumboMode="false"
         optimize="true"
         revision="23.0.1"
         sha1="248218f163235e6d2a81188eaa1db0ec61193055">
-        <dex dex="/Users/mac/Desktop/React/appuser/android/app/build/intermediates/pre-dexed/debug/me.leolin-ShortcutBadger-1.1.17_dbdcc9289434d49425f5d5dca4304dbc906b92fb.jar" />
+        <dex dex="/Users/mac/Desktop/React/appuser/android/app/build/intermediates/pre-dexed/release/me.leolin-ShortcutBadger-1.1.17_dbdcc9289434d49425f5d5dca4304dbc906b92fb.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/mac/Desktop/React/appuser/android/app/build/intermediates/exploded-aar/com.google.firebase/firebase-analytics/16.0.0/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="23.0.1"
+        sha1="3e2b946046fb1d10649a06811b870f2eca30ea53">
+        <dex dex="/Users/mac/Desktop/React/appuser/android/app/build/intermediates/pre-dexed/release/com.google.firebase-firebase-analytics-16.0.0_98364390d7d4a7a1def77cf7b4f1bc2e44a844ab.jar" />
     </item>
     <item
         is-multidex="false"
@@ -462,21 +363,21 @@
     </item>
     <item
         is-multidex="false"
-        jar="/Users/mac/Desktop/React/appuser/android/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-iid/10.0.1/jars/classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="23.0.1"
-        sha1="6bb5d347ebc0c6ef3c83a905222a688da5d2f7b4">
-        <dex dex="/Users/mac/Desktop/React/appuser/android/app/build/intermediates/pre-dexed/debug/com.google.android.gms-play-services-iid-10.0.1_a483df475bd7b0903c6851b376404e48b6ed2de8.jar" />
-    </item>
-    <item
-        is-multidex="false"
         jar="/Users/mac/Desktop/React/appuser/android/app/build/intermediates/exploded-aar/com.facebook.fbui.textlayoutbuilder/textlayoutbuilder/1.0.0/jars/classes.jar"
         jumboMode="false"
         optimize="true"
         revision="23.0.1"
         sha1="f90b593491e4044903f0bbf68dc3fa2790b151b9">
-        <dex dex="/Users/mac/Desktop/React/appuser/android/app/build/intermediates/pre-dexed/debug/com.facebook.fbui.textlayoutbuilder-textlayoutbuilder-1.0.0_fed571435729f3359cf1d3e5b2b5e225a042ac9c.jar" />
+        <dex dex="/Users/mac/Desktop/React/appuser/android/app/build/intermediates/pre-dexed/release/com.facebook.fbui.textlayoutbuilder-textlayoutbuilder-1.0.0_fed571435729f3359cf1d3e5b2b5e225a042ac9c.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/mac/Desktop/React/appuser/android/app/build/intermediates/exploded-aar/com.facebook.fresco/drawee/1.0.1/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="23.0.1"
+        sha1="5a61f17cd72e20aa4323cbf5f909b7c609619275">
+        <dex dex="/Users/mac/Desktop/React/appuser/android/app/build/intermediates/pre-dexed/release/com.facebook.fresco-drawee-1.0.1_f54636e50b15f3178f3fef16df939b89865653a6.jar" />
     </item>
     <item
         is-multidex="false"
@@ -484,17 +385,17 @@
         jumboMode="false"
         optimize="true"
         revision="23.0.1"
-        sha1="6f4193e6a0afb80def681504e96127e6114032c0">
-        <dex dex="/Users/mac/Desktop/React/appuser/android/app/build/intermediates/pre-dexed/debug/appuser-react-native-fcm-unspecified_7fc8d3492cc814f9f71075ecefff15e43187ab55.jar" />
+        sha1="e74496dec3166128d22ac0ed617f617f98e5371c">
+        <dex dex="/Users/mac/Desktop/React/appuser/android/app/build/intermediates/pre-dexed/release/appuser-react-native-fcm-unspecified_7fc8d3492cc814f9f71075ecefff15e43187ab55.jar" />
     </item>
     <item
         is-multidex="false"
-        jar="/Users/mac/Desktop/React/appuser/android/app/build/intermediates/exploded-aar/com.google.firebase/firebase-messaging/10.0.1/jars/classes.jar"
+        jar="/Users/mac/Desktop/React/appuser/android/app/build/intermediates/exploded-aar/com.facebook.fresco/fbcore/1.0.1/jars/classes.jar"
         jumboMode="false"
         optimize="true"
         revision="23.0.1"
-        sha1="4b17463c814bdc562fb0392fa3494063623a0904">
-        <dex dex="/Users/mac/Desktop/React/appuser/android/app/build/intermediates/pre-dexed/debug/com.google.firebase-firebase-messaging-10.0.1_2916e161049f9090e8ea7a8f9e391dba72d4c0b7.jar" />
+        sha1="2668e49e4e31c7d451b76a36009b902bf44e0d70">
+        <dex dex="/Users/mac/Desktop/React/appuser/android/app/build/intermediates/pre-dexed/release/com.facebook.fresco-fbcore-1.0.1_3bcaa0bae0fed35a70dc552ab265a3ee397b3e7b.jar" />
     </item>
     <item
         is-multidex="false"
@@ -516,21 +417,228 @@
     </item>
     <item
         is-multidex="false"
+        jar="/Users/mac/Desktop/React/appuser/android/app/build/intermediates/exploded-aar/com.facebook.fresco/fresco/1.0.1/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="23.0.1"
+        sha1="cf836a435a496eb22ff2aa69aa1e619462549f81">
+        <dex dex="/Users/mac/Desktop/React/appuser/android/app/build/intermediates/pre-dexed/release/com.facebook.fresco-fresco-1.0.1_8a2bdc4ee616c3401b4d363306a7daf47c7e467f.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/mac/Desktop/React/appuser/android/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-tasks/15.0.1/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="23.0.1"
+        sha1="4d4d98a0428b2e620e6b4a228ef9f7cb2f0debd2">
+        <dex dex="/Users/mac/Desktop/React/appuser/android/app/build/intermediates/pre-dexed/release/com.google.android.gms-play-services-tasks-15.0.1_9d4759be9ecbdc842bbffb7f4e855cfcbc1ccefa.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/mac/Desktop/React/appuser/android/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-basement/15.0.1/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="23.0.1"
+        sha1="d8fe6d91310b54734f454dd490c3c869f6290576">
+        <dex dex="/Users/mac/Desktop/React/appuser/android/app/build/intermediates/pre-dexed/release/com.google.android.gms-play-services-basement-15.0.1_300b2f4101f5207131d4d19bc75b0d428922f975.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/mac/Desktop/React/appuser/android/app/build/intermediates/exploded-aar/appuser/react-native-vector-icons/unspecified/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="23.0.1"
+        sha1="b319ff9834bbeb9be394687614eb86892699ea14">
+        <dex dex="/Users/mac/Desktop/React/appuser/android/app/build/intermediates/pre-dexed/release/appuser-react-native-vector-icons-unspecified_0e06c74e908407635336f2f5b61f5c3d7011a570.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/mac/.gradle/caches/modules-2/files-2.1/android.arch.core/common/1.0.0/a2d487452376193fc8c103dd2b9bd5f2b1b44563/common-1.0.0.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="23.0.1"
+        sha1="a2d487452376193fc8c103dd2b9bd5f2b1b44563">
+        <dex dex="/Users/mac/Desktop/React/appuser/android/app/build/intermediates/pre-dexed/release/common-1.0.0_86790f29bdcbc64bd0673e22524f493514468629.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/mac/Desktop/React/testUser/fb35c2a8027601a758c9e8ba9b8aa1a944c51547/android/app/build/intermediates/exploded-aar/com.facebook.fresco/drawee/0.11.0/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="23.0.1"
+        sha1="1137942adeb03984c1311b662363dd38fc238fd3">
+        <dex dex="/Users/mac/Desktop/React/testUser/fb35c2a8027601a758c9e8ba9b8aa1a944c51547/android/app/build/intermediates/pre-dexed/debug/com.facebook.fresco-drawee-0.11.0_b2713abc4f347ea5803d368f7317b4f04c2a298a.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/mac/Desktop/React/testUser/fb35c2a8027601a758c9e8ba9b8aa1a944c51547/android/app/build/intermediates/exploded-aar/com.facebook.fresco/imagepipeline-base/0.11.0/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="23.0.1"
+        sha1="ca63c521b5745ae9a09629d7ca67ff6bc2a967fe">
+        <dex dex="/Users/mac/Desktop/React/testUser/fb35c2a8027601a758c9e8ba9b8aa1a944c51547/android/app/build/intermediates/pre-dexed/debug/com.facebook.fresco-imagepipeline-base-0.11.0_1f40f3afbd8bced4d4057c40906a42ac725ad484.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/mac/Desktop/React/appuser/android/app/build/intermediates/exploded-aar/com.google.firebase/firebase-analytics-impl/16.0.0/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="23.0.1"
+        sha1="a66ffce1d574f71569fedd39d178da5856f0a84b">
+        <dex dex="/Users/mac/Desktop/React/appuser/android/app/build/intermediates/pre-dexed/release/com.google.firebase-firebase-analytics-impl-16.0.0_8cbd4909bb79b5e0d329964cbf30f041b55b5cb4.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/mac/Desktop/React/testUser/fb35c2a8027601a758c9e8ba9b8aa1a944c51547/android/app/build/intermediates/exploded-aar/com.facebook.react/react-native/0.42.3/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="23.0.1"
+        sha1="962b06c207e808c0557ffd6163ac584025a96021">
+        <dex dex="/Users/mac/Desktop/React/testUser/fb35c2a8027601a758c9e8ba9b8aa1a944c51547/android/app/build/intermediates/pre-dexed/debug/com.facebook.react-react-native-0.42.3_d23ac429b332885cc02238915cc2761f4f8cc095.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/mac/Desktop/React/appuser/android/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-measurement-base/15.0.4/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="23.0.1"
+        sha1="6a13da3b2de1cb4d43145994271c4d9e6ac060be">
+        <dex dex="/Users/mac/Desktop/React/appuser/android/app/build/intermediates/pre-dexed/release/com.google.android.gms-play-services-measurement-base-15.0.4_a6a30e43b88015e879c2aff76554253e71bded92.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/mac/Desktop/React/appuser/android/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-stats/15.0.1/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="23.0.1"
+        sha1="c1e9d140d3260619ce2fa991d30b14b531d61dec">
+        <dex dex="/Users/mac/Desktop/React/appuser/android/app/build/intermediates/pre-dexed/release/com.google.android.gms-play-services-stats-15.0.1_6c1b7beeee9dc03046835a62f0a9c4dd9a502826.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/mac/.gradle/caches/modules-2/files-2.1/com.nineoldandroids/library/2.4.0/e9b63380f3a242dbdbf103a2355ad7e43bad17cb/library-2.4.0.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="23.0.1"
+        sha1="e9b63380f3a242dbdbf103a2355ad7e43bad17cb">
+        <dex dex="/Users/mac/Desktop/React/testUser/fb35c2a8027601a758c9e8ba9b8aa1a944c51547/android/app/build/intermediates/pre-dexed/debug/library-2.4.0_fcd7bf57330797c3eaeb05d042207c4ab7ecac63.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/mac/Desktop/React/appuser/android/app/build/intermediates/exploded-aar/android.arch.lifecycle/runtime/1.0.0/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="23.0.1"
+        sha1="b62fdc4cfef174c1e456014195c83fa7de7dc041">
+        <dex dex="/Users/mac/Desktop/React/appuser/android/app/build/intermediates/pre-dexed/release/android.arch.lifecycle-runtime-1.0.0_9ea1cbf84b4338054517323511020d62fa1d17c5.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/mac/Desktop/React/appuser/android/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-iid/15.0.1/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="23.0.1"
+        sha1="6d468b69c3baff6635f9a7d09a558ced41fdbdf4">
+        <dex dex="/Users/mac/Desktop/React/appuser/android/app/build/intermediates/pre-dexed/release/com.google.android.gms-play-services-iid-15.0.1_b70b31d2bea98369520715ae05f5bd1993d0e064.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/mac/.gradle/caches/modules-2/files-2.1/javax.inject/javax.inject/1/6975da39a7040257bd51d21a231b76c915872d38/javax.inject-1.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="23.0.1"
+        sha1="6975da39a7040257bd51d21a231b76c915872d38">
+        <dex dex="/Users/mac/Desktop/React/testUser/fb35c2a8027601a758c9e8ba9b8aa1a944c51547/android/app/build/intermediates/pre-dexed/debug/javax.inject-1_81f63147293c80992186865712de6648b741fa96.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/mac/Desktop/React/testUser/fb35c2a8027601a758c9e8ba9b8aa1a944c51547/android/app/build/intermediates/exploded-aar/com.google.firebase/firebase-messaging/10.0.1/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="23.0.1"
+        sha1="4b17463c814bdc562fb0392fa3494063623a0904">
+        <dex dex="/Users/mac/Desktop/React/testUser/fb35c2a8027601a758c9e8ba9b8aa1a944c51547/android/app/build/intermediates/pre-dexed/debug/com.google.firebase-firebase-messaging-10.0.1_cc0b75896b62fd651b704c30c837dbf0eeeb1108.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/mac/Desktop/React/testUser/fb35c2a8027601a758c9e8ba9b8aa1a944c51547/android/app/build/intermediates/exploded-aar/com.facebook.fresco/imagepipeline/0.11.0/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="23.0.1"
+        sha1="3341b66c54367e777a0647e2db96c045329bfeab">
+        <dex dex="/Users/mac/Desktop/React/testUser/fb35c2a8027601a758c9e8ba9b8aa1a944c51547/android/app/build/intermediates/pre-dexed/debug/com.facebook.fresco-imagepipeline-0.11.0_9b2b9a434fbee4a227cf00ff07cf3d096fcdd9ca.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/mac/Desktop/React/appuser/android/app/build/intermediates/exploded-aar/com.google.firebase/firebase-measurement-connector/16.0.0/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="23.0.1"
+        sha1="f9148af2391a1288519f4f1d38da060c4a640e85">
+        <dex dex="/Users/mac/Desktop/React/appuser/android/app/build/intermediates/pre-dexed/release/com.google.firebase-firebase-measurement-connector-16.0.0_586b1bbc6920b46f6312e85eb7abe4a7f815b9ec.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/mac/.gradle/caches/modules-2/files-2.1/com.squareup.okhttp3/okhttp-ws/3.4.1/8ace66ef7002d98f633377c9e67daeeb196d8c3b/okhttp-ws-3.4.1.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="23.0.1"
+        sha1="8ace66ef7002d98f633377c9e67daeeb196d8c3b">
+        <dex dex="/Users/mac/Desktop/React/testUser/fb35c2a8027601a758c9e8ba9b8aa1a944c51547/android/app/build/intermediates/pre-dexed/debug/okhttp-ws-3.4.1_6b0c216011bb3c3a197f8d2cb210ad55279674dc.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/mac/Desktop/React/testUser/fb35c2a8027601a758c9e8ba9b8aa1a944c51547/android/app/build/intermediates/exploded-aar/com.facebook.fbui.textlayoutbuilder/textlayoutbuilder/1.0.0/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="23.0.1"
+        sha1="f90b593491e4044903f0bbf68dc3fa2790b151b9">
+        <dex dex="/Users/mac/Desktop/React/testUser/fb35c2a8027601a758c9e8ba9b8aa1a944c51547/android/app/build/intermediates/pre-dexed/debug/com.facebook.fbui.textlayoutbuilder-textlayoutbuilder-1.0.0_16a82f2b7a01499e7864e2d1882966fb15c5702a.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/mac/Desktop/React/appuser/android/app/build/intermediates/exploded-aar/com.facebook.react/react-native/0.45.1/jars/libs/infer-annotations-4.0.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="23.0.1"
+        sha1="9809e90be788acdb479b2b44e2112f3295a03068">
+        <dex dex="/Users/mac/Desktop/React/appuser/android/app/build/intermediates/pre-dexed/release/infer-annotations-4.0_c426000e80871027cf15d1fa2b6e12adabd60ba9.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/mac/Desktop/React/testUser/fb35c2a8027601a758c9e8ba9b8aa1a944c51547/android/app/build/intermediates/exploded-aar/appuser/react-native-vector-icons/unspecified/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="23.0.1"
+        sha1="b319ff9834bbeb9be394687614eb86892699ea14">
+        <dex dex="/Users/mac/Desktop/React/testUser/fb35c2a8027601a758c9e8ba9b8aa1a944c51547/android/app/build/intermediates/pre-dexed/debug/appuser-react-native-vector-icons-unspecified_6bf377fa98cb6861d0cf4081863f54d6eb5e6d83.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/mac/Desktop/React/appuser/android/app/build/intermediates/exploded-aar/com.android.support/support-v4/26.1.0/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="23.0.1"
+        sha1="d7c42c80f6509b9ea4db28ca7859ffae08ec5741">
+        <dex dex="/Users/mac/Desktop/React/appuser/android/app/build/intermediates/pre-dexed/release/com.android.support-support-v4-26.1.0_d8bd57356c14fe0e025adbd357f05b52ce7449e2.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/mac/Desktop/React/appuser/android/app/build/intermediates/exploded-aar/com.facebook.fresco/imagepipeline-okhttp3/1.0.1/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="23.0.1"
+        sha1="ba9b39366b723ccff6359d1117332968e98a4aca">
+        <dex dex="/Users/mac/Desktop/React/appuser/android/app/build/intermediates/pre-dexed/release/com.facebook.fresco-imagepipeline-okhttp3-1.0.1_1b56a27613484cf1c523e9b9a6e82f94d59a326e.jar" />
+    </item>
+    <item
+        is-multidex="false"
         jar="/Users/mac/Desktop/React/testUser/fb35c2a8027601a758c9e8ba9b8aa1a944c51547/android/app/build/intermediates/exploded-aar/appuser/react-native-fcm/unspecified/jars/classes.jar"
         jumboMode="false"
         optimize="true"
         revision="23.0.1"
         sha1="7fda3f1b253989860191cb3f7c3933c6814a942d">
         <dex dex="/Users/mac/Desktop/React/testUser/fb35c2a8027601a758c9e8ba9b8aa1a944c51547/android/app/build/intermediates/pre-dexed/debug/appuser-react-native-fcm-unspecified_b373e846d5408a0a316be6714db0149ddaee2d8a.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/Users/mac/Desktop/React/appuser/android/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/10.0.1/jars/classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="23.0.1"
-        sha1="25438f55fc6d906a0e72f30b21487541430ede43">
-        <dex dex="/Users/mac/Desktop/React/appuser/android/app/build/intermediates/pre-dexed/debug/com.google.android.gms-play-services-base-10.0.1_0e501b81eec1aaca1842fa4e0353ad11d377b25f.jar" />
     </item>
     <item
         is-multidex="false"
@@ -543,12 +651,12 @@
     </item>
     <item
         is-multidex="false"
-        jar="/Users/mac/Desktop/React/appuser/android/app/build/intermediates/exploded-aar/appuser/react-native-vector-icons/unspecified/jars/classes.jar"
+        jar="/Users/mac/Desktop/React/appuser/android/app/build/intermediates/exploded-aar/com.facebook.react/react-native/0.45.1/jars/classes.jar"
         jumboMode="false"
         optimize="true"
         revision="23.0.1"
-        sha1="b319ff9834bbeb9be394687614eb86892699ea14">
-        <dex dex="/Users/mac/Desktop/React/appuser/android/app/build/intermediates/pre-dexed/debug/appuser-react-native-vector-icons-unspecified_0e06c74e908407635336f2f5b61f5c3d7011a570.jar" />
+        sha1="0d3e48e200296061415952a358fad487e129adaa">
+        <dex dex="/Users/mac/Desktop/React/appuser/android/app/build/intermediates/pre-dexed/release/com.facebook.react-react-native-0.45.1_f26613aa79300c7c53e5608e1e99e9092b635d13.jar" />
     </item>
     <item
         is-multidex="false"
@@ -570,21 +678,21 @@
     </item>
     <item
         is-multidex="false"
-        jar="/Users/mac/Desktop/React/appuser/android/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-tasks/10.0.1/jars/classes.jar"
+        jar="/Users/mac/Desktop/React/appuser/android/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-ads-identifier/15.0.1/jars/classes.jar"
         jumboMode="false"
         optimize="true"
         revision="23.0.1"
-        sha1="6addaba208e21c6da776d0ca75b6b23a6ccd5499">
-        <dex dex="/Users/mac/Desktop/React/appuser/android/app/build/intermediates/pre-dexed/debug/com.google.android.gms-play-services-tasks-10.0.1_f5b049678a1665f493db8ed60471dc9b4e853edd.jar" />
+        sha1="63413895dce50f6123807d1db2274a1982a34194">
+        <dex dex="/Users/mac/Desktop/React/appuser/android/app/build/intermediates/pre-dexed/release/com.google.android.gms-play-services-ads-identifier-15.0.1_260a5ebd188fa6536af3f4a6218cce9efa2b6162.jar" />
     </item>
     <item
         is-multidex="false"
-        jar="/Users/mac/Desktop/React/appuser/android/app/build/intermediates/exploded-aar/com.android.support/support-v4/24.0.0/jars/classes.jar"
+        jar="/Users/mac/Desktop/React/appuser/android/app/build/intermediates/exploded-aar/com.facebook.fresco/imagepipeline-base/1.0.1/jars/classes.jar"
         jumboMode="false"
         optimize="true"
         revision="23.0.1"
-        sha1="2f7e6e2dad1bccaf68a8820820adc6c0d5b96d37">
-        <dex dex="/Users/mac/Desktop/React/appuser/android/app/build/intermediates/pre-dexed/debug/com.android.support-support-v4-24.0.0_d7a763637341e7bb49f9a679a933ae30d7b9fe99.jar" />
+        sha1="050f688115ea65a0292d8483a6ffe6bcdab1e2ef">
+        <dex dex="/Users/mac/Desktop/React/appuser/android/app/build/intermediates/pre-dexed/release/com.facebook.fresco-imagepipeline-base-1.0.1_9eff32db3e8459d70af5343e2d1f8d67552ff8c3.jar" />
     </item>
     <item
         is-multidex="false"
@@ -594,6 +702,15 @@
         revision="23.0.1"
         sha1="d86429b0f0b3f3cafbeb78dda1b9d89119ccb05d">
         <dex dex="/Users/mac/Desktop/React/testUser/fb35c2a8027601a758c9e8ba9b8aa1a944c51547/android/app/build/intermediates/pre-dexed/debug/com.android.support-appcompat-v7-23.0.1_8adcb2f916930a8d5fd6ef014e789fd841b7e6a5.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/mac/.gradle/caches/modules-2/files-2.1/android.arch.lifecycle/common/1.0.0/e414a4cb28434e25c4f6aa71426eb20cf4874ae9/common-1.0.0.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="23.0.1"
+        sha1="e414a4cb28434e25c4f6aa71426eb20cf4874ae9">
+        <dex dex="/Users/mac/Desktop/React/appuser/android/app/build/intermediates/pre-dexed/release/common-1.0.0_836d66f8e757e7d24929f36349491c37f5a6606e.jar" />
     </item>
 
 </items>

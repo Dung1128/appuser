@@ -246,6 +246,7 @@ class HomeIOS extends Component {
 			}
 
 			let data1 = await fetchData('api_get_list_chuyen_pho_bien', params1, 'GET');
+
 			let listChuyen = [];
 
 			if (data1.status == 200) {
@@ -296,9 +297,30 @@ class HomeIOS extends Component {
 		}
 
 		if (checkData) {
+			let currentMonth = currentDate.getMonth() + 1;
+			let currentDay = currentDate.getDate();
+			let selectMonth = this.state.month;
+			let selectDay = this.state.day;
 
-			let newCurrentDate = currentDate.getDate() + (currentDate.getMonth() + 1) + currentDate.getFullYear();
-			let selectCurrentDate = this.state.day + this.state.month + this.state.year;
+			if (currentMonth < 10) {
+				currentMonth = '0' + currentMonth;
+			}
+	
+			if (currentDay < 10) {
+				currentDay = '0' + currentDay;
+			}
+
+			if (selectMonth < 10) {
+				selectMonth = '0' + selectMonth;
+			}
+	
+			if (selectDay < 10) {
+				selectDay = '0' + selectDay;
+			}
+
+			let newCurrentDate = currentDate.getFullYear().toString() + currentMonth.toString() + currentDay.toString();
+			let selectCurrentDate = this.state.year.toString() + selectMonth.toString() + selectDay.toString();
+
 			if (newCurrentDate <= selectCurrentDate) {
 
 				this.setState({
@@ -948,8 +970,15 @@ class HomeIOS extends Component {
 		let listNews = this.state.resultsNews;
 
 		for (let i = 0; i < listChuyen.length; i++) {
-			let dau = listChuyen[i].tuy_ten.split('-')[0].trim();
-			let cuoi = listChuyen[i].tuy_ten.split('-')[1].trim();
+			let arrTenTuyen = listChuyen[i].tuy_ten.split('-');
+			let dau = '', cuoi = '';
+			if (arrTenTuyen[0]) {
+				dau = listChuyen[i].tuy_ten.split('-')[0].trim();
+			}
+
+			if (arrTenTuyen[1]) {
+				cuoi = listChuyen[i].tuy_ten.split('-')[1].trim();
+			}
 			htmlChuyen.push(
 				<View key={i} style={{ flexDirection: 'row', marginTop: 10, alignItems: 'center', borderWidth: 1, borderColor: '#ccc', borderRadius: 10, backgroundColor: '#FFFFFF' }}>
 					<View style={{ flexDirection: 'column', flex: 3, margin: 10 }}>

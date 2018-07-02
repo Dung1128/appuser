@@ -90,10 +90,10 @@ android {
         applicationId "com.appuser"
         minSdkVersion 16
         targetSdkVersion 22
-        versionCode 1
-        versionName "1.0"
+        versionCode 16
+        versionName "3.1"
         ndk {
-            abiFilters "armeabi-v7a"
+            abiFilters "armeabi-v7a", "x86"
         }
     }
     signingConfigs {

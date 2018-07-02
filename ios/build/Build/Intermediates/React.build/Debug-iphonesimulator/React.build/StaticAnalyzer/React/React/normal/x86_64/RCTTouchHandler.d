@@ -11,6 +11,7 @@ dependencies: \
   /Users/mac/Desktop/React/appuser/node_modules/react-native/React/Base/RCTInvalidating.h \
   /Users/mac/Desktop/React/appuser/node_modules/react-native/React/Base/RCTEventDispatcher.h \
   /Users/mac/Desktop/React/appuser/node_modules/react-native/React/Base/RCTLog.h \
+  /Users/mac/Desktop/React/appuser/node_modules/react-native/React/Base/RCTUtils.h \
   /Users/mac/Desktop/React/appuser/node_modules/react-native/React/Base/RCTTouchEvent.h \
   /Users/mac/Desktop/React/appuser/node_modules/react-native/React/Modules/RCTUIManager.h \
   /Users/mac/Desktop/React/appuser/node_modules/react-native/React/Base/RCTRootView.h \
@@ -24,5 +25,4 @@ dependencies: \
   /Users/mac/Desktop/React/appuser/ios/build/Build/Products/Debug-iphonesimulator/include/yoga/YGEnums.h \
   /Users/mac/Desktop/React/appuser/ios/build/Build/Products/Debug-iphonesimulator/include/yoga/YGMacros.h \
   /Users/mac/Desktop/React/appuser/node_modules/react-native/React/Views/UIView+React.h \
-  /Users/mac/Desktop/React/appuser/node_modules/react-native/React/Views/RCTComponent.h \
-  /Users/mac/Desktop/React/appuser/node_modules/react-native/React/Base/RCTUtils.h
+  /Users/mac/Desktop/React/appuser/node_modules/react-native/React/Views/RCTComponent.h

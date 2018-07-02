@@ -15,6 +15,7 @@ dependencies: \
   /Users/mac/Desktop/React/appuser/node_modules/react-native/React/Views/RCTBorderStyle.h \
   /Users/mac/Desktop/React/appuser/node_modules/react-native/React/Base/RCTLog.h \
   /Users/mac/Desktop/React/appuser/node_modules/react-native/React/Base/RCTAssert.h \
+  /Users/mac/Desktop/React/appuser/node_modules/react-native/React/Base/RCTUtils.h \
   /Users/mac/Desktop/React/appuser/node_modules/react-native/React/Views/RCTPointerEvents.h \
   /Users/mac/Desktop/React/appuser/node_modules/react-native/React/Views/RCTTextDecorationLineType.h \
   /Users/mac/Desktop/React/appuser/ios/build/Build/Products/Debug-iphonesimulator/include/yoga/Yoga.h \
@@ -31,9 +32,10 @@ dependencies: \
   /Users/mac/Desktop/React/appuser/node_modules/react-native/React/Base/RCTBridgeMethod.h \
   /Users/mac/Desktop/React/appuser/node_modules/react-native/React/Base/RCTNullability.h \
   /Users/mac/Desktop/React/appuser/node_modules/react-native/React/Profiler/RCTProfile.h \
+  /Users/mac/Desktop/React/appuser/node_modules/react-native/React/Base/RCTRootContentView.h \
+  /Users/mac/Desktop/React/appuser/node_modules/react-native/React/Views/RCTView.h \
   /Users/mac/Desktop/React/appuser/node_modules/react-native/React/Views/RCTRootShadowView.h \
   /Users/mac/Desktop/React/appuser/node_modules/react-native/React/Views/RCTShadowView.h \
   /Users/mac/Desktop/React/appuser/node_modules/react-native/React/Base/RCTRootViewInternal.h \
   /Users/mac/Desktop/React/appuser/node_modules/react-native/React/Views/RCTScrollableProtocol.h \
-  /Users/mac/Desktop/React/appuser/node_modules/react-native/React/Base/RCTUtils.h \
-  /Users/mac/Desktop/React/appuser/node_modules/react-native/React/Views/RCTView.h
+  /Users/mac/Desktop/React/appuser/node_modules/react-native/React/Modules/RCTUIManagerObserverCoordinator.h

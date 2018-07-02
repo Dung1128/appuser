@@ -13,6 +13,7 @@ dependencies: \
   /Users/mac/Desktop/React/appuser/node_modules/react-native/React/Views/RCTAnimationType.h \
   /Users/mac/Desktop/React/appuser/node_modules/react-native/React/Views/RCTBorderStyle.h \
   /Users/mac/Desktop/React/appuser/node_modules/react-native/React/Base/RCTLog.h \
+  /Users/mac/Desktop/React/appuser/node_modules/react-native/React/Base/RCTUtils.h \
   /Users/mac/Desktop/React/appuser/node_modules/react-native/React/Views/RCTPointerEvents.h \
   /Users/mac/Desktop/React/appuser/node_modules/react-native/React/Views/RCTTextDecorationLineType.h \
   /Users/mac/Desktop/React/appuser/ios/build/Build/Products/Debug-iphonesimulator/include/yoga/Yoga.h \
@@ -25,7 +26,6 @@ dependencies: \
   /Users/mac/Desktop/React/appuser/node_modules/react-native/React/Views/RCTAutoInsetsProtocol.h \
   /Users/mac/Desktop/React/appuser/node_modules/react-native/React/Views/RCTScrollableProtocol.h \
   /Users/mac/Desktop/React/appuser/node_modules/react-native/React/Views/RCTView.h \
-  /Users/mac/Desktop/React/appuser/node_modules/react-native/React/Base/RCTUtils.h \
   /Users/mac/Desktop/React/appuser/node_modules/react-native/React/Views/RCTWrapperViewController.h \
   /Users/mac/Desktop/React/appuser/node_modules/react-native/React/Views/RCTViewControllerProtocol.h \
   /Users/mac/Desktop/React/appuser/node_modules/react-native/React/Views/UIView+React.h

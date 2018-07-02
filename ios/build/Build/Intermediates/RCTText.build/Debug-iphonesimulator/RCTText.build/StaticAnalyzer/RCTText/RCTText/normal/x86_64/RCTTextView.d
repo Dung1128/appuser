@@ -11,6 +11,7 @@ dependencies: \
   /Users/mac/Desktop/React/appuser/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTDefines.h \
   /Users/mac/Desktop/React/appuser/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTLog.h \
   /Users/mac/Desktop/React/appuser/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTAssert.h \
+  /Users/mac/Desktop/React/appuser/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTUtils.h \
   /Users/mac/Desktop/React/appuser/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTTextDecorationLineType.h \
   /Users/mac/Desktop/React/appuser/ios/build/Build/Products/Debug-iphonesimulator/include/yoga/Yoga.h \
   /Users/mac/Desktop/React/appuser/ios/build/Build/Products/Debug-iphonesimulator/include/yoga/YGEnums.h \
@@ -22,9 +23,11 @@ dependencies: \
   /Users/mac/Desktop/React/appuser/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTBridgeModule.h \
   /Users/mac/Desktop/React/appuser/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTFrameUpdate.h \
   /Users/mac/Desktop/React/appuser/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTInvalidating.h \
-  /Users/mac/Desktop/React/appuser/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTUtils.h \
+  /Users/mac/Desktop/React/appuser/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTUIManager.h \
+  /Users/mac/Desktop/React/appuser/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTRootView.h \
+  /Users/mac/Desktop/React/appuser/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTViewManager.h \
   /Users/mac/Desktop/React/appuser/node_modules/react-native/Libraries/Text/RCTShadowText.h \
   /Users/mac/Desktop/React/appuser/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTShadowView.h \
-  /Users/mac/Desktop/React/appuser/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTRootView.h \
   /Users/mac/Desktop/React/appuser/node_modules/react-native/Libraries/Text/RCTText.h \
-  /Users/mac/Desktop/React/appuser/node_modules/react-native/Libraries/Text/RCTTextSelection.h
+  /Users/mac/Desktop/React/appuser/node_modules/react-native/Libraries/Text/RCTTextSelection.h \
+  /Users/mac/Desktop/React/appuser/node_modules/react-native/Libraries/Text/RCTUITextView.h

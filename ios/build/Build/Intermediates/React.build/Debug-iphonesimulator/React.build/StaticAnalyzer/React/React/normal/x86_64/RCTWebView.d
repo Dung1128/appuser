@@ -11,6 +11,7 @@ dependencies: \
   /Users/mac/Desktop/React/appuser/node_modules/react-native/React/Base/RCTDefines.h \
   /Users/mac/Desktop/React/appuser/node_modules/react-native/React/Base/RCTLog.h \
   /Users/mac/Desktop/React/appuser/node_modules/react-native/React/Base/RCTAssert.h \
+  /Users/mac/Desktop/React/appuser/node_modules/react-native/React/Base/RCTUtils.h \
   /Users/mac/Desktop/React/appuser/node_modules/react-native/React/Views/RCTTextDecorationLineType.h \
   /Users/mac/Desktop/React/appuser/ios/build/Build/Products/Debug-iphonesimulator/include/yoga/Yoga.h \
   /Users/mac/Desktop/React/appuser/ios/build/Build/Products/Debug-iphonesimulator/include/yoga/YGEnums.h \
@@ -22,5 +23,4 @@ dependencies: \
   /Users/mac/Desktop/React/appuser/node_modules/react-native/React/Base/RCTBridgeModule.h \
   /Users/mac/Desktop/React/appuser/node_modules/react-native/React/Base/RCTFrameUpdate.h \
   /Users/mac/Desktop/React/appuser/node_modules/react-native/React/Base/RCTInvalidating.h \
-  /Users/mac/Desktop/React/appuser/node_modules/react-native/React/Base/RCTUtils.h \
   /Users/mac/Desktop/React/appuser/node_modules/react-native/React/Views/UIView+React.h

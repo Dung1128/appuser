@@ -8,11 +8,13 @@ dependencies: \
   /Users/mac/Desktop/React/appuser/node_modules/react-native/React/Base/RCTFrameUpdate.h \
   /Users/mac/Desktop/React/appuser/node_modules/react-native/React/Base/RCTInvalidating.h \
   /Users/mac/Desktop/React/appuser/node_modules/react-native/React/Base/RCTBridge+Private.h \
+  /Users/mac/Desktop/React/appuser/node_modules/react-native/React/Base/RCTBridge+JavaScriptCore.h \
   /Users/mac/Desktop/React/appuser/node_modules/react-native/React/Base/RCTConvert.h \
   /Users/mac/Desktop/React/appuser/node_modules/react-native/React/Views/RCTAnimationType.h \
   /Users/mac/Desktop/React/appuser/node_modules/react-native/React/Views/RCTBorderStyle.h \
   /Users/mac/Desktop/React/appuser/node_modules/react-native/React/Base/RCTLog.h \
   /Users/mac/Desktop/React/appuser/node_modules/react-native/React/Base/RCTAssert.h \
+  /Users/mac/Desktop/React/appuser/node_modules/react-native/React/Base/RCTUtils.h \
   /Users/mac/Desktop/React/appuser/node_modules/react-native/React/Views/RCTPointerEvents.h \
   /Users/mac/Desktop/React/appuser/node_modules/react-native/React/Views/RCTTextDecorationLineType.h \
   /Users/mac/Desktop/React/appuser/ios/build/Build/Products/Debug-iphonesimulator/include/yoga/Yoga.h \
@@ -22,5 +24,4 @@ dependencies: \
   /Users/mac/Desktop/React/appuser/node_modules/react-native/React/Base/RCTModuleData.h \
   /Users/mac/Desktop/React/appuser/node_modules/react-native/React/Base/RCTPerformanceLogger.h \
   /Users/mac/Desktop/React/appuser/node_modules/react-native/React/Profiler/RCTProfile.h \
-  /Users/mac/Desktop/React/appuser/node_modules/react-native/React/Base/RCTReloadCommand.h \
-  /Users/mac/Desktop/React/appuser/node_modules/react-native/React/Base/RCTUtils.h
+  /Users/mac/Desktop/React/appuser/node_modules/react-native/React/Base/RCTReloadCommand.h

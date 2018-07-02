@@ -88,35 +88,37 @@ class SideBar extends Component {
 
 		let results = await StorageHelper.getStore('infoUser');
 		results = JSON.parse(results);
-		let admId = results.adm_id;
-		let token = results.token;
-		this.setState({
-			infoAdm: results,
-			token: token
-		});
+		if (results) {
+			let admId = results.adm_id;
+			let token = results.token;
+			this.setState({
+				infoAdm: results,
+				token: token
+			});
 
-		var that = this;
+			var that = this;
 
-		fetch(domain+'/api/api_user_get_user_info.php?token='+token+'&user_id='+admId, {
-			headers: {
-				'Cache-Control': cache
-			}
-		})
-		.then((response) => response.json())
-		.then((responseJson) => {
-			if(responseJson.status == 200) {
-				that.setState({
-					results: responseJson.dataUser,
-					loading: false
+			fetch(domain + '/api/api_user_get_user_info.php?token=' + token + '&user_id=' + admId, {
+				headers: {
+					'Cache-Control': cache
+				}
+			})
+				.then((response) => response.json())
+				.then((responseJson) => {
+					if (responseJson.status == 200) {
+						that.setState({
+							results: responseJson.dataUser,
+							loading: false
+						});
+					} else {
+						alert(responseJson.mes);
+						Actions.welcome({ type: 'reset' });
+					}
+				})
+				.catch((error) => {
+					console.error(error);
 				});
-			}else {
-				alert(responseJson.mes);
-				Actions.welcome({type: 'reset'});
-			}
-		})
-		.catch((error) => {
-		   console.error(error);
-		});
+		}
 	}
 
 	_userInfo() {
@@ -147,7 +149,7 @@ class SideBar extends Component {
 					<ScrollView style={{ marginBottom: 40, height: (this.state.height - 73) }}>
 						{this.state.checkLogin &&
 							<TouchableOpacity style={{ backgroundColor: colorLogo, paddingTop: 10, alignItems: 'center' }} onPress={() => { this.props.closeDrawer(); Actions.UserInfo({ title: 'Thông tin tài khoản' }) }}>
-								<Thumbnail size={50} circular source={{uri: this.state.results.avatar_txt}} />
+								<Thumbnail size={50} circular source={{ uri: this.state.results.avatar_txt }} />
 								<View style={{ alignItems: 'flex-start', paddingVertical: 20 }}>
 									{this.state.dataUser.adm_fullname != '' &&
 										<Text style={{ color: '#0A0A1B' }}>Xin Chào: <Text style={{ color: '#4B1414' }}>{this.state.dataUser.adm_fullname}</Text></Text>

@@ -21,13 +21,14 @@ dependencies: \
   /Users/mac/Desktop/React/appuser/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTBorderStyle.h \
   /Users/mac/Desktop/React/appuser/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTLog.h \
   /Users/mac/Desktop/React/appuser/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTAssert.h \
+  /Users/mac/Desktop/React/appuser/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTUtils.h \
   /Users/mac/Desktop/React/appuser/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTPointerEvents.h \
   /Users/mac/Desktop/React/appuser/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTFont.h \
+  /Users/mac/Desktop/React/appuser/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTShadowView+Layout.h \
   /Users/mac/Desktop/React/appuser/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTUIManager.h \
   /Users/mac/Desktop/React/appuser/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTViewManager.h \
   /Users/mac/Desktop/React/appuser/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTEventDispatcher.h \
   /Users/mac/Desktop/React/appuser/ios/build/Build/Products/Debug-iphonesimulator/include/React/UIView+React.h \
-  /Users/mac/Desktop/React/appuser/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTUtils.h \
   /Users/mac/Desktop/React/appuser/node_modules/react-native/Libraries/Text/RCTShadowRawText.h \
   /Users/mac/Desktop/React/appuser/node_modules/react-native/Libraries/Text/RCTText.h \
   /Users/mac/Desktop/React/appuser/node_modules/react-native/Libraries/Text/RCTTextView.h \

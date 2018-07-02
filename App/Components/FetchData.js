@@ -85,7 +85,7 @@ const fetchData = async (type, param={}, method="GET", retry=undefined) => {
     }
 
     // Trả về dữ liệu json
-    // console.log(url);
+    console.log(url);
     let response    = await fetch(url, opts)
     let responseJson= await response.json()
     

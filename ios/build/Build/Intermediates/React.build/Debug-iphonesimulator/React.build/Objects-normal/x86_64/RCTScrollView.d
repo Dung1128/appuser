@@ -19,6 +19,7 @@ dependencies: \
   /Users/mac/Desktop/React/appuser/node_modules/react-native/React/Views/RCTAnimationType.h \
   /Users/mac/Desktop/React/appuser/node_modules/react-native/React/Base/RCTLog.h \
   /Users/mac/Desktop/React/appuser/node_modules/react-native/React/Base/RCTAssert.h \
+  /Users/mac/Desktop/React/appuser/node_modules/react-native/React/Base/RCTUtils.h \
   /Users/mac/Desktop/React/appuser/node_modules/react-native/React/Views/RCTTextDecorationLineType.h \
   /Users/mac/Desktop/React/appuser/ios/build/Build/Products/Debug-iphonesimulator/include/yoga/Yoga.h \
   /Users/mac/Desktop/React/appuser/ios/build/Build/Products/Debug-iphonesimulator/include/yoga/YGEnums.h \
@@ -27,6 +28,5 @@ dependencies: \
   /Users/mac/Desktop/React/appuser/node_modules/react-native/React/Base/RCTRootView.h \
   /Users/mac/Desktop/React/appuser/node_modules/react-native/React/Views/RCTViewManager.h \
   /Users/mac/Desktop/React/appuser/node_modules/react-native/React/Views/UIView+React.h \
-  /Users/mac/Desktop/React/appuser/node_modules/react-native/React/Base/RCTUtils.h \
   /Users/mac/Desktop/React/appuser/node_modules/react-native/React/Views/UIView+Private.h \
   /Users/mac/Desktop/React/appuser/node_modules/react-native/React/Views/RCTRefreshControl.h

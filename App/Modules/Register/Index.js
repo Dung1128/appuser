@@ -48,21 +48,21 @@ class Register extends Component {
 			);
 		}
 
-		if (this.state.email == '') {
-			checkValid = false;
-			this.state.cssError.cssErrorEmail = 'cssError';
-			mesValid.push(
-				<Text key="email" style={styles.textErrors}>Bạn vui lòng nhập Email.</Text>
-			);
-		} else {
-			if (!this.validateEmail(this.state.email)) {
-				checkValid = false;
-				this.state.cssError.cssErrorEmail = 'cssError';
-				mesValid.push(
-					<Text key="email" style={styles.textErrors}>Mail bạn nhập không đúng.</Text>
-				);
-			}
-		}
+		// if (this.state.email == '') {
+		// 	checkValid = false;
+		// 	this.state.cssError.cssErrorEmail = 'cssError';
+		// 	mesValid.push(
+		// 		<Text key="email" style={styles.textErrors}>Bạn vui lòng nhập Email.</Text>
+		// 	);
+		// } else {
+		// 	if (!this.validateEmail(this.state.email)) {
+		// 		checkValid = false;
+		// 		this.state.cssError.cssErrorEmail = 'cssError';
+		// 		mesValid.push(
+		// 			<Text key="email" style={styles.textErrors}>Mail bạn nhập không đúng.</Text>
+		// 		);
+		// 	}
+		// }
 
 		if (this.state.phone == '') {
 			checkValid = false;
@@ -80,6 +80,13 @@ class Register extends Component {
 			}
 		}
 
+		if ((this.state.email.trim() != '' && (!this.validateEmail(this.state.email))) ) {
+			checkValid = false;
+			this.state.cssError.cssErrorEmail = 'cssError';
+			mesValid.push(
+				<Text key="email" style={styles.textErrors}>Mail bạn nhập không đúng.</Text>
+			);
+		}
 
 		if (this.state.password == '') {
 			checkValid = false;
@@ -212,14 +219,14 @@ class Register extends Component {
 							<Input placeholder="Họ Và Tên" onChange={(event) => this.setState({ fullName: event.nativeEvent.text })} />
 						</InputGroup>
 
-						<InputGroup key="group_email">
-							<Icon name='ios-mail' style={styles[this.state.cssError.cssErrorEmail]} />
-							<Input placeholder="Địa Chỉ Email" onChange={(event) => this.setState({ email: event.nativeEvent.text })} />
-						</InputGroup>
-
 						<InputGroup key="group_phone">
 							<Icon name='ios-call' style={styles[this.state.cssError.cssErrorPhone]} />
 							<Input placeholder="Số điện thoại" keyboardType="numeric" maxLength={11} onChange={(event) => this.setState({ phone: event.nativeEvent.text })} />
+						</InputGroup>
+
+						<InputGroup key="group_email">
+							<Icon name='ios-mail' style={styles[this.state.cssError.cssErrorEmail]} />
+							<Input placeholder="Địa Chỉ Email" onChange={(event) => this.setState({ email: event.nativeEvent.text })} />
 						</InputGroup>
 
 						<InputGroup key="group_password">
